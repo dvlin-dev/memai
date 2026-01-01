@@ -13,7 +13,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@memory/embed-react": "workspace:*",
     "@memory/ui": "workspace:*",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@tiptap/react": "^2.11.5",

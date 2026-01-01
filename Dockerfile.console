@@ -14,8 +14,6 @@ FROM base AS deps
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/console/package.json ./apps/console/
 COPY packages/ui/package.json ./packages/ui/
-COPY packages/embed/package.json ./packages/embed/
-COPY packages/embed-react/package.json ./packages/embed-react/
 RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memory/console...
 
 # 构建阶段
@@ -23,12 +21,8 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/console/node_modules ./apps/console/node_modules
 COPY --from=deps /app/packages/ui/node_modules ./packages/ui/node_modules
-COPY --from=deps /app/packages/embed/node_modules ./packages/embed/node_modules
-COPY --from=deps /app/packages/embed-react/node_modules ./packages/embed-react/node_modules
 COPY apps/console ./apps/console
 COPY packages/ui ./packages/ui
-COPY packages/embed ./packages/embed
-COPY packages/embed-react ./packages/embed-react
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 
 WORKDIR /app/apps/console
