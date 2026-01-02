@@ -26,7 +26,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@memory/ui/primitives'
-import { AlertTriangle, Send, Search, Trash2, Plus } from 'lucide-react'
+import { AlertTriangle, Send, Search, Plus, Key } from 'lucide-react'
 import { useApiKeys } from '@/features/api-keys'
 
 interface Memory {
@@ -47,6 +47,7 @@ interface SearchResult extends Memory {
 export default function MemoryPlaygroundPage() {
   const { data: apiKeys, isLoading: keysLoading } = useApiKeys()
   const [selectedKeyId, setSelectedKeyId] = useState<string>('')
+  const [manualApiKey, setManualApiKey] = useState<string>('')
 
   // Add Memory state
   const [addContent, setAddContent] = useState('')
@@ -74,11 +75,11 @@ export default function MemoryPlaygroundPage() {
   }, [apiKeys, selectedKeyId])
 
   const getApiKey = () => {
-    return apiKeys?.find((k) => k.id === selectedKeyId)?.key || ''
+    return manualApiKey
   }
 
   const handleAddMemory = async () => {
-    if (!addContent.trim() || !selectedKeyId) return
+    if (!addContent.trim() || !manualApiKey.trim()) return
 
     setAddLoading(true)
     setAddError(null)
@@ -115,7 +116,7 @@ export default function MemoryPlaygroundPage() {
   }
 
   const handleSearch = async () => {
-    if (!searchQuery.trim() || !selectedKeyId) return
+    if (!searchQuery.trim() || !manualApiKey.trim()) return
 
     setSearchLoading(true)
     setSearchError(null)
@@ -200,25 +201,28 @@ export default function MemoryPlaygroundPage() {
         description="Test the Memory API interactively - add, search, and manage semantic memories"
       />
 
-      {/* API Key Selector */}
+      {/* API Key Input */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex items-center gap-4">
-            <Label htmlFor="api-key" className="whitespace-nowrap">
-              API Key
-            </Label>
-            <Select value={selectedKeyId} onValueChange={setSelectedKeyId}>
-              <SelectTrigger id="api-key" className="flex-1">
-                <SelectValue placeholder="Select an API key" />
-              </SelectTrigger>
-              <SelectContent>
-                {apiKeys.map((key) => (
-                  <SelectItem key={key.id} value={key.id}>
-                    {key.name} ({key.keyPrefix}...)
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <Label htmlFor="api-key-input" className="whitespace-nowrap">
+                <Key className="h-4 w-4 inline mr-2" />
+                API Key
+              </Label>
+              <Input
+                id="api-key-input"
+                type="password"
+                placeholder="输入你的 API Key (mk_...)"
+                value={manualApiKey}
+                onChange={(e) => setManualApiKey(e.target.value)}
+                className="flex-1 font-mono"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              API Key 在创建时只显示一次。如需新 Key，请在{' '}
+              <a href="/api-keys" className="underline text-primary">API Keys 页面</a> 创建。
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -284,7 +288,7 @@ export default function MemoryPlaygroundPage() {
                 </div>
                 <Button
                   onClick={handleAddMemory}
-                  disabled={addLoading || !addContent.trim()}
+                  disabled={addLoading || !addContent.trim() || !manualApiKey.trim()}
                   className="w-full"
                 >
                   {addLoading ? 'Adding...' : 'Add Memory'}
@@ -379,7 +383,7 @@ export default function MemoryPlaygroundPage() {
                 </div>
                 <Button
                   onClick={handleSearch}
-                  disabled={searchLoading || !searchQuery.trim()}
+                  disabled={searchLoading || !searchQuery.trim() || !manualApiKey.trim()}
                   className="w-full"
                 >
                   {searchLoading ? 'Searching...' : 'Search'}
