@@ -20,6 +20,6 @@ import { UsageModule } from '../usage';
   ],
   controllers: [QuotaController],
   providers: [QuotaService, QuotaGuard],
-  exports: [QuotaService, QuotaGuard],
+  exports: [QuotaService, QuotaGuard, UsageModule],
 })
 export class QuotaModule {}
