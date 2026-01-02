@@ -5,8 +5,10 @@ import {
   Scripts,
   useParams,
 } from '@tanstack/react-router'
+import * as React from 'react'
 import { RootProvider } from 'fumadocs-ui/provider/tanstack'
-import { i18n, translations, getLocaleDisplayName } from '../lib/i18n'
+import { I18nProvider } from 'fumadocs-ui/contexts/i18n'
+import { i18n, getLocaleDisplayName } from '../lib/i18n'
 import { getLocale, LOCALES } from '../lib/types'
 import '../styles/app.css'
 
@@ -103,7 +105,53 @@ export const Route = createRootRoute({
   }),
 })
 
-function RootComponent() {
+// UI translations for fumadocs
+const uiTranslations: Record<string, Record<string, string>> = {
+  en: {
+    search: 'Search documentation...',
+    searchNoResult: 'No results found',
+    toc: 'On this page',
+    tocNoHeadings: 'No headings',
+    lastUpdate: 'Last updated',
+    chooseTheme: 'Choose theme',
+    nextPage: 'Next',
+    previousPage: 'Previous',
+    chooseLanguage: 'Change language',
+    editOnGithub: 'Edit on GitHub',
+  },
+  zh: {
+    search: '搜索文档...',
+    searchNoResult: '未找到结果',
+    toc: '本页目录',
+    tocNoHeadings: '无标题',
+    lastUpdate: '最后更新',
+    chooseTheme: '选择主题',
+    nextPage: '下一页',
+    previousPage: '上一页',
+    chooseLanguage: '切换语言',
+    editOnGithub: '在 GitHub 上编辑',
+  },
+}
+
+function I18nWrapper({ children }: { children: React.ReactNode }) {
+  const params = useParams({ strict: false }) as { lang?: string }
+  const locale = getLocale(params.lang)
+
+  return (
+    <I18nProvider
+      locale={locale}
+      locales={LOCALES.map((lang) => ({
+        name: getLocaleDisplayName(lang),
+        locale: lang,
+      }))}
+      translations={uiTranslations[locale]}
+    >
+      {children}
+    </I18nProvider>
+  )
+}
+
+function RootDocument({ children }: { children: React.ReactNode }) {
   const params = useParams({ strict: false }) as { lang?: string }
   const locale = getLocale(params.lang)
 
@@ -113,20 +161,19 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col">
-        <RootProvider
-          i18n={{
-            locale,
-            locales: LOCALES.map((lang) => ({
-              name: getLocaleDisplayName(lang),
-              locale: lang,
-            })),
-            translations: translations[locale],
-          }}
-        >
-          <Outlet />
+        <RootProvider>
+          <I18nWrapper>{children}</I18nWrapper>
         </RootProvider>
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
   )
 }

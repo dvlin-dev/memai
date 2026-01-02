@@ -1,14 +1,16 @@
 /** English translations */
 export const en = {
-  // Fumadocs UI
+  // Fumadocs UI (required fields)
   search: 'Search documentation...',
   searchNoResult: 'No results found',
   toc: 'On this page',
+  tocNoHeadings: 'No headings',
   lastUpdate: 'Last updated',
   chooseTheme: 'Choose theme',
   nextPage: 'Next',
   previousPage: 'Previous',
   chooseLanguage: 'Change language',
+  editOnGithub: 'Edit on GitHub',
 
   // Site meta
   siteTitle: 'Memokit - Memory as a Service for AI',

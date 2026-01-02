@@ -2,15 +2,17 @@ import type { TranslationKeys } from './en'
 
 /** Chinese translations */
 export const zh: Record<TranslationKeys, string> = {
-  // Fumadocs UI
+  // Fumadocs UI (required fields)
   search: '搜索文档...',
   searchNoResult: '未找到结果',
   toc: '本页目录',
+  tocNoHeadings: '无标题',
   lastUpdate: '最后更新',
   chooseTheme: '选择主题',
   nextPage: '下一页',
   previousPage: '上一页',
   chooseLanguage: '切换语言',
+  editOnGithub: '在 GitHub 上编辑',
 
   // Site meta
   siteTitle: 'Memokit - AI 应用的记忆即服务',
