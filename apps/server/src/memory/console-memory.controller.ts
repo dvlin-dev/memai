@@ -14,6 +14,7 @@ import { Response } from 'express';
 import { CurrentUser } from '../auth';
 import type { CurrentUserDto } from '../types';
 import { MemoryService } from './memory.service';
+import { parsePaginationParams } from '../common/utils';
 
 @Controller('api/console/memories')
 export class ConsoleMemoryController {
@@ -30,10 +31,12 @@ export class ConsoleMemoryController {
     @Query('limit') limit?: string,
     @Query('offset') offset?: string,
   ) {
+    const pagination = parsePaginationParams(limit, offset);
+
     const result = await this.memoryService.listByUser(user.id, {
       apiKeyId,
-      limit: limit ? parseInt(limit, 10) : undefined,
-      offset: offset ? parseInt(offset, 10) : undefined,
+      limit: pagination.limit,
+      offset: pagination.offset,
     });
 
     return {
@@ -41,8 +44,8 @@ export class ConsoleMemoryController {
       data: result.memories,
       meta: {
         total: result.total,
-        limit: limit ? parseInt(limit, 10) : 20,
-        offset: offset ? parseInt(offset, 10) : 0,
+        limit: pagination.limit,
+        offset: pagination.offset,
       },
     };
   }

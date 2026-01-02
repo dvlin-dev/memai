@@ -7,6 +7,11 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { CurrentUser } from '../auth';
 import type { CurrentUserDto } from '../types';
 import { UsageService } from './usage.service';
+import { parsePositiveInt } from '../common/utils';
+
+/** Max allowed values for stats queries */
+const MAX_DAYS = 90;
+const MAX_MONTHS = 24;
 
 @Controller('api/console/stats')
 export class ConsoleStatsController {
@@ -34,11 +39,8 @@ export class ConsoleStatsController {
     @CurrentUser() user: CurrentUserDto,
     @Query('days') days?: string,
   ) {
-    const numDays = days ? parseInt(days, 10) : 30;
-    const dailyUsage = await this.usageService.getDailyUsage(
-      user.id,
-      Math.min(numDays, 90), // Max 90 days
-    );
+    const numDays = parsePositiveInt(days, 30, MAX_DAYS);
+    const dailyUsage = await this.usageService.getDailyUsage(user.id, numDays);
     return {
       success: true,
       data: dailyUsage,
@@ -54,11 +56,8 @@ export class ConsoleStatsController {
     @CurrentUser() user: CurrentUserDto,
     @Query('limit') limit?: string,
   ) {
-    const numLimit = limit ? parseInt(limit, 10) : 12;
-    const history = await this.usageService.getUsageHistory(
-      user.id,
-      Math.min(numLimit, 24), // Max 24 months
-    );
+    const numLimit = parsePositiveInt(limit, 12, MAX_MONTHS);
+    const history = await this.usageService.getUsageHistory(user.id, numLimit);
     return {
       success: true,
       data: history,
