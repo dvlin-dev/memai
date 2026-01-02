@@ -40,11 +40,23 @@ export class EmbeddingService {
   }
 
   /**
-   * 批量生成向量
+   * 批量生成向量（使用批量 API 调用优化）
    */
   async generateBatchEmbeddings(texts: string[]): Promise<EmbeddingResult[]> {
-    // 简单实现：逐个生成
-    // TODO: 优化为批量 API 调用
+    if (texts.length === 0) {
+      return [];
+    }
+
+    // 单个文本直接调用单个方法
+    if (texts.length === 1) {
+      return [await this.generateEmbedding(texts[0])];
+    }
+
+    if (this.provider === 'openai') {
+      return this.generateOpenAIBatchEmbeddings(texts);
+    }
+
+    // 其他 provider 回退到逐个调用
     const results: EmbeddingResult[] = [];
     for (const text of texts) {
       const result = await this.generateEmbedding(text);
@@ -109,6 +121,47 @@ export class EmbeddingService {
       };
     } catch (error) {
       this.logger.error(`Failed to generate embedding: ${(error as Error).message}`);
+      throw error;
+    }
+  }
+
+  /**
+   * OpenAI 批量 embedding API 调用
+   * 一次请求处理多个文本，减少网络延迟
+   */
+  private async generateOpenAIBatchEmbeddings(texts: string[]): Promise<EmbeddingResult[]> {
+    if (!this.apiKey) {
+      throw new Error('OPENAI_API_KEY not configured');
+    }
+
+    try {
+      const response = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify({
+          input: texts,
+          model: this.model,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`OpenAI API error: ${error}`);
+      }
+
+      const data = await response.json();
+
+      // OpenAI 返回的 data.data 数组按输入顺序排列
+      return data.data.map((item: { embedding: number[]; index: number }) => ({
+        embedding: item.embedding,
+        model: this.model,
+        dimensions: item.embedding.length,
+      }));
+    } catch (error) {
+      this.logger.error(`Failed to generate batch embeddings: ${(error as Error).message}`);
       throw error;
     }
   }

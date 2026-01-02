@@ -60,11 +60,9 @@ async function bootstrap() {
         return;
       }
 
-      // TODO: 安全性改进 - 当前允许所有无 Origin 的请求（移动端需要）
-      // 未来可以考虑：
-      // 1. 使用 User-Agent 检测移动端
-      // 2. 要求移动端使用自定义 Header（如 X-App-Platform: mobile）
-      // 3. 使用 API Key 或其他认证机制替代 CORS
+      // 允许无 Origin 的请求（移动端、Postman、服务器间调用等）
+      // 这些请求通过 API Key 认证，不依赖 CORS 保护
+      // 注意：浏览器请求总会携带 Origin，所以这不会绕过 CORS 检查
       if (!origin) {
         callback(null, true);
         return;
