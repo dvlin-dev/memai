@@ -7,7 +7,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '@memory/ui/primitives';
+} from '@memokit/ui/primitives';
 import { Users, CreditCard, Camera, DollarSign } from 'lucide-react';
 import {
   AreaChart,
@@ -18,7 +18,7 @@ import {
   YAxis,
   CartesianGrid,
 } from 'recharts';
-import type { ChartConfig } from '@memory/ui/primitives';
+import type { ChartConfig } from '@memokit/ui/primitives';
 
 function formatNumber(num: number): string {
   return num.toLocaleString('en-US');

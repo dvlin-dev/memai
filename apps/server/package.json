@@ -1,7 +1,7 @@
 {
-  "name": "@memory/server",
+  "name": "@memokit/server",
   "version": "0.0.1",
-  "description": "Memory Screenshot API Server",
+  "description": "Memokit Semantic Memory API Server",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

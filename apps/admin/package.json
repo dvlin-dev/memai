@@ -1,5 +1,5 @@
 {
-  "name": "@memory/admin",
+  "name": "@memokit/admin",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@memory/ui": "workspace:*",
+    "@memokit/ui": "workspace:*",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-table": "^8.21.3",
     "lucide-react": "^0.553.0",

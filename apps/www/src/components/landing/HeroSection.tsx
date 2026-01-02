@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout'
-import { Button } from '@memory/ui/primitives'
+import { Button } from '@memokit/ui/primitives'
 import { ArrowRight, Brain } from 'lucide-react'
 
 export function HeroSection() {
@@ -31,7 +31,7 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <a href="https://console.memory.dev/signup">
+            <a href="https://console.memokit.dev/signup">
               <Button size="lg" className="font-mono">
                 Get Started Free
                 <ArrowRight className="ml-2 h-4 w-4" />

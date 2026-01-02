@@ -1,12 +1,12 @@
 /**
- * Memory Dashboard 页面
+ * Memokit Dashboard 页面
  * 显示配额使用和快速入门
  */
-import { PageHeader } from '@memory/ui/composed'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, Skeleton } from '@memory/ui/primitives'
-import { Progress } from '@memory/ui/primitives'
-import { Button } from '@memory/ui/primitives'
-import { Camera, Key, Book, ExternalLink } from 'lucide-react'
+import { PageHeader } from '@memokit/ui/composed'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, Skeleton } from '@memokit/ui/primitives'
+import { Progress } from '@memokit/ui/primitives'
+import { Button } from '@memokit/ui/primitives'
+import { Brain, Key, Book, ExternalLink } from 'lucide-react'
 import { useProfile } from '@/features/settings'
 
 export default function DashboardPage() {
@@ -26,7 +26,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <PageHeader
         title="Dashboard"
-        description="Welcome to Memory Web Screenshot API"
+        description="Welcome to Memokit Semantic Memory API"
       />
 
       {/* 配额卡片 */}
@@ -95,7 +95,7 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>Quick Start</CardTitle>
-          <CardDescription>Get started with Memory API in minutes</CardDescription>
+          <CardDescription>Get started with Memokit API in minutes</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-start gap-4 p-4 border rounded-none">
@@ -115,18 +115,18 @@ export default function DashboardPage() {
 
           <div className="flex items-start gap-4 p-4 border rounded-none">
             <div className="p-2">
-              <Camera className="h-5 w-5 text-primary" />
+              <Brain className="h-5 w-5 text-primary" />
             </div>
             <div className="flex-1">
-              <h4 className="font-medium">2. Call Screenshot API</h4>
+              <h4 className="font-medium">2. Call Memory API</h4>
               <p className="text-sm text-muted-foreground">
-                Make screenshot requests using your API Key
+                Store and search memories using your API Key
               </p>
               <pre className="mt-2 p-3 bg-muted rounded-none text-xs overflow-x-auto">
-{`curl -X POST https://api.memory.dev/v1/screenshot \\
+{`curl -X POST https://server.memokit.dev/v1/memories \\
   -H "X-API-Key: mk_your_api_key" \\
   -H "Content-Type: application/json" \\
-  -d '{"url": "https://example.com"}'`}
+  -d '{"content": "User prefers dark mode"}'`}
               </pre>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function DashboardPage() {
                 Learn about all available parameters and advanced features
               </p>
               <Button variant="link" className="px-0 h-auto mt-1" asChild>
-                <a href="https://docs.memory.dev" target="_blank" rel="noopener noreferrer">
+                <a href="https://docs.memokit.dev" target="_blank" rel="noopener noreferrer">
                   View docs <ExternalLink className="h-3 w-3 ml-1" />
                 </a>
               </Button>

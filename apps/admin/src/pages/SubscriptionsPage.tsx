@@ -3,7 +3,7 @@
  * 订阅管理
  */
 import { useState } from 'react';
-import { PageHeader, SimplePagination } from '@memory/ui/composed';
+import { PageHeader, SimplePagination } from '@memokit/ui/composed';
 import {
   Card,
   CardContent,
@@ -30,8 +30,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@memory/ui/primitives';
-import { formatRelativeTime } from '@memory/ui/lib';
+} from '@memokit/ui/primitives';
+import { formatRelativeTime } from '@memokit/ui/lib';
 import { Search, Pencil } from 'lucide-react';
 import {
   useSubscriptions,

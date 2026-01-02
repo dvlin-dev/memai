@@ -11,7 +11,7 @@ export function PlaygroundSection() {
             TRY IT NOW
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Enter any URL and see the screenshot API in action
+            Search our demo memories and see semantic search in action
           </p>
         </div>
 

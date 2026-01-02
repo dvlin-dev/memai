@@ -1,16 +1,16 @@
-import { cn } from '@memory/ui/lib'
+import { cn } from '@memokit/ui/lib'
 
 interface PresetButtonsProps {
-  onSelect: (url: string) => void
+  onSelect: (query: string) => void
   isLoading: boolean
   disabled?: boolean
 }
 
 const presets = [
-  { label: 'GitHub', url: 'https://github.com' },
-  { label: 'Hacker News', url: 'https://news.ycombinator.com' },
-  { label: 'Product Hunt', url: 'https://www.producthunt.com' },
-  { label: 'Vercel', url: 'https://vercel.com' },
+  { label: 'User preferences', query: 'user preferences' },
+  { label: 'Dark mode', query: 'dark mode settings' },
+  { label: 'Meeting notes', query: 'meeting notes summary' },
+  { label: 'Project ideas', query: 'project ideas brainstorm' },
 ]
 
 export function PresetButtons({
@@ -23,8 +23,8 @@ export function PresetButtons({
       <span className="font-mono text-xs text-muted-foreground">Try:</span>
       {presets.map((preset) => (
         <button
-          key={preset.url}
-          onClick={() => onSelect(preset.url)}
+          key={preset.query}
+          onClick={() => onSelect(preset.query)}
           disabled={isLoading || disabled}
           className={cn(
             'border border-border px-2.5 py-1 font-mono text-xs transition-colors',

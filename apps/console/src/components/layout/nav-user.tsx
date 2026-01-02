@@ -22,7 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@memory/ui/primitives'
+} from '@memokit/ui/primitives'
 
 export interface NavUserProps {
   user: {

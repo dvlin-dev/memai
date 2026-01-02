@@ -3,7 +3,7 @@
  * 用户管理
  */
 import { useState } from 'react';
-import { PageHeader, SimplePagination } from '@memory/ui/composed';
+import { PageHeader, SimplePagination } from '@memokit/ui/composed';
 import {
   Card,
   CardContent,
@@ -33,8 +33,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@memory/ui/primitives';
-import { formatRelativeTime } from '@memory/ui/lib';
+} from '@memokit/ui/primitives';
+import { formatRelativeTime } from '@memokit/ui/lib';
 import { Search, MoreHorizontal, Shield, Trash2 } from 'lucide-react';
 import { useUsers, useUpdateUser, useDeleteUser } from '@/features/users';
 import type { UserListItem, UserQuery } from '@/features/users';

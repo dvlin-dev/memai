@@ -10,7 +10,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
   Separator,
-} from '@memory/ui/primitives'
+} from '@memokit/ui/primitives'
 
 export function MainLayout() {
   const user = useAuthStore((state) => state.user)

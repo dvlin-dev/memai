@@ -1,4 +1,4 @@
-# Dockerfile for @memory/admin
+# Dockerfile for @memokit/admin
 # 构建上下文：根目录 (.)
 # Dockerfile 路径：Dockerfile.admin
 
@@ -14,7 +14,7 @@ FROM base AS deps
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/admin/package.json ./apps/admin/
 COPY packages/ui/package.json ./packages/ui/
-RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memory/admin...
+RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memokit/admin...
 
 # 构建阶段
 FROM base AS builder
@@ -28,7 +28,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR /app/apps/admin
 
 # 构建时注入 API 地址（Vite 会将 VITE_* 变量嵌入到静态文件中）
-ARG VITE_API_URL=https://server.memory.dev
+ARG VITE_API_URL=https://server.memokit.dev
 ENV VITE_API_URL=$VITE_API_URL
 
 RUN pnpm build

@@ -3,8 +3,8 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@memory/ui/lib"
-import { Button, Input, Textarea } from "@memory/ui/primitives"
+import { cn } from "@memokit/ui/lib"
+import { Button, Input, Textarea } from "@memokit/ui/primitives"
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (

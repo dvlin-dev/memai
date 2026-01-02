@@ -5,7 +5,7 @@ const footerLinks = {
     { href: '/docs', label: 'Documentation' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/blog', label: 'Blog' },
-    { href: 'https://status.memory.dev', label: 'Status' },
+    { href: 'https://status.memokit.dev', label: 'Status' },
   ],
   company: [
     { href: '/about', label: 'About' },
@@ -13,7 +13,7 @@ const footerLinks = {
     { href: '/privacy', label: 'Privacy' },
   ],
   developers: [
-    { href: 'https://github.com/memory', label: 'GitHub' },
+    { href: 'https://github.com/memokit', label: 'GitHub' },
     { href: '/docs/api', label: 'API Reference' },
     { href: '/docs/sdks', label: 'SDKs' },
   ],
@@ -28,10 +28,10 @@ export function Footer() {
             {/* Brand */}
             <div className="col-span-2 md:col-span-1">
               <span className="font-mono text-lg font-bold tracking-tight">
-                LINKSNAP
+                memokit
               </span>
               <p className="mt-4 text-sm text-muted-foreground">
-                Screenshot API for Modern Developers
+                Semantic Memory API for AI Agents
               </p>
             </div>
 
@@ -96,11 +96,11 @@ export function Footer() {
           {/* Bottom */}
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Memory. All rights reserved.
+              © {new Date().getFullYear()} memokit. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="https://twitter.com/memory"
+                href="https://twitter.com/memokit"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -108,7 +108,7 @@ export function Footer() {
                 Twitter
               </a>
               <a
-                href="https://github.com/memory"
+                href="https://github.com/memokit"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"

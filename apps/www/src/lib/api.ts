@@ -1,20 +1,22 @@
-export interface CaptureResult {
-  imageUrl: string
-  captureTime: number
-  imageSize: number
-  dimensions: {
-    width: number
-    height: number
-  }
+export interface SearchResult {
+  id: string
+  content: string
+  score: number
+  createdAt: string
+  tags?: string[]
+}
+
+export interface SearchResponse {
+  results: SearchResult[]
+  searchTime: number
+  totalFound: number
 }
 
 interface BackendResponse {
   success: boolean
-  imageDataUrl?: string
-  processingMs?: number
-  fileSize?: number
-  width?: number
-  height?: number
+  results?: SearchResult[]
+  searchTimeMs?: number
+  totalFound?: number
   error?: {
     code: string
     message: string
@@ -35,38 +37,30 @@ class ApiError extends Error {
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
 /**
- * 执行截图
+ * 搜索记忆
  */
-export async function captureScreenshot(
-  url: string,
+export async function searchMemories(
+  query: string,
   captcha: string
-): Promise<CaptureResult> {
-  const response = await fetch(`${API_BASE}/api/demo/screenshot`, {
+): Promise<SearchResponse> {
+  const response = await fetch(`${API_BASE}/api/demo/search`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url, captcha }),
+    body: JSON.stringify({ query, captcha }),
   })
 
   const data: BackendResponse = await response.json()
 
   if (!response.ok || !data.success) {
     throw new ApiError(
-      data.error?.message || 'Failed to capture screenshot',
+      data.error?.message || 'Failed to search memories',
       data.error?.code
     )
   }
 
-  if (!data.imageDataUrl) {
-    throw new ApiError('No screenshot data returned')
-  }
-
   return {
-    imageUrl: data.imageDataUrl,
-    captureTime: data.processingMs || 0,
-    imageSize: data.fileSize || 0,
-    dimensions: {
-      width: data.width || 0,
-      height: data.height || 0,
-    },
+    results: data.results || [],
+    searchTime: data.searchTimeMs || 0,
+    totalFound: data.totalFound || 0,
   }
 }

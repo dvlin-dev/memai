@@ -1,10 +1,10 @@
 import { useState, useCallback, useRef } from 'react'
-import { UrlInput } from './UrlInput'
+import { QueryInput } from './QueryInput'
 import { PresetButtons } from './PresetButtons'
-import { ResultPreview } from './ResultPreview'
+import { SearchResults } from './SearchResults'
 import { StatsBar } from './StatsBar'
 import { Turnstile, type TurnstileRef } from './Turnstile'
-import { captureScreenshot, type CaptureResult } from '@/lib/api'
+import { searchMemories, type SearchResponse } from '@/lib/api'
 
 /** Turnstile Site Key（从环境变量读取） */
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as
@@ -14,48 +14,46 @@ const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as
 export function QuickPlayground() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [result, setResult] = useState<CaptureResult | null>(null)
+  const [result, setResult] = useState<SearchResponse | null>(null)
 
   // Turnstile ref 和 token 状态
   const turnstileRef = useRef<TurnstileRef>(null)
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
-  const executeCapture = useCallback(async (url: string, token: string) => {
+  const executeSearch = useCallback(async (query: string, token: string) => {
     setIsLoading(true)
     setError(null)
 
     try {
-      const data = await captureScreenshot(url, token)
+      const data = await searchMemories(query, token)
       setResult(data)
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : 'Failed to capture screenshot'
+        err instanceof Error ? err.message : 'Failed to search memories'
       )
       setResult(null)
     } finally {
       setIsLoading(false)
-      // 截图完成后（无论成功或失败）重置 Turnstile 以获取新 token
-      // 对于已验证的用户，通常会静默完成，无需再次点击
+      // 搜索完成后（无论成功或失败）重置 Turnstile 以获取新 token
       setCaptchaToken(null)
       turnstileRef.current?.reset()
     }
   }, [])
 
-  const handleCapture = useCallback(
-    (url: string) => {
+  const handleSearch = useCallback(
+    (query: string) => {
       if (!TURNSTILE_SITE_KEY) {
         setError('Captcha not configured')
         return
       }
 
       if (!captchaToken) {
-        // 按钮已禁用，正常情况下不会执行到这里
         return
       }
 
-      executeCapture(url, captchaToken)
+      executeSearch(query, captchaToken)
     },
-    [captchaToken, executeCapture]
+    [captchaToken, executeSearch]
   )
 
   const handleCaptchaSuccess = useCallback((token: string) => {
@@ -75,16 +73,16 @@ export function QuickPlayground() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
-      {/* URL Input */}
-      <UrlInput
-        onSubmit={handleCapture}
+      {/* Query Input */}
+      <QueryInput
+        onSubmit={handleSearch}
         isLoading={isLoading}
         disabled={!canSubmit}
       />
 
       {/* Preset Buttons */}
       <PresetButtons
-        onSelect={handleCapture}
+        onSelect={handleSearch}
         isLoading={isLoading}
         disabled={!canSubmit}
       />
@@ -104,10 +102,10 @@ export function QuickPlayground() {
       {TURNSTILE_SITE_KEY && (
         <div className="text-center text-sm">
           {captchaToken ? (
-            <span className="text-green-600">Verified - Ready to capture</span>
+            <span className="text-green-600">Verified - Ready to search</span>
           ) : (
             <span className="text-gray-500">
-              Complete the verification above to enable screenshot
+              Complete the verification above to enable search
             </span>
           )}
         </div>
@@ -115,16 +113,15 @@ export function QuickPlayground() {
 
       {/* Stats Bar */}
       <StatsBar
-        captureTime={result?.captureTime ?? null}
-        imageSize={result?.imageSize ?? null}
-        dimensions={result?.dimensions ?? null}
+        searchTime={result?.searchTime ?? null}
+        totalFound={result?.totalFound ?? null}
       />
 
-      {/* Result Preview */}
-      <ResultPreview
+      {/* Search Results */}
+      <SearchResults
         isLoading={isLoading}
         error={error}
-        imageUrl={result?.imageUrl ?? null}
+        results={result?.results ?? null}
       />
     </div>
   )

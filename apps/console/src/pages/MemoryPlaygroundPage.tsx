@@ -3,7 +3,7 @@
  * Interactive Memory API testing interface
  */
 import { useState, useEffect } from 'react'
-import { PageHeader } from '@memory/ui/composed'
+import { PageHeader } from '@memokit/ui/composed'
 import {
   Card,
   CardContent,
@@ -20,7 +20,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@memory/ui/primitives'
+} from '@memokit/ui/primitives'
 import { AlertTriangle, Send, Search, Plus, Key } from 'lucide-react'
 import { useApiKeys } from '@/features/api-keys'
 

@@ -20,7 +20,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@memory/ui/primitives'
+} from '@memokit/ui/primitives'
 
 // 导航分组配置
 const navGroups: NavGroup[] = [

@@ -3,7 +3,7 @@
  * 订单管理
  */
 import { useState } from 'react';
-import { PageHeader, SimplePagination } from '@memory/ui/composed';
+import { PageHeader, SimplePagination } from '@memokit/ui/composed';
 import {
   Card,
   CardContent,
@@ -24,8 +24,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@memory/ui/primitives';
-import { formatRelativeTime } from '@memory/ui/lib';
+} from '@memokit/ui/primitives';
+import { formatRelativeTime } from '@memokit/ui/lib';
 import { Search } from 'lucide-react';
 import { useOrders } from '@/features/orders';
 import type { OrderQuery, OrderStatus, OrderType } from '@/features/orders';

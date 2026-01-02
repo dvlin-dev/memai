@@ -10,7 +10,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@memory/ui/primitives'
+} from '@memokit/ui/primitives'
 import { useDeleteWebhook } from '../hooks'
 import type { Webhook } from '../types'
 

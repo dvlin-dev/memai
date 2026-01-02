@@ -17,7 +17,7 @@ importers:
 
   apps/admin:
     dependencies:
-      '@memory/ui':
+      '@memokit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-query':
@@ -99,7 +99,7 @@ importers:
 
   apps/console:
     dependencies:
-      '@memory/ui':
+      '@memokit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@radix-ui/react-alert-dialog':
@@ -482,7 +482,7 @@ importers:
 
   apps/www:
     dependencies:
-      '@memory/ui':
+      '@memokit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       lucide-react:

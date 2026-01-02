@@ -1,12 +1,12 @@
 /**
- * @memory/ui - 共享 UI 组件库
+ * @memokit/ui - 共享 UI 组件库
  *
  * 使用方式:
- * import { cn } from '@memory/ui/lib'
- * import { usePagination } from '@memory/ui/hooks'
- * import { Button } from '@memory/ui/primitives'
- * import { DataTable } from '@memory/ui/composed'
- * import '@memory/ui/styles'
+ * import { cn } from '@memokit/ui/lib'
+ * import { usePagination } from '@memokit/ui/hooks'
+ * import { Button } from '@memokit/ui/primitives'
+ * import { DataTable } from '@memokit/ui/composed'
+ * import '@memokit/ui/styles'
  */
 
 // Re-export all modules

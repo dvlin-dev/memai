@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout'
-import { Button } from '@memory/ui/primitives'
+import { Button } from '@memokit/ui/primitives'
 import { Check } from 'lucide-react'
-import { cn } from '@memory/ui/lib'
+import { cn } from '@memokit/ui/lib'
 
 const tiers = [
   {
@@ -18,7 +18,7 @@ const tiers = [
       'Community support',
     ],
     cta: 'Get Started',
-    href: 'https://console.memory.dev/signup',
+    href: 'https://console.memokit.dev/signup',
     highlighted: false,
   },
   {
@@ -35,7 +35,7 @@ const tiers = [
       'Priority support',
     ],
     cta: 'Start Free Trial',
-    href: 'https://console.memory.dev/signup?plan=hobby',
+    href: 'https://console.memokit.dev/signup?plan=hobby',
     highlighted: true,
   },
   {

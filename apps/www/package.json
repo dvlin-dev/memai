@@ -1,5 +1,5 @@
 {
-  "name": "@memory/www",
+  "name": "@memokit/www",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@memory/ui": "workspace:*",
+    "@memokit/ui": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.10.1",

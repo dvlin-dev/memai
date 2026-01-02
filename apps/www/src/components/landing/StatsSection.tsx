@@ -1,10 +1,10 @@
 import { Container } from '@/components/layout'
 
 const stats = [
-  { value: '10M+', label: 'Screenshots Captured' },
-  { value: '<500ms', label: 'Average Latency' },
+  { value: '10M+', label: 'Memories Stored' },
+  { value: '<100ms', label: 'Search Latency' },
   { value: '99.9%', label: 'Uptime SLA' },
-  { value: '50+', label: 'Edge Locations' },
+  { value: '1536', label: 'Vector Dimensions' },
 ]
 
 export function StatsSection() {

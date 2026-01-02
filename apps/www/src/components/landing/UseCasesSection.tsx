@@ -1,30 +1,30 @@
 import { Container } from '@/components/layout'
-import { Share2, FileText, BarChart3, Link2 } from 'lucide-react'
+import { Brain, Network, Search, Sparkles } from 'lucide-react'
 
 const useCases = [
   {
-    icon: Share2,
-    title: 'Social Media Cards',
+    icon: Brain,
+    title: 'AI Agent Memory',
     description:
-      'Generate beautiful Open Graph images for social sharing. Perfect for blogs, news sites, and marketing pages.',
+      'Give your AI assistants persistent memory across sessions. Remember user preferences, past conversations, and context.',
   },
   {
-    icon: FileText,
-    title: 'PDF Generation',
+    icon: Network,
+    title: 'Knowledge Graphs',
     description:
-      'Convert web pages to PDF documents with precise rendering. Ideal for invoices, reports, and documentation.',
+      'Automatically build and query knowledge graphs from stored memories. Understand relationships between entities.',
   },
   {
-    icon: BarChart3,
-    title: 'Visual Monitoring',
+    icon: Search,
+    title: 'Semantic Search',
     description:
-      'Track visual changes and regressions automatically. Perfect for QA, compliance, and competitor analysis.',
+      'Find relevant memories using natural language queries. Vector embeddings for accurate similarity matching.',
   },
   {
-    icon: Link2,
-    title: 'Link Previews',
+    icon: Sparkles,
+    title: 'Entity Extraction',
     description:
-      'Generate rich link previews for chat apps, email clients, and content platforms.',
+      'Automatically extract people, places, dates, and concepts from text. Structured data from unstructured content.',
   },
 ]
 
@@ -38,7 +38,7 @@ export function UseCasesSection() {
             USE CASES
           </h2>
           <p className="mt-4 text-muted-foreground">
-            From social cards to visual monitoring, one API for all your screenshot needs
+            From AI assistants to knowledge management, one API for all your memory needs
           </p>
         </div>
 

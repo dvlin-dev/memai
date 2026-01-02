@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout'
-import { Button } from '@memory/ui/primitives'
+import { Button } from '@memokit/ui/primitives'
 import { ArrowRight } from 'lucide-react'
 
 export function CTASection() {
@@ -11,10 +11,10 @@ export function CTASection() {
             READY TO GET STARTED?
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Start capturing screenshots in minutes. No credit card required.
+            Start building AI memory in minutes. No credit card required.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a href="https://console.memory.dev/signup">
+            <a href="https://console.memokit.dev/signup">
               <Button size="lg" className="font-mono">
                 Create Free Account
                 <ArrowRight className="ml-2 h-4 w-4" />

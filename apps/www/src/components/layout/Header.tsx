@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Container } from './Container'
-import { Button } from '@memory/ui/primitives'
+import { Button } from '@memokit/ui/primitives'
 
 const navLinks = [
   { href: '/docs', label: 'Docs' },
@@ -16,7 +16,7 @@ export function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <span className="font-mono text-xl font-bold tracking-tight">
-              LINKSNAP
+              memokit
             </span>
           </Link>
 
@@ -36,14 +36,14 @@ export function Header() {
           {/* CTA */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/memory/memory"
+              href="https://github.com/memokit/memokit"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               GitHub
             </a>
-            <a href="https://console.memory.dev">
+            <a href="https://console.memokit.dev">
               <Button variant="outline" size="sm" className="font-mono">
                 Console
               </Button>

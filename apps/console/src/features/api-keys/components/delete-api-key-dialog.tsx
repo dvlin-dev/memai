@@ -10,7 +10,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@memory/ui/primitives'
+} from '@memokit/ui/primitives'
 import { useDeleteApiKey } from '../hooks'
 import type { ApiKey } from '../types'
 

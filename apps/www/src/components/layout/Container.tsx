@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { cn } from '@memory/ui/lib'
+import { cn } from '@memokit/ui/lib'
 
 interface ContainerProps {
   children: ReactNode

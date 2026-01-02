@@ -1,11 +1,11 @@
 {
-  "name": "memory",
+  "name": "memokit",
   "private": true,
   "scripts": {
-    "dev:server": "pnpm --filter @memory/server start:dev",
-    "dev:console": "pnpm --filter @memory/console dev",
-    "build:server": "pnpm --filter @memory/server build",
-    "build:console": "pnpm --filter @memory/console build",
+    "dev:server": "pnpm --filter @memokit/server start:dev",
+    "dev:console": "pnpm --filter @memokit/console dev",
+    "build:server": "pnpm --filter @memokit/server build",
+    "build:console": "pnpm --filter @memokit/console build",
     "build": "pnpm run build:server && pnpm run build:console",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"
