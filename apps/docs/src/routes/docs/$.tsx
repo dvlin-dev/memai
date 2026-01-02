@@ -1,16 +1,62 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { DocsPageLayout, getDocsPageMeta } from '../../components/docs'
+import { createFileRoute, notFound } from '@tanstack/react-router'
+import { DocsLayout } from 'fumadocs-ui/layouts/docs'
+import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page'
+import { MDXContent } from '@content-collections/mdx/react'
+import { source } from '../../lib/source'
+import { baseOptions } from '../../lib/layout.shared'
+import { getMDXComponents } from '../../mdx-components'
 
 export const Route = createFileRoute('/docs/$')({
-  head: ({ params }) => {
-    const slugs = params._splat?.split('/').filter(Boolean) ?? []
-    return getDocsPageMeta(slugs, 'en')
-  },
   component: DocsPageComponent,
+  head: ({ params }: { params: { _splat?: string } }) => {
+    const slug = params._splat?.split('/') ?? []
+    const page = source.getPage(slug, 'en')
+
+    if (!page) {
+      return {
+        meta: [{ title: 'Not Found | Memokit Docs' }],
+      }
+    }
+
+    return {
+      meta: [
+        { title: `${page.data.title} | Memokit Docs` },
+        { name: 'description', content: page.data.description },
+      ],
+    }
+  },
 })
 
 function DocsPageComponent() {
-  const { _splat } = Route.useParams()
-  const slugs = _splat?.split('/').filter(Boolean) ?? []
-  return <DocsPageLayout slugs={slugs} locale="en" />
+  const params = Route.useParams() as { _splat?: string }
+  const slug = params._splat?.split('/') ?? []
+  const page = source.getPage(slug, 'en')
+
+  if (!page) {
+    throw notFound()
+  }
+
+  return (
+    <DocsLayout
+      tree={source.getPageTree('en')}
+      {...baseOptions()}
+      sidebar={{
+        banner: (
+          <div className="border-b border-border pb-4 mb-4">
+            <p className="text-sm text-muted-foreground">AI Memory API</p>
+          </div>
+        ),
+      }}
+    >
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <DocsPage toc={(page.data as any).toc}>
+        <DocsTitle>{page.data.title}</DocsTitle>
+        {page.data.description && <DocsDescription>{page.data.description}</DocsDescription>}
+        <DocsBody>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <MDXContent code={(page.data as any).body} components={getMDXComponents()} />
+        </DocsBody>
+      </DocsPage>
+    </DocsLayout>
+  )
 }

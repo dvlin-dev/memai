@@ -1,6 +1,0 @@
-export { Header } from './header'
-export { Hero } from './hero'
-export { CodeExample } from './code-example'
-export { Features } from './features'
-export { Footer } from './footer'
-export { HomePage } from './home-page'

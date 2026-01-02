@@ -1,34 +1,32 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared'
-import { i18n, getTranslation } from './i18n'
-import { siteConfig, getDocsPath } from './config'
-import type { Locale } from './types'
+import { i18n } from './i18n'
 
-export function baseOptions(locale?: Locale): BaseLayoutProps {
-  const t = getTranslation(locale ?? 'en')
+export function baseOptions(locale?: string): BaseLayoutProps {
+  const isZh = locale === 'zh'
 
   return {
     i18n,
     nav: {
-      title: siteConfig.name,
+      title: 'Memokit',
     },
     links: [
       {
-        text: t.navConsole,
-        url: siteConfig.console,
+        text: isZh ? '控制台' : 'Console',
+        url: 'https://console.memokit.dev',
         external: true,
       },
       {
-        text: t.navApiReference,
-        url: `${getDocsPath(locale ?? 'en')}/api-reference`,
+        text: isZh ? 'API 参考' : 'API Reference',
+        url: locale ? `/${locale}/docs/api-reference` : '/docs/api-reference',
       },
       {
-        text: t.navStatus,
-        url: siteConfig.status,
+        text: isZh ? '状态' : 'Status',
+        url: 'https://status.memokit.dev',
         external: true,
       },
       {
         text: 'GitHub',
-        url: siteConfig.github,
+        url: 'https://github.com/memokit',
         external: true,
       },
     ],

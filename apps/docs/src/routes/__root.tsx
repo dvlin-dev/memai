@@ -7,9 +7,8 @@ import {
 } from '@tanstack/react-router'
 import * as React from 'react'
 import { RootProvider } from 'fumadocs-ui/provider/tanstack'
-import { I18nProvider } from 'fumadocs-ui/contexts/i18n'
-import { i18n, getLocaleDisplayName } from '../lib/i18n'
-import { getLocale, LOCALES } from '../lib/types'
+import { I18nProvider } from 'fumadocs-ui/i18n'
+import { i18n } from '../lib/i18n'
 import '../styles/app.css'
 
 export const Route = createRootRoute({
@@ -105,46 +104,52 @@ export const Route = createRootRoute({
   }),
 })
 
-// UI translations for fumadocs
-const uiTranslations: Record<string, Record<string, string>> = {
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
+  )
+}
+
+// UI translations
+const translations: Record<string, Record<string, string>> = {
   en: {
     search: 'Search documentation...',
     searchNoResult: 'No results found',
     toc: 'On this page',
-    tocNoHeadings: 'No headings',
+    tocNoHeading: 'No headings',
     lastUpdate: 'Last updated',
     chooseTheme: 'Choose theme',
     nextPage: 'Next',
     previousPage: 'Previous',
     chooseLanguage: 'Change language',
-    editOnGithub: 'Edit on GitHub',
   },
   zh: {
     search: '搜索文档...',
     searchNoResult: '未找到结果',
-    toc: '本页目录',
-    tocNoHeadings: '无标题',
+    toc: '目录',
+    tocNoHeading: '无标题',
     lastUpdate: '最后更新',
     chooseTheme: '选择主题',
     nextPage: '下一页',
     previousPage: '上一页',
-    chooseLanguage: '切换语言',
-    editOnGithub: '在 GitHub 上编辑',
+    chooseLanguage: '选择语言',
   },
 }
 
 function I18nWrapper({ children }: { children: React.ReactNode }) {
   const params = useParams({ strict: false }) as { lang?: string }
-  const locale = getLocale(params.lang)
+  const locale = params.lang || i18n.defaultLanguage
 
   return (
     <I18nProvider
       locale={locale}
-      locales={LOCALES.map((lang) => ({
-        name: getLocaleDisplayName(lang),
+      locales={i18n.languages.map((lang) => ({
+        name: lang === 'zh' ? '中文' : 'English',
         locale: lang,
       }))}
-      translations={uiTranslations[locale]}
+      translations={translations[locale]}
     >
       {children}
     </I18nProvider>
@@ -153,7 +158,7 @@ function I18nWrapper({ children }: { children: React.ReactNode }) {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const params = useParams({ strict: false }) as { lang?: string }
-  const locale = getLocale(params.lang)
+  const locale = params.lang || i18n.defaultLanguage
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -167,13 +172,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
-}
-
-function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
   )
 }
