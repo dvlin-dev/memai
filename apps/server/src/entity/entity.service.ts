@@ -2,7 +2,7 @@
  * [POS]: Entity Service
  */
 
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EntityRepository, Entity } from './entity.repository';
 import { CreateEntityDto } from './dto';
@@ -176,7 +176,7 @@ export class EntityService {
     });
 
     if (!entity) {
-      throw new Error('Entity not found');
+      throw new NotFoundException('Entity not found');
     }
 
     await this.prisma.entity.delete({
