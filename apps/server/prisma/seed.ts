@@ -46,16 +46,16 @@ async function main() {
       },
       subscription: {
         create: {
-          tier: SubscriptionTier.PRO,
+          tier: SubscriptionTier.ENTERPRISE,
           status: SubscriptionStatus.ACTIVE,
-          currentPeriodStart: now,
-          currentPeriodEnd: thirtyDaysLater,
+          periodStartAt: now,
+          periodEndAt: thirtyDaysLater,
         },
       },
       quota: {
         create: {
-          monthlyLimit: 20000,
-          monthlyUsed: 0,
+          monthlyApiLimit: 100000,
+          monthlyApiUsed: 0,
           periodStartAt: now,
           periodEndAt: thirtyDaysLater,
         },
@@ -86,14 +86,14 @@ async function main() {
         create: {
           tier: SubscriptionTier.FREE,
           status: SubscriptionStatus.ACTIVE,
-          currentPeriodStart: now,
-          currentPeriodEnd: thirtyDaysLater,
+          periodStartAt: now,
+          periodEndAt: thirtyDaysLater,
         },
       },
       quota: {
         create: {
-          monthlyLimit: 100,
-          monthlyUsed: 50,
+          monthlyApiLimit: 100,
+          monthlyApiUsed: 50,
           periodStartAt: now,
           periodEndAt: thirtyDaysLater,
         },
@@ -103,43 +103,42 @@ async function main() {
   console.log('✅ 创建免费用户:', freeUser.email);
 
   // ==========================================
-  // 3. Pro 用户
+  // 3. Hobby 用户
   // ==========================================
 
-  const proUser = await prisma.user.upsert({
-    where: { email: 'pro@example.com' },
+  const hobbyUser = await prisma.user.upsert({
+    where: { email: 'hobby@example.com' },
     update: {},
     create: {
-      email: 'pro@example.com',
-      name: 'Pro用户',
+      email: 'hobby@example.com',
+      name: 'Hobby用户',
       emailVerified: true,
       accounts: {
         create: {
-          accountId: 'pro@example.com',
+          accountId: 'hobby@example.com',
           providerId: 'credential',
           password: passwordHash,
         },
       },
       subscription: {
         create: {
-          tier: SubscriptionTier.PRO,
+          tier: SubscriptionTier.HOBBY,
           status: SubscriptionStatus.ACTIVE,
-          currentPeriodStart: now,
-          currentPeriodEnd: thirtyDaysLater,
+          periodStartAt: now,
+          periodEndAt: thirtyDaysLater,
         },
       },
       quota: {
         create: {
-          monthlyLimit: 20000,
-          monthlyUsed: 5000,
-          purchasedQuota: 1000,
+          monthlyApiLimit: 10000,
+          monthlyApiUsed: 5000,
           periodStartAt: now,
           periodEndAt: thirtyDaysLater,
         },
       },
     },
   });
-  console.log('✅ 创建Pro用户:', proUser.email);
+  console.log('✅ 创建Hobby用户:', hobbyUser.email);
 
   // ==========================================
   // 完成
@@ -152,9 +151,9 @@ async function main() {
   console.log('  配额记录:', await prisma.quota.count());
 
   console.log('\n👤 测试账号（密码均为 test123456）：');
-  console.log('  dvlin.dev@gmail.com - 管理员 [PRO] (isAdmin: true)');
-  console.log('  free@example.com  - 免费用户 [FREE]');
-  console.log('  pro@example.com   - Pro用户 [PRO]');
+  console.log('  dvlin.dev@gmail.com - 管理员 [ENTERPRISE] (isAdmin: true)');
+  console.log('  free@example.com    - 免费用户 [FREE]');
+  console.log('  hobby@example.com   - Hobby用户 [HOBBY]');
 
   console.log('\n⚠️  注意：这些是测试数据，请勿在生产环境使用！');
 }
