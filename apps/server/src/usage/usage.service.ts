@@ -120,7 +120,8 @@ export class UsageService {
     userId: string,
     days: number = 30,
   ): Promise<Array<{ date: string; memories: number; apiCalls: number }>> {
-    const startDate = new Date();
+    const now = new Date();
+    const startDate = new Date(now);
     startDate.setDate(startDate.getDate() - days);
     startDate.setHours(0, 0, 0, 0);
 
@@ -137,10 +138,10 @@ export class UsageService {
       },
     });
 
-    // 初始化日期映射
+    // 初始化日期映射（使用 UTC 日期字符串确保一致性）
     const dateMap = new Map<string, { memories: number; apiCalls: number }>();
-    for (let i = 0; i < days; i++) {
-      const date = new Date();
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date(now);
       date.setDate(date.getDate() - i);
       const dateStr = date.toISOString().split('T')[0];
       dateMap.set(dateStr, { memories: 0, apiCalls: 0 });
@@ -159,10 +160,11 @@ export class UsageService {
       }
     }
 
-    // 转换为数组并按日期排序
-    return Array.from(dateMap.entries())
-      .map(([date, usage]) => ({ date, ...usage }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+    // 转换为数组（已按日期升序排列）
+    return Array.from(dateMap.entries()).map(([date, usage]) => ({
+      date,
+      ...usage,
+    }));
   }
 
   /**

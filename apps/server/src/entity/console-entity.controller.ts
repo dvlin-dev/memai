@@ -11,11 +11,11 @@ import {
   Query,
   HttpCode,
   HttpStatus,
-  NotFoundException,
 } from '@nestjs/common';
 import { CurrentUser } from '../auth';
 import type { CurrentUserDto } from '../types';
 import { EntityService } from './entity.service';
+import { parsePaginationParams } from '../common/utils';
 
 @Controller('api/console/entities')
 export class ConsoleEntityController {
@@ -33,11 +33,13 @@ export class ConsoleEntityController {
     @Query('limit') limit?: string,
     @Query('offset') offset?: string,
   ) {
+    const pagination = parsePaginationParams(limit, offset);
+
     const result = await this.entityService.listByUser(user.id, {
       type,
       apiKeyId,
-      limit: limit ? parseInt(limit, 10) : undefined,
-      offset: offset ? parseInt(offset, 10) : undefined,
+      limit: pagination.limit,
+      offset: pagination.offset,
     });
 
     return {
@@ -45,8 +47,8 @@ export class ConsoleEntityController {
       data: result.entities,
       meta: {
         total: result.total,
-        limit: limit ? parseInt(limit, 10) : 20,
-        offset: offset ? parseInt(offset, 10) : 0,
+        limit: pagination.limit,
+        offset: pagination.offset,
       },
     };
   }
@@ -75,10 +77,6 @@ export class ConsoleEntityController {
     @CurrentUser() user: CurrentUserDto,
     @Param('id') id: string,
   ): Promise<void> {
-    try {
-      await this.entityService.deleteByUser(user.id, id);
-    } catch {
-      throw new NotFoundException('Entity not found');
-    }
+    await this.entityService.deleteByUser(user.id, id);
   }
 }

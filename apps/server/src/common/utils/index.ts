@@ -4,3 +4,4 @@
  */
 
 export * from './http.utils';
+export * from './pagination.utils';

@@ -2,7 +2,7 @@
  * Memory Playground Page
  * Interactive Memory API testing interface
  */
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { PageHeader } from '@memokit/ui/composed'
 import {
   Card,
@@ -45,6 +45,72 @@ interface SearchResult extends Memory {
   similarity: number
 }
 
+/** Custom hook for API request state management */
+function useApiRequest<T>() {
+  const [data, setData] = useState<T | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  const execute = useCallback(async (request: () => Promise<T>) => {
+    setLoading(true)
+    setError(null)
+    try {
+      const result = await request()
+      setData(result)
+      return result
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Request failed'
+      setError(message)
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const reset = useCallback(() => {
+    setData(null)
+    setError(null)
+  }, [])
+
+  return { data, error, loading, execute, reset, setData }
+}
+
+/** cURL display component */
+function CurlDisplay({
+  curl,
+  label = 'cURL Command',
+}: {
+  curl: string
+  label?: string
+}) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(curl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+      toast.success('cURL copied to clipboard')
+    } catch {
+      toast.error('Failed to copy')
+    }
+  }
+
+  return (
+    <div className="pt-4 border-t">
+      <div className="flex items-center justify-between mb-2">
+        <Label className="text-xs text-muted-foreground">{label}</Label>
+        <Button variant="ghost" size="sm" onClick={handleCopy}>
+          {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+        </Button>
+      </div>
+      <pre className="text-xs p-3 rounded-lg bg-muted overflow-auto max-h-[120px] font-mono">
+        {curl}
+      </pre>
+    </div>
+  )
+}
+
 export default function MemoryPlaygroundPage() {
   const { data: apiKeys, isLoading: keysLoading } = useApiKeys()
   const [selectedKeyId, setSelectedKeyId] = useState<string>('')
@@ -54,35 +120,24 @@ export default function MemoryPlaygroundPage() {
   const [addUserId, setAddUserId] = useState('test-user')
   const [addAgentId, setAddAgentId] = useState('')
   const [addTags, setAddTags] = useState('')
-  const [addResult, setAddResult] = useState<Memory | null>(null)
-  const [addError, setAddError] = useState<string | null>(null)
-  const [addLoading, setAddLoading] = useState(false)
+  const addRequest = useApiRequest<Memory>()
 
   // Search state
   const [searchQuery, setSearchQuery] = useState('')
   const [searchUserId, setSearchUserId] = useState('test-user')
   const [searchLimit, setSearchLimit] = useState('10')
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([])
-  const [searchError, setSearchError] = useState<string | null>(null)
-  const [searchLoading, setSearchLoading] = useState(false)
+  const searchRequest = useApiRequest<SearchResult[]>()
 
   // List state
   const [listUserId, setListUserId] = useState('test-user')
   const [listLimit, setListLimit] = useState('10')
   const [listOffset, setListOffset] = useState('0')
-  const [listResults, setListResults] = useState<Memory[]>([])
-  const [listError, setListError] = useState<string | null>(null)
-  const [listLoading, setListLoading] = useState(false)
+  const listRequest = useApiRequest<Memory[]>()
 
   // Get/Delete state
   const [memoryId, setMemoryId] = useState('')
-  const [getResult, setGetResult] = useState<Memory | null>(null)
-  const [getError, setGetError] = useState<string | null>(null)
-  const [getLoading, setGetLoading] = useState(false)
+  const getRequest = useApiRequest<Memory>()
   const [deleteLoading, setDeleteLoading] = useState(false)
-
-  // cURL state
-  const [copiedCurl, setCopiedCurl] = useState(false)
 
   // 获取本地存储的 API Keys，并与服务器列表同步
   const storedKeys = useMemo(() => {
@@ -116,136 +171,112 @@ export default function MemoryPlaygroundPage() {
   const handleAddMemory = async () => {
     if (!addContent.trim() || !getApiKey()) return
 
-    setAddLoading(true)
-    setAddError(null)
-    setAddResult(null)
-
     try {
-      const response = await fetch('/api/v1/memories', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getApiKey()}`,
-        },
-        body: JSON.stringify({
-          content: addContent,
-          userId: addUserId,
-          agentId: addAgentId || undefined,
-          tags: addTags ? addTags.split(',').map(t => t.trim()) : undefined,
-        }),
+      await addRequest.execute(async () => {
+        const response = await fetch('/api/v1/memories', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getApiKey()}`,
+          },
+          body: JSON.stringify({
+            content: addContent,
+            userId: addUserId,
+            agentId: addAgentId || undefined,
+            tags: addTags ? addTags.split(',').map(t => t.trim()) : undefined,
+          }),
+        })
+
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to add memory')
+        }
+        return data.data
       })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to add memory')
-      }
-
-      setAddResult(data.data)
       setAddContent('')
-    } catch (err) {
-      setAddError(err instanceof Error ? err.message : 'Failed to add memory')
-    } finally {
-      setAddLoading(false)
+    } catch {
+      // Error already handled by useApiRequest
     }
   }
 
   const handleSearch = async () => {
     if (!searchQuery.trim() || !getApiKey()) return
 
-    setSearchLoading(true)
-    setSearchError(null)
-    setSearchResults([])
-
     try {
-      const response = await fetch('/api/v1/memories/search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getApiKey()}`,
-        },
-        body: JSON.stringify({
-          query: searchQuery,
-          userId: searchUserId,
-          limit: parseInt(searchLimit),
-        }),
+      await searchRequest.execute(async () => {
+        const response = await fetch('/api/v1/memories/search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getApiKey()}`,
+          },
+          body: JSON.stringify({
+            query: searchQuery,
+            userId: searchUserId,
+            limit: parseInt(searchLimit),
+          }),
+        })
+
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to search memories')
+        }
+        return data.data || []
       })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to search memories')
-      }
-
-      setSearchResults(data.data || [])
-    } catch (err) {
-      setSearchError(err instanceof Error ? err.message : 'Failed to search memories')
-    } finally {
-      setSearchLoading(false)
+    } catch {
+      // Error already handled by useApiRequest
     }
   }
 
   const handleList = async () => {
     if (!getApiKey()) return
 
-    setListLoading(true)
-    setListError(null)
-    setListResults([])
-
     try {
-      const params = new URLSearchParams({
-        userId: listUserId,
-        limit: listLimit,
-        offset: listOffset,
+      await listRequest.execute(async () => {
+        const params = new URLSearchParams({
+          userId: listUserId,
+          limit: listLimit,
+          offset: listOffset,
+        })
+
+        const response = await fetch(`/api/v1/memories?${params}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${getApiKey()}`,
+          },
+        })
+
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to list memories')
+        }
+        return data.data || []
       })
-
-      const response = await fetch(`/api/v1/memories?${params}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${getApiKey()}`,
-        },
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to list memories')
-      }
-
-      setListResults(data.data || [])
-    } catch (err) {
-      setListError(err instanceof Error ? err.message : 'Failed to list memories')
-    } finally {
-      setListLoading(false)
+    } catch {
+      // Error already handled by useApiRequest
     }
   }
 
   const handleGetMemory = async () => {
     if (!memoryId.trim() || !getApiKey()) return
 
-    setGetLoading(true)
-    setGetError(null)
-    setGetResult(null)
-
     try {
-      const response = await fetch(`/api/v1/memories/${memoryId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${getApiKey()}`,
-        },
+      await getRequest.execute(async () => {
+        const response = await fetch(`/api/v1/memories/${memoryId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${getApiKey()}`,
+          },
+        })
+
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to get memory')
+        }
+        return data.data
       })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to get memory')
-      }
-
-      setGetResult(data.data)
-    } catch (err) {
-      setGetError(err instanceof Error ? err.message : 'Failed to get memory')
-    } finally {
-      setGetLoading(false)
+    } catch {
+      // Error already handled by useApiRequest
     }
   }
 
@@ -253,7 +284,7 @@ export default function MemoryPlaygroundPage() {
     if (!memoryId.trim() || !getApiKey()) return
 
     setDeleteLoading(true)
-    setGetError(null)
+    getRequest.reset()
 
     try {
       const response = await fetch(`/api/v1/memories/${memoryId}`, {
@@ -268,11 +299,11 @@ export default function MemoryPlaygroundPage() {
         throw new Error(data.message || 'Failed to delete memory')
       }
 
-      setGetResult(null)
+      getRequest.setData(null)
       setMemoryId('')
       toast.success('Memory deleted successfully')
     } catch (err) {
-      setGetError(err instanceof Error ? err.message : 'Failed to delete memory')
+      toast.error(err instanceof Error ? err.message : 'Failed to delete memory')
     } finally {
       setDeleteLoading(false)
     }
@@ -289,17 +320,6 @@ export default function MemoryPlaygroundPage() {
     const bodyStr = body ? `\\\n  -d '${JSON.stringify(body)}'` : ''
 
     return `curl -X ${method} "${baseUrl}${endpoint}" \\\n  ${headers}${bodyStr}`
-  }
-
-  const handleCopyCurl = async (curl: string) => {
-    try {
-      await navigator.clipboard.writeText(curl)
-      setCopiedCurl(true)
-      setTimeout(() => setCopiedCurl(false), 2000)
-      toast.success('cURL copied to clipboard')
-    } catch {
-      toast.error('Failed to copy')
-    }
   }
 
   if (keysLoading) {
@@ -332,14 +352,14 @@ export default function MemoryPlaygroundPage() {
         <Alert>
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
-            你还没有创建任何 API Key。请先在{' '}
+            You haven't created any API Keys yet. Please create one on the{' '}
             <a
               href="/api-keys"
               className="underline font-medium text-primary"
             >
-              API Keys 页面
+              API Keys page
             </a>{' '}
-            创建一个。
+            first.
           </AlertDescription>
         </Alert>
       </div>
@@ -356,14 +376,14 @@ export default function MemoryPlaygroundPage() {
         <Alert>
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
-            没有可用的 API Key。API Key 只在创建时显示一次，请在{' '}
+            No available API Keys. API Keys are only shown once when created. Please create a new key on the{' '}
             <a
               href="/api-keys"
               className="underline font-medium text-primary"
             >
-              API Keys 页面
-            </a>{' '}
-            创建一个新的 Key，创建后即可在此选择使用。
+              API Keys page
+            </a>
+            , then you can select it here.
           </AlertDescription>
         </Alert>
       </div>
@@ -388,7 +408,7 @@ export default function MemoryPlaygroundPage() {
               </Label>
               <Select value={selectedKeyId} onValueChange={setSelectedKeyId}>
                 <SelectTrigger className="flex-1">
-                  <SelectValue placeholder="选择 API Key" />
+                  <SelectValue placeholder="Select API Key" />
                 </SelectTrigger>
                 <SelectContent>
                   {availableKeys.map((key) => (
@@ -403,8 +423,8 @@ export default function MemoryPlaygroundPage() {
               </Select>
             </div>
             <p className="text-xs text-muted-foreground">
-              如需新 Key，请在{' '}
-              <a href="/api-keys" className="underline text-primary">API Keys 页面</a> 创建。
+              Need a new key? Create one on the{' '}
+              <a href="/api-keys" className="underline text-primary">API Keys page</a>.
             </p>
           </div>
         </CardContent>
@@ -479,39 +499,22 @@ export default function MemoryPlaygroundPage() {
                 </div>
                 <Button
                   onClick={handleAddMemory}
-                  disabled={addLoading || !addContent.trim() || !selectedKeyId}
+                  disabled={addRequest.loading || !addContent.trim() || !selectedKeyId}
                   className="w-full"
                 >
-                  {addLoading ? 'Adding...' : 'Add Memory'}
+                  {addRequest.loading ? 'Adding...' : 'Add Memory'}
                   <Send className="h-4 w-4 ml-2" />
                 </Button>
 
                 {/* cURL */}
-                <div className="pt-4 border-t">
-                  <div className="flex items-center justify-between mb-2">
-                    <Label className="text-xs text-muted-foreground">cURL Command</Label>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleCopyCurl(generateCurl('POST', '/api/v1/memories', {
-                        content: addContent || 'Your memory content',
-                        userId: addUserId,
-                        ...(addAgentId && { agentId: addAgentId }),
-                        ...(addTags && { tags: addTags.split(',').map(t => t.trim()) }),
-                      }))}
-                    >
-                      {copiedCurl ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                    </Button>
-                  </div>
-                  <pre className="text-xs p-3 rounded-lg bg-muted overflow-auto max-h-[120px] font-mono">
-                    {generateCurl('POST', '/api/v1/memories', {
-                      content: addContent || 'Your memory content',
-                      userId: addUserId,
-                      ...(addAgentId && { agentId: addAgentId }),
-                      ...(addTags && { tags: addTags.split(',').map(t => t.trim()) }),
-                    })}
-                  </pre>
-                </div>
+                <CurlDisplay
+                  curl={generateCurl('POST', '/api/v1/memories', {
+                    content: addContent || 'Your memory content',
+                    userId: addUserId,
+                    ...(addAgentId && { agentId: addAgentId }),
+                    ...(addTags && { tags: addTags.split(',').map(t => t.trim()) }),
+                  })}
+                />
               </CardContent>
             </Card>
 
@@ -520,22 +523,22 @@ export default function MemoryPlaygroundPage() {
                 <CardTitle>Result</CardTitle>
               </CardHeader>
               <CardContent>
-                {addError ? (
+                {addRequest.error ? (
                   <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription>{addError}</AlertDescription>
+                    <AlertDescription>{addRequest.error}</AlertDescription>
                   </Alert>
-                ) : addResult ? (
+                ) : addRequest.data ? (
                   <div className="space-y-2">
                     <div className="p-4 rounded-lg bg-muted">
                       <p className="text-sm font-medium mb-2">Memory Created</p>
                       <p className="text-xs text-muted-foreground mb-2">
-                        ID: {addResult.id}
+                        ID: {addRequest.data.id}
                       </p>
-                      <p className="text-sm">{addResult.content}</p>
-                      {addResult.tags && addResult.tags.length > 0 && (
+                      <p className="text-sm">{addRequest.data.content}</p>
+                      {addRequest.data.tags && addRequest.data.tags.length > 0 && (
                         <div className="flex gap-1 mt-2">
-                          {addResult.tags.map((tag, i) => (
+                          {addRequest.data.tags.map((tag, i) => (
                             <span
                               key={i}
                               className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary"
@@ -547,7 +550,7 @@ export default function MemoryPlaygroundPage() {
                       )}
                     </div>
                     <pre className="text-xs p-4 rounded-lg bg-muted overflow-auto max-h-[300px]">
-                      {JSON.stringify(addResult, null, 2)}
+                      {JSON.stringify(addRequest.data, null, 2)}
                     </pre>
                   </div>
                 ) : (
@@ -601,53 +604,37 @@ export default function MemoryPlaygroundPage() {
                 </div>
                 <Button
                   onClick={handleSearch}
-                  disabled={searchLoading || !searchQuery.trim() || !selectedKeyId}
+                  disabled={searchRequest.loading || !searchQuery.trim() || !selectedKeyId}
                   className="w-full"
                 >
-                  {searchLoading ? 'Searching...' : 'Search'}
+                  {searchRequest.loading ? 'Searching...' : 'Search'}
                   <Search className="h-4 w-4 ml-2" />
                 </Button>
 
                 {/* cURL */}
-                <div className="pt-4 border-t">
-                  <div className="flex items-center justify-between mb-2">
-                    <Label className="text-xs text-muted-foreground">cURL Command</Label>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleCopyCurl(generateCurl('POST', '/api/v1/memories/search', {
-                        query: searchQuery || 'Your search query',
-                        userId: searchUserId,
-                        limit: parseInt(searchLimit),
-                      }))}
-                    >
-                      {copiedCurl ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                    </Button>
-                  </div>
-                  <pre className="text-xs p-3 rounded-lg bg-muted overflow-auto max-h-[120px] font-mono">
-                    {generateCurl('POST', '/api/v1/memories/search', {
-                      query: searchQuery || 'Your search query',
-                      userId: searchUserId,
-                      limit: parseInt(searchLimit),
-                    })}
-                  </pre>
-                </div>
+                <CurlDisplay
+                  curl={generateCurl('POST', '/api/v1/memories/search', {
+                    query: searchQuery || 'Your search query',
+                    userId: searchUserId,
+                    limit: parseInt(searchLimit),
+                  })}
+                />
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Results ({searchResults.length})</CardTitle>
+                <CardTitle>Results ({searchRequest.data?.length ?? 0})</CardTitle>
               </CardHeader>
               <CardContent>
-                {searchError ? (
+                {searchRequest.error ? (
                   <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription>{searchError}</AlertDescription>
+                    <AlertDescription>{searchRequest.error}</AlertDescription>
                   </Alert>
-                ) : searchResults.length > 0 ? (
+                ) : searchRequest.data && searchRequest.data.length > 0 ? (
                   <div className="space-y-3 max-h-[400px] overflow-auto">
-                    {searchResults.map((result) => (
+                    {searchRequest.data.map((result) => (
                       <div
                         key={result.id}
                         className="p-3 rounded-lg border bg-card"
@@ -727,45 +714,33 @@ export default function MemoryPlaygroundPage() {
                 </div>
                 <Button
                   onClick={handleList}
-                  disabled={listLoading || !selectedKeyId}
+                  disabled={listRequest.loading || !selectedKeyId}
                   className="w-full"
                 >
-                  {listLoading ? 'Loading...' : 'List Memories'}
+                  {listRequest.loading ? 'Loading...' : 'List Memories'}
                   <List className="h-4 w-4 ml-2" />
                 </Button>
 
                 {/* cURL */}
-                <div className="pt-4 border-t">
-                  <div className="flex items-center justify-between mb-2">
-                    <Label className="text-xs text-muted-foreground">cURL Command</Label>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleCopyCurl(generateCurl('GET', `/api/v1/memories?userId=${listUserId}&limit=${listLimit}&offset=${listOffset}`))}
-                    >
-                      {copiedCurl ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                    </Button>
-                  </div>
-                  <pre className="text-xs p-3 rounded-lg bg-muted overflow-auto max-h-[120px] font-mono">
-                    {generateCurl('GET', `/api/v1/memories?userId=${listUserId}&limit=${listLimit}&offset=${listOffset}`)}
-                  </pre>
-                </div>
+                <CurlDisplay
+                  curl={generateCurl('GET', `/api/v1/memories?userId=${listUserId}&limit=${listLimit}&offset=${listOffset}`)}
+                />
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Results ({listResults.length})</CardTitle>
+                <CardTitle>Results ({listRequest.data?.length ?? 0})</CardTitle>
               </CardHeader>
               <CardContent>
-                {listError ? (
+                {listRequest.error ? (
                   <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription>{listError}</AlertDescription>
+                    <AlertDescription>{listRequest.error}</AlertDescription>
                   </Alert>
-                ) : listResults.length > 0 ? (
+                ) : listRequest.data && listRequest.data.length > 0 ? (
                   <div className="space-y-3 max-h-[400px] overflow-auto">
-                    {listResults.map((memory) => (
+                    {listRequest.data.map((memory) => (
                       <div
                         key={memory.id}
                         className="p-3 rounded-lg border bg-card"
@@ -824,10 +799,10 @@ export default function MemoryPlaygroundPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <Button
                     onClick={handleGetMemory}
-                    disabled={getLoading || !memoryId.trim() || !selectedKeyId}
+                    disabled={getRequest.loading || !memoryId.trim() || !selectedKeyId}
                     className="w-full"
                   >
-                    {getLoading ? 'Loading...' : 'Get Memory'}
+                    {getRequest.loading ? 'Loading...' : 'Get Memory'}
                     <Search className="h-4 w-4 ml-2" />
                   </Button>
                   <Button
@@ -842,38 +817,16 @@ export default function MemoryPlaygroundPage() {
                 </div>
 
                 {/* cURL for GET */}
-                <div className="pt-4 border-t">
-                  <div className="flex items-center justify-between mb-2">
-                    <Label className="text-xs text-muted-foreground">cURL - GET</Label>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleCopyCurl(generateCurl('GET', `/api/v1/memories/${memoryId || '{id}'}`))}
-                    >
-                      {copiedCurl ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                    </Button>
-                  </div>
-                  <pre className="text-xs p-3 rounded-lg bg-muted overflow-auto max-h-[80px] font-mono">
-                    {generateCurl('GET', `/api/v1/memories/${memoryId || '{id}'}`)}
-                  </pre>
-                </div>
+                <CurlDisplay
+                  label="cURL - GET"
+                  curl={generateCurl('GET', `/api/v1/memories/${memoryId || '{id}'}`)}
+                />
 
                 {/* cURL for DELETE */}
-                <div className="pt-2">
-                  <div className="flex items-center justify-between mb-2">
-                    <Label className="text-xs text-muted-foreground">cURL - DELETE</Label>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleCopyCurl(generateCurl('DELETE', `/api/v1/memories/${memoryId || '{id}'}`))}
-                    >
-                      {copiedCurl ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                    </Button>
-                  </div>
-                  <pre className="text-xs p-3 rounded-lg bg-muted overflow-auto max-h-[80px] font-mono">
-                    {generateCurl('DELETE', `/api/v1/memories/${memoryId || '{id}'}`)}
-                  </pre>
-                </div>
+                <CurlDisplay
+                  label="cURL - DELETE"
+                  curl={generateCurl('DELETE', `/api/v1/memories/${memoryId || '{id}'}`)}
+                />
               </CardContent>
             </Card>
 
@@ -882,28 +835,28 @@ export default function MemoryPlaygroundPage() {
                 <CardTitle>Result</CardTitle>
               </CardHeader>
               <CardContent>
-                {getError ? (
+                {getRequest.error ? (
                   <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription>{getError}</AlertDescription>
+                    <AlertDescription>{getRequest.error}</AlertDescription>
                   </Alert>
-                ) : getResult ? (
+                ) : getRequest.data ? (
                   <div className="space-y-4">
                     <div className="p-4 rounded-lg border bg-card">
                       <div className="flex justify-between items-start mb-2">
                         <span className="text-xs text-muted-foreground font-mono">
-                          {getResult.id}
+                          {getRequest.data.id}
                         </span>
                       </div>
-                      <p className="text-sm mb-2">{getResult.content}</p>
+                      <p className="text-sm mb-2">{getRequest.data.content}</p>
                       <div className="text-xs text-muted-foreground space-y-1">
-                        <p>User: {getResult.userId}</p>
-                        {getResult.agentId && <p>Agent: {getResult.agentId}</p>}
-                        <p>Created: {new Date(getResult.createdAt).toLocaleString()}</p>
+                        <p>User: {getRequest.data.userId}</p>
+                        {getRequest.data.agentId && <p>Agent: {getRequest.data.agentId}</p>}
+                        <p>Created: {new Date(getRequest.data.createdAt).toLocaleString()}</p>
                       </div>
-                      {getResult.tags && getResult.tags.length > 0 && (
+                      {getRequest.data.tags && getRequest.data.tags.length > 0 && (
                         <div className="flex gap-1 mt-2">
-                          {getResult.tags.map((tag, i) => (
+                          {getRequest.data.tags.map((tag, i) => (
                             <span
                               key={i}
                               className="text-xs px-2 py-0.5 rounded-full bg-muted"
@@ -915,7 +868,7 @@ export default function MemoryPlaygroundPage() {
                       )}
                     </div>
                     <pre className="text-xs p-4 rounded-lg bg-muted overflow-auto max-h-[200px] font-mono">
-                      {JSON.stringify(getResult, null, 2)}
+                      {JSON.stringify(getRequest.data, null, 2)}
                     </pre>
                   </div>
                 ) : (

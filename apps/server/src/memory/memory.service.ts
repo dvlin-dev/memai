@@ -25,6 +25,23 @@ export interface ListMemoriesByUserOptions {
   offset?: number;
 }
 
+/**
+ * Escape a value for CSV according to RFC 4180
+ * - Fields containing commas, double quotes, or newlines must be quoted
+ * - Double quotes within fields must be escaped by doubling them
+ */
+function escapeCsvField(value: string | null | undefined): string {
+  if (value === null || value === undefined) {
+    return '';
+  }
+  const str = String(value);
+  // If field contains special characters, wrap in quotes and escape internal quotes
+  if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+  return str;
+}
+
 @Injectable()
 export class MemoryService {
   private readonly logger = new Logger(MemoryService.name);
@@ -241,16 +258,16 @@ export class MemoryService {
       ];
 
       const rows = memories.map((m) => [
-        m.id,
-        m.userId,
-        m.agentId || '',
-        m.sessionId || '',
-        `"${m.content.replace(/"/g, '""')}"`,
-        m.source || '',
-        m.importance?.toString() || '',
-        m.tags.join(';'),
-        m.apiKey.name,
-        m.createdAt.toISOString(),
+        escapeCsvField(m.id),
+        escapeCsvField(m.userId),
+        escapeCsvField(m.agentId),
+        escapeCsvField(m.sessionId),
+        escapeCsvField(m.content),
+        escapeCsvField(m.source),
+        escapeCsvField(m.importance?.toString()),
+        escapeCsvField(m.tags.join(';')),
+        escapeCsvField(m.apiKey.name),
+        escapeCsvField(m.createdAt.toISOString()),
       ]);
 
       const csv = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
