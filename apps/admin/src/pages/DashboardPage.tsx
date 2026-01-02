@@ -8,7 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@memokit/ui/primitives';
-import { Users, CreditCard, Camera, DollarSign } from 'lucide-react';
+import { Users, CreditCard, Zap, DollarSign } from 'lucide-react';
 import {
   AreaChart,
   Area,
@@ -19,23 +19,15 @@ import {
   CartesianGrid,
 } from 'recharts';
 import type { ChartConfig } from '@memokit/ui/primitives';
+import {
+  formatNumber,
+  formatCurrency,
+  formatShortDate,
+} from '@/lib/formatters';
 
-function formatNumber(num: number): string {
-  return num.toLocaleString('en-US');
-}
-
-function formatCurrency(cents: number): string {
-  return `$${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-}
-
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-const screenshotChartConfig: ChartConfig = {
+const usageChartConfig: ChartConfig = {
   value: {
-    label: 'Screenshots',
+    label: 'API Calls',
     color: 'hsl(221, 83%, 53%)', // blue-600
   },
 };
@@ -69,10 +61,10 @@ export default function DashboardPage() {
       bgColor: 'bg-green-100',
     },
     {
-      label: 'Screenshots Today',
-      value: statsData?.screenshotsToday ?? 0,
+      label: 'API Calls Today',
+      value: statsData?.usageRecordsToday ?? 0,
       format: formatNumber,
-      icon: Camera,
+      icon: Zap,
       color: 'text-purple-600',
       bgColor: 'bg-purple-100',
     },
@@ -117,17 +109,17 @@ export default function DashboardPage() {
 
       {/* Charts */}
       <div className="grid gap-4 md:grid-cols-2">
-        {/* Screenshots Chart */}
+        {/* API Usage Chart */}
         <div className="rounded-none border border-border bg-card p-6">
-          <h3 className="font-semibold">Screenshots Over Time</h3>
+          <h3 className="font-semibold">API Usage</h3>
           <p className="text-sm text-muted-foreground">Last 7 days</p>
           {chartLoading ? (
             <Skeleton className="mt-4 h-64 w-full" />
           ) : (
-            <ChartContainer config={screenshotChartConfig} className="mt-4 h-64">
-              <AreaChart data={chartData?.screenshots ?? []}>
+            <ChartContainer config={usageChartConfig} className="mt-4 h-64">
+              <AreaChart data={chartData?.usage ?? []}>
                 <defs>
-                  <linearGradient id="fillScreenshots" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="fillUsage" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="var(--color-value)" stopOpacity={0.8} />
                     <stop offset="95%" stopColor="var(--color-value)" stopOpacity={0.1} />
                   </linearGradient>
@@ -135,7 +127,7 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis
                   dataKey="date"
-                  tickFormatter={formatDate}
+                  tickFormatter={formatShortDate}
                   tickLine={false}
                   axisLine={false}
                 />
@@ -143,7 +135,7 @@ export default function DashboardPage() {
                 <ChartTooltip
                   content={
                     <ChartTooltipContent
-                      labelFormatter={(value) => formatDate(value as string)}
+                      labelFormatter={(value) => formatShortDate(value as string)}
                     />
                   }
                 />
@@ -151,7 +143,7 @@ export default function DashboardPage() {
                   type="monotone"
                   dataKey="value"
                   stroke="var(--color-value)"
-                  fill="url(#fillScreenshots)"
+                  fill="url(#fillUsage)"
                   strokeWidth={2}
                 />
               </AreaChart>
@@ -171,7 +163,7 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis
                   dataKey="date"
-                  tickFormatter={formatDate}
+                  tickFormatter={formatShortDate}
                   tickLine={false}
                   axisLine={false}
                 />
@@ -183,7 +175,7 @@ export default function DashboardPage() {
                 <ChartTooltip
                   content={
                     <ChartTooltipContent
-                      labelFormatter={(value) => formatDate(value as string)}
+                      labelFormatter={(value) => formatShortDate(value as string)}
                       formatter={(value) => formatCurrency(value as number)}
                     />
                   }

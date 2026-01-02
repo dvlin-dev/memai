@@ -61,7 +61,8 @@ export type UpdateSubscriptionDto = z.infer<typeof updateSubscriptionSchema>;
 
 export const orderQuerySchema = paginationQuerySchema.extend({
   status: z.enum(['pending', 'completed', 'failed', 'refunded']).optional(),
-  type: z.enum(['subscription', 'quota_purchase']).optional(),
+  /** 订单类型 - 与 Prisma Schema 保持一致 */
+  type: z.enum(['subscription', 'usage_billing']).optional(),
 });
 
 export type OrderQuery = z.infer<typeof orderQuerySchema>;

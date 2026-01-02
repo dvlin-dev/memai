@@ -3,8 +3,8 @@
  */
 export type { ApiResponse, Pagination, PaginatedResponse } from '@/lib/types';
 
-/** 订单类型 */
-export type OrderType = 'subscription' | 'quota_purchase';
+/** 订单类型 - 与 Prisma Schema 保持一致 */
+export type OrderType = 'subscription' | 'usage_billing';
 
 /** 订单状态 */
 export type OrderStatus = 'pending' | 'completed' | 'failed' | 'refunded';
@@ -17,10 +17,10 @@ export interface OrderListItem {
   userName: string | null;
   creemOrderId: string;
   type: OrderType;
+  /** 金额（单位：分） */
   amount: number;
   currency: string;
   status: OrderStatus;
-  quotaAmount: number | null;
   createdAt: string;
   updatedAt: string;
 }

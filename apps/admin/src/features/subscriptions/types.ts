@@ -2,12 +2,13 @@
  * Subscriptions 类型定义
  */
 export type { ApiResponse, Pagination, PaginatedResponse } from '@/lib/types';
+import type {
+  SubscriptionTier,
+  SubscriptionStatus,
+} from '@/lib/subscription.types';
 
-/** 订阅层级 */
-export type SubscriptionTier = 'FREE' | 'BASIC' | 'PRO' | 'TEAM';
-
-/** 订阅状态 */
-export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAST_DUE' | 'EXPIRED';
+// Re-export for consumers
+export type { SubscriptionTier, SubscriptionStatus };
 
 /** 订阅列表项 */
 export interface SubscriptionListItem {
@@ -17,8 +18,10 @@ export interface SubscriptionListItem {
   userName: string | null;
   tier: SubscriptionTier;
   status: SubscriptionStatus;
-  currentPeriodStart: string;
-  currentPeriodEnd: string | null;
+  /** 当前周期开始时间 */
+  periodStartAt: string;
+  /** 当前周期结束时间 */
+  periodEndAt: string | null;
   cancelAtPeriodEnd: boolean;
   createdAt: string;
   updatedAt: string;

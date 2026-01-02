@@ -43,9 +43,14 @@ import type {
   SubscriptionTier,
   SubscriptionStatus,
 } from '@/features/subscriptions';
-
-const TIER_OPTIONS: SubscriptionTier[] = ['FREE', 'BASIC', 'PRO', 'TEAM'];
-const STATUS_OPTIONS: SubscriptionStatus[] = ['ACTIVE', 'CANCELED', 'PAST_DUE', 'EXPIRED'];
+import {
+  SUBSCRIPTION_TIER_OPTIONS,
+  SUBSCRIPTION_STATUS_OPTIONS,
+} from '@/lib/subscription.types';
+import {
+  getTierBadgeVariant,
+  getSubscriptionStatusBadgeVariant,
+} from '@/lib/badge-variants';
 
 export default function SubscriptionsPage() {
   const [query, setQuery] = useState<SubscriptionQuery>({ page: 1, limit: 20 });
@@ -110,32 +115,6 @@ export default function SubscriptionsPage() {
     }
   };
 
-  const getTierBadgeVariant = (tier: string) => {
-    switch (tier) {
-      case 'PRO':
-      case 'TEAM':
-        return 'default';
-      case 'BASIC':
-        return 'secondary';
-      default:
-        return 'outline';
-    }
-  };
-
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case 'ACTIVE':
-        return 'default';
-      case 'CANCELED':
-        return 'secondary';
-      case 'PAST_DUE':
-      case 'EXPIRED':
-        return 'destructive';
-      default:
-        return 'outline';
-    }
-  };
-
   return (
     <div className="space-y-6">
       <PageHeader title="Subscriptions" description="管理用户订阅" />
@@ -151,7 +130,7 @@ export default function SubscriptionsPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">全部层级</SelectItem>
-                  {TIER_OPTIONS.map((tier) => (
+                  {SUBSCRIPTION_TIER_OPTIONS.map((tier) => (
                     <SelectItem key={tier} value={tier}>
                       {tier}
                     </SelectItem>
@@ -164,7 +143,7 @@ export default function SubscriptionsPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">全部状态</SelectItem>
-                  {STATUS_OPTIONS.map((status) => (
+                  {SUBSCRIPTION_STATUS_OPTIONS.map((status) => (
                     <SelectItem key={status} value={status}>
                       {status}
                     </SelectItem>
@@ -228,16 +207,16 @@ export default function SubscriptionsPage() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={getStatusBadgeVariant(subscription.status)}>
+                        <Badge variant={getSubscriptionStatusBadgeVariant(subscription.status)}>
                           {subscription.status}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-sm">
-                        {subscription.currentPeriodEnd ? (
+                        {subscription.periodEndAt ? (
                           <span>
-                            {new Date(subscription.currentPeriodStart).toLocaleDateString()}{' '}
+                            {new Date(subscription.periodStartAt).toLocaleDateString()}{' '}
                             -{' '}
-                            {new Date(subscription.currentPeriodEnd).toLocaleDateString()}
+                            {new Date(subscription.periodEndAt).toLocaleDateString()}
                           </span>
                         ) : (
                           <span className="text-muted-foreground">永久</span>
@@ -297,7 +276,7 @@ export default function SubscriptionsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {TIER_OPTIONS.map((tier) => (
+                  {SUBSCRIPTION_TIER_OPTIONS.map((tier) => (
                     <SelectItem key={tier} value={tier}>
                       {tier}
                     </SelectItem>
@@ -315,7 +294,7 @@ export default function SubscriptionsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {STATUS_OPTIONS.map((status) => (
+                  {SUBSCRIPTION_STATUS_OPTIONS.map((status) => (
                     <SelectItem key={status} value={status}>
                       {status}
                     </SelectItem>

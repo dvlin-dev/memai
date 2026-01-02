@@ -29,9 +29,15 @@ import { formatRelativeTime } from '@memokit/ui/lib';
 import { Search } from 'lucide-react';
 import { useOrders } from '@/features/orders';
 import type { OrderQuery, OrderStatus, OrderType } from '@/features/orders';
+import { formatAmount } from '@/lib/formatters';
+import { getOrderTypeLabel, getOrderStatusLabel } from '@/lib/labels';
+import {
+  getOrderStatusBadgeVariant,
+  getOrderTypeBadgeVariant,
+} from '@/lib/badge-variants';
 
 const STATUS_OPTIONS: OrderStatus[] = ['pending', 'completed', 'failed', 'refunded'];
-const TYPE_OPTIONS: OrderType[] = ['subscription', 'quota_purchase'];
+const TYPE_OPTIONS: OrderType[] = ['subscription', 'usage_billing'];
 
 export default function OrdersPage() {
   const [query, setQuery] = useState<OrderQuery>({ page: 1, limit: 20 });
@@ -69,39 +75,6 @@ export default function OrdersPage() {
     }));
   };
 
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return 'default';
-      case 'pending':
-        return 'secondary';
-      case 'failed':
-      case 'refunded':
-        return 'destructive';
-      default:
-        return 'outline';
-    }
-  };
-
-  const getTypeBadgeVariant = (type: string) => {
-    switch (type) {
-      case 'subscription':
-        return 'default';
-      case 'quota_purchase':
-        return 'secondary';
-      default:
-        return 'outline';
-    }
-  };
-
-  const formatAmount = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency.toUpperCase(),
-      minimumFractionDigits: 2,
-    }).format(amount / 100);
-  };
-
   return (
     <div className="space-y-6">
       <PageHeader title="Orders" description="查看支付订单" />
@@ -119,7 +92,7 @@ export default function OrdersPage() {
                   <SelectItem value="all">全部状态</SelectItem>
                   {STATUS_OPTIONS.map((status) => (
                     <SelectItem key={status} value={status}>
-                      {status}
+                      {getOrderStatusLabel(status)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -132,7 +105,7 @@ export default function OrdersPage() {
                   <SelectItem value="all">全部类型</SelectItem>
                   {TYPE_OPTIONS.map((type) => (
                     <SelectItem key={type} value={type}>
-                      {type === 'subscription' ? '订阅' : '配额购买'}
+                      {getOrderTypeLabel(type)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -171,7 +144,6 @@ export default function OrdersPage() {
                     <TableHead>类型</TableHead>
                     <TableHead>金额</TableHead>
                     <TableHead>状态</TableHead>
-                    <TableHead>配额数量</TableHead>
                     <TableHead>创建时间</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -190,24 +162,17 @@ export default function OrdersPage() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={getTypeBadgeVariant(order.type)}>
-                          {order.type === 'subscription' ? '订阅' : '配额购买'}
+                        <Badge variant={getOrderTypeBadgeVariant(order.type)}>
+                          {getOrderTypeLabel(order.type)}
                         </Badge>
                       </TableCell>
                       <TableCell className="font-medium">
                         {formatAmount(order.amount, order.currency)}
                       </TableCell>
                       <TableCell>
-                        <Badge variant={getStatusBadgeVariant(order.status)}>
-                          {order.status}
+                        <Badge variant={getOrderStatusBadgeVariant(order.status)}>
+                          {getOrderStatusLabel(order.status)}
                         </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {order.quotaAmount ? (
-                          <span>{order.quotaAmount}</span>
-                        ) : (
-                          <span className="text-muted-foreground">-</span>
-                        )}
                       </TableCell>
                       <TableCell className="text-muted-foreground text-sm">
                         {formatRelativeTime(order.createdAt)}

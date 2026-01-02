@@ -38,6 +38,7 @@ import { formatRelativeTime } from '@memokit/ui/lib';
 import { Search, MoreHorizontal, Shield, Trash2 } from 'lucide-react';
 import { useUsers, useUpdateUser, useDeleteUser } from '@/features/users';
 import type { UserListItem, UserQuery } from '@/features/users';
+import { getTierBadgeVariant } from '@/lib/badge-variants';
 
 export default function UsersPage() {
   const [query, setQuery] = useState<UserQuery>({ page: 1, limit: 20 });
@@ -83,18 +84,6 @@ export default function UsersPage() {
     }
   };
 
-  const getTierBadgeVariant = (tier: string) => {
-    switch (tier) {
-      case 'PRO':
-      case 'TEAM':
-        return 'default';
-      case 'BASIC':
-        return 'secondary';
-      default:
-        return 'outline';
-    }
-  };
-
   return (
     <div className="space-y-6">
       <PageHeader title="Users" description="管理系统用户" />
@@ -136,7 +125,7 @@ export default function UsersPage() {
                     <TableHead>用户</TableHead>
                     <TableHead>订阅</TableHead>
                     <TableHead>配额</TableHead>
-                    <TableHead>截图数</TableHead>
+                    <TableHead>用量</TableHead>
                     <TableHead>Admin</TableHead>
                     <TableHead>注册时间</TableHead>
                     <TableHead className="text-right">操作</TableHead>
@@ -172,18 +161,12 @@ export default function UsersPage() {
                         {user.quota ? (
                           <span className="text-sm">
                             {user.quota.monthlyUsed} / {user.quota.monthlyLimit}
-                            {user.quota.purchasedQuota > 0 && (
-                              <span className="text-muted-foreground">
-                                {' '}
-                                (+{user.quota.purchasedQuota})
-                              </span>
-                            )}
                           </span>
                         ) : (
                           <span className="text-muted-foreground text-sm">-</span>
                         )}
                       </TableCell>
-                      <TableCell>{user.screenshotCount}</TableCell>
+                      <TableCell>{user.usageRecordCount}</TableCell>
                       <TableCell>
                         <Switch
                           checked={user.isAdmin}
