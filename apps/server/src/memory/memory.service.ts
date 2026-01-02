@@ -7,6 +7,7 @@
  */
 
 import { Injectable, Logger, ForbiddenException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { MemoryRepository, Memory, MemoryWithSimilarity } from './memory.repository';
 import { EmbeddingService } from '../embedding/embedding.service';
 import { QuotaService } from '../quota/quota.service';
@@ -14,12 +15,23 @@ import { UsageService, UsageType } from '../usage/usage.service';
 import { SubscriptionService } from '../subscription/subscription.service';
 import { CreateMemoryDto, SearchMemoryDto } from './dto';
 
+export interface MemoryWithApiKeyName extends Memory {
+  apiKeyName: string;
+}
+
+export interface ListMemoriesByUserOptions {
+  apiKeyId?: string;
+  limit?: number;
+  offset?: number;
+}
+
 @Injectable()
 export class MemoryService {
   private readonly logger = new Logger(MemoryService.name);
 
   constructor(
     private readonly repository: MemoryRepository,
+    private readonly prisma: PrismaService,
     private readonly embeddingService: EmbeddingService,
     private readonly quotaService: QuotaService,
     private readonly usageService: UsageService,
@@ -131,5 +143,145 @@ export class MemoryService {
   async deleteByUser(apiKeyId: string, userId: string): Promise<void> {
     await this.repository.delete(apiKeyId, { userId });
     this.logger.log(`Deleted all memories for user ${userId}`);
+  }
+
+  /**
+   * 获取用户所有 API Keys 下的 Memories（Console 用）
+   */
+  async listByUser(
+    userId: string,
+    options: ListMemoriesByUserOptions = {},
+  ): Promise<{ memories: MemoryWithApiKeyName[]; total: number }> {
+    const { apiKeyId, limit = 20, offset = 0 } = options;
+
+    const where: Record<string, unknown> = {
+      apiKey: { userId },
+    };
+
+    if (apiKeyId) {
+      where.apiKeyId = apiKeyId;
+    }
+
+    const [memories, total] = await Promise.all([
+      this.prisma.memory.findMany({
+        where,
+        include: {
+          apiKey: {
+            select: { name: true },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+        take: limit,
+        skip: offset,
+      }),
+      this.prisma.memory.count({ where }),
+    ]);
+
+    return {
+      memories: memories.map((m) => ({
+        id: m.id,
+        apiKeyId: m.apiKeyId,
+        userId: m.userId,
+        agentId: m.agentId,
+        sessionId: m.sessionId,
+        content: m.content,
+        metadata: m.metadata as Record<string, unknown> | null,
+        source: m.source,
+        importance: m.importance,
+        tags: m.tags,
+        createdAt: m.createdAt,
+        updatedAt: m.updatedAt,
+        apiKeyName: m.apiKey.name,
+      })),
+      total,
+    };
+  }
+
+  /**
+   * 导出用户的 Memories（Console 用）
+   */
+  async exportByUser(
+    userId: string,
+    options: { apiKeyId?: string; format: 'json' | 'csv' } = { format: 'json' },
+  ): Promise<{ data: string; contentType: string; filename: string }> {
+    const { apiKeyId, format } = options;
+
+    const where: Record<string, unknown> = {
+      apiKey: { userId },
+    };
+
+    if (apiKeyId) {
+      where.apiKeyId = apiKeyId;
+    }
+
+    const memories = await this.prisma.memory.findMany({
+      where,
+      include: {
+        apiKey: {
+          select: { name: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const timestamp = new Date().toISOString().split('T')[0];
+
+    if (format === 'csv') {
+      const headers = [
+        'id',
+        'userId',
+        'agentId',
+        'sessionId',
+        'content',
+        'source',
+        'importance',
+        'tags',
+        'apiKeyName',
+        'createdAt',
+      ];
+
+      const rows = memories.map((m) => [
+        m.id,
+        m.userId,
+        m.agentId || '',
+        m.sessionId || '',
+        `"${m.content.replace(/"/g, '""')}"`,
+        m.source || '',
+        m.importance?.toString() || '',
+        m.tags.join(';'),
+        m.apiKey.name,
+        m.createdAt.toISOString(),
+      ]);
+
+      const csv = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+
+      return {
+        data: csv,
+        contentType: 'text/csv',
+        filename: `memories-export-${timestamp}.csv`,
+      };
+    }
+
+    // JSON 格式
+    const jsonData = memories.map((m) => ({
+      id: m.id,
+      userId: m.userId,
+      agentId: m.agentId,
+      sessionId: m.sessionId,
+      content: m.content,
+      metadata: m.metadata,
+      source: m.source,
+      importance: m.importance,
+      tags: m.tags,
+      apiKeyName: m.apiKey.name,
+      createdAt: m.createdAt.toISOString(),
+      updatedAt: m.updatedAt.toISOString(),
+    }));
+
+    return {
+      data: JSON.stringify(jsonData, null, 2),
+      contentType: 'application/json',
+      filename: `memories-export-${timestamp}.json`,
+    };
   }
 }

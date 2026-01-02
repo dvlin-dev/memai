@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MemoryController } from './memory.controller';
+import { ConsoleMemoryController } from './console-memory.controller';
 import { MemoryService } from './memory.service';
 import { MemoryRepository } from './memory.repository';
 import { PrismaModule } from '../prisma';
@@ -18,7 +19,7 @@ import { ApiKeyModule } from '../api-key';
     SubscriptionModule,
     ApiKeyModule,
   ],
-  controllers: [MemoryController],
+  controllers: [MemoryController, ConsoleMemoryController],
   providers: [MemoryService, MemoryRepository],
   exports: [MemoryService, MemoryRepository],
 })
