@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout'
 import { Button } from '@memokit/ui/primitives'
-import { ArrowRight, Brain } from 'lucide-react'
+import { ArrowRight, Brain, Github } from 'lucide-react'
 
 export function HeroSection() {
   return (
@@ -46,6 +46,15 @@ export function HeroSection() {
 
           {/* Trust indicators */}
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-muted-foreground">
+            <a
+              href="https://github.com/dvlin-dev/memokit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 transition-colors hover:text-foreground"
+            >
+              <Github className="h-4 w-4" />
+              <span className="font-mono">Open Source</span>
+            </a>
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 bg-green-500" />
               <span className="font-mono">99.9% Uptime</span>

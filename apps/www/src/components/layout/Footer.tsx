@@ -13,7 +13,7 @@ const footerLinks = {
     { href: '/privacy', label: 'Privacy' },
   ],
   developers: [
-    { href: 'https://github.com/memokit', label: 'GitHub' },
+    { href: 'https://github.com/dvlin-dev/memokit', label: 'GitHub' },
     { href: '/docs/api', label: 'API Reference' },
     { href: '/docs/sdks', label: 'SDKs' },
   ],
@@ -108,7 +108,7 @@ export function Footer() {
                 Twitter
               </a>
               <a
-                href="https://github.com/memokit"
+                href="https://github.com/dvlin-dev/memokit"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
