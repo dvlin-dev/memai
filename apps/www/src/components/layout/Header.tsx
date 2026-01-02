@@ -36,7 +36,7 @@ export function Header() {
           {/* CTA */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/memokit/memokit"
+              href="https://github.com/dvlin-dev/memokit"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground"

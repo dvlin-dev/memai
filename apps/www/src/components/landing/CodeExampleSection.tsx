@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Container } from '@/components/layout'
 import { cn } from '@memokit/ui/lib'
 
-const languages = ['curl', 'javascript', 'python', 'go'] as const
+const languages = ['curl', 'typescript'] as const
 type Language = (typeof languages)[number]
 
 const codeExamples: Record<Language, string> = {
@@ -20,7 +20,7 @@ curl -X POST https://server.memokit.dev/v1/memories \\
 curl -X POST https://server.memokit.dev/v1/memories/search \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -d '{ "query": "user preferences", "limit": 5 }'`,
-  javascript: `import { Memokit } from '@memokit/sdk';
+  typescript: `import { Memokit } from '@memokit/sdk';
 
 const client = new Memokit('YOUR_API_KEY');
 
@@ -38,49 +38,6 @@ const results = await client.memories.search({
 });
 
 console.log(results);`,
-  python: `from memokit import Memokit
-
-client = Memokit('YOUR_API_KEY')
-
-# Store a memory
-client.memories.create(
-    content='User prefers dark mode and concise responses',
-    user_id='user_123',
-    tags=['preferences', 'ui']
-)
-
-# Search memories
-results = client.memories.search(
-    query='user preferences',
-    limit=5
-)
-
-print(results)`,
-  go: `package main
-
-import (
-    "fmt"
-    "github.com/memokit/memokit-go"
-)
-
-func main() {
-    client := memokit.New("YOUR_API_KEY")
-
-    // Store a memory
-    client.Memories.Create(&memokit.Memory{
-        Content: "User prefers dark mode and concise responses",
-        UserID:  "user_123",
-        Tags:    []string{"preferences", "ui"},
-    })
-
-    // Search memories
-    results, _ := client.Memories.Search(&memokit.SearchOptions{
-        Query: "user preferences",
-        Limit: 5,
-    })
-
-    fmt.Println(results)
-}`,
 }
 
 export function CodeExampleSection() {
@@ -95,7 +52,7 @@ export function CodeExampleSection() {
             SIMPLE API
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Store and search memories with a simple API. SDKs for every major language.
+            Store and search memories with a simple API.
           </p>
         </div>
 
@@ -117,6 +74,14 @@ export function CodeExampleSection() {
                 {lang}
               </button>
             ))}
+            <a
+              href="https://github.com/dvlin-dev/memokit/issues/new?title=SDK%20Request%3A%20%5BLanguage%5D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 font-mono text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              more...
+            </a>
           </div>
 
           {/* Code Content */}
