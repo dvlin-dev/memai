@@ -3,7 +3,7 @@ import { Container } from './Container'
 import { Button } from '@memokit/ui/primitives'
 
 const navLinks = [
-  { href: '/docs', label: 'Docs' },
+  { href: 'https://docs.memokit.dev', label: 'Docs' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/blog', label: 'Blog' },
 ]

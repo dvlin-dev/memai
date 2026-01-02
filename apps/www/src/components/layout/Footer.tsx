@@ -2,7 +2,7 @@ import { Container } from './Container'
 
 const footerLinks = {
   product: [
-    { href: '/docs', label: 'Documentation' },
+    { href: 'https://docs.memokit.dev', label: 'Documentation' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/blog', label: 'Blog' },
     { href: 'https://status.memokit.dev', label: 'Status' },
@@ -14,8 +14,8 @@ const footerLinks = {
   ],
   developers: [
     { href: 'https://github.com/dvlin-dev/memokit', label: 'GitHub' },
-    { href: '/docs/api', label: 'API Reference' },
-    { href: '/docs/sdks', label: 'SDKs' },
+    { href: 'https://docs.memokit.dev/api', label: 'API Reference' },
+    { href: 'https://docs.memokit.dev/sdks', label: 'SDKs' },
   ],
 }
 
