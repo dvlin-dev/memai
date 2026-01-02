@@ -1,0 +1,38 @@
+{
+  "name": "@memokit/docs",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build && tsc --noEmit",
+    "preview": "vite preview",
+    "deploy": "pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@memokit/ui": "workspace:*",
+    "@tanstack/react-router": "^1.144.0",
+    "@tanstack/react-start": "^1.145.3",
+    "@fontsource-variable/jetbrains-mono": "^5.1.1",
+    "fumadocs-core": "^16.4.2",
+    "fumadocs-ui": "^16.4.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.0.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/mdx": "^2.0.0",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "fumadocs-mdx": "^14.2.4",
+    "tailwindcss": "^4.1.17",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vite-tsconfig-paths": "^5.0.0",
+    "wrangler": "^4.0.0"
+  }
+}
