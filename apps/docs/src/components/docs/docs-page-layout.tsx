@@ -27,6 +27,8 @@ export function DocsPageLayout({ slugs, locale }: DocsPageLayoutProps) {
       tree={source.getPageTree(locale)}
       {...baseOptions(locale)}
       sidebar={{
+        collapsible: true,
+        defaultOpenLevel: 1,
         banner: (
           <div className="border-b border-border pb-4 mb-4">
             <p className="text-sm text-muted-foreground">{t.sidebarBanner}</p>
