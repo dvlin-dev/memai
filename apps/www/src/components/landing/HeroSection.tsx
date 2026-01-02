@@ -37,7 +37,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </a>
-            <a href="/docs">
+            <a href="https://docs.memokit.dev">
               <Button variant="outline" size="lg" className="font-mono">
                 Read the Docs
               </Button>
