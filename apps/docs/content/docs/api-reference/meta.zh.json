@@ -1,5 +1,6 @@
 {
   "title": "API 参考",
+  "defaultOpen": false,
   "pages": [
     "index",
     "memories",

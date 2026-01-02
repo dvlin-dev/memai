@@ -1,5 +1,6 @@
 {
   "title": "快速开始",
+  "defaultOpen": false,
   "pages": [
     "index",
     "quickstart",

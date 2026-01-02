@@ -1,5 +1,6 @@
 {
   "title": "Guides",
+  "defaultOpen": false,
   "pages": [
     "index",
     "rate-limits",
