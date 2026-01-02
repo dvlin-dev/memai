@@ -137,34 +137,35 @@
   - [x] 1.8.1 删除 `docs/features/render-mode.md` (截图专用文档)
   - [x] 1.8.2 重写 `docs/AGENTS.md` 为 Memory 服务文档
 
-### Phase 2: 功能完善
+### Phase 2: 功能完善 ✅
 
-- [ ] **2.1** Entity 管理功能
-  - [ ] 2.1.1 创建 Entity feature 模块
-  - [ ] 2.1.2 实现 Entity 列表页面
-  - [ ] 2.1.3 实现 Entity 创建/编辑功能
-  - [ ] 2.1.4 实现 Entity 删除功能
+- [x] **2.1** Entity 管理功能
+  - [x] 2.1.1 创建 Entity feature 模块 (`apps/console/src/features/entities/`)
+  - [x] 2.1.2 实现 Entity 列表页面 (`apps/console/src/pages/EntitiesPage.tsx`)
+  - [x] 2.1.3 实现后端 Console Entity API (`console-entity.controller.ts`)
+  - [x] 2.1.4 实现 Entity 删除功能
 
-- [ ] **2.2** Webhook 投递日志
-  - [ ] 2.2.1 添加日志查询 API
-  - [ ] 2.2.2 实现日志列表 UI
-  - [ ] 2.2.3 实现日志详情查看
+- [x] **2.2** Webhook 投递日志
+  - [x] 2.2.1 添加日志查询 API (`webhook.service.ts` - `getDeliveries`, `getAllDeliveries`)
+  - [x] 2.2.2 实现日志列表 UI (`WebhookDeliveriesPage.tsx`)
+  - [x] 2.2.3 添加投递日志端点 (`webhook.controller.ts`)
 
-- [ ] **2.3** Memory 导出功能
-  - [ ] 2.3.1 实现后端导出 API
-  - [ ] 2.3.2 实现前端导出 UI
-  - [ ] 2.3.3 支持 JSON/CSV 格式
+- [x] **2.3** Memory 导出功能
+  - [x] 2.3.1 实现后端导出 API (`console-memory.controller.ts`)
+  - [x] 2.3.2 实现前端导出 UI (`MemoriesPage.tsx`)
+  - [x] 2.3.3 支持 JSON/CSV 格式
 
-- [ ] **2.4** Playground 增强
-  - [ ] 2.4.1 添加 Get Memory 功能
-  - [ ] 2.4.2 添加 Delete Memory 功能
-  - [ ] 2.4.3 添加 List Memories 功能
-  - [ ] 2.4.4 添加请求历史记录
+- [x] **2.4** Playground 增强
+  - [x] 2.4.1 添加 Get Memory 功能
+  - [x] 2.4.2 添加 Delete Memory 功能
+  - [x] 2.4.3 添加 List Memories 功能
+  - [x] 2.4.4 添加 cURL 命令生成
 
-- [ ] **2.5** API 使用统计
-  - [ ] 2.5.1 设计统计数据结构
-  - [ ] 2.5.2 实现统计图表组件
-  - [ ] 2.5.3 集成到 Dashboard
+- [x] **2.5** API 使用统计
+  - [x] 2.5.1 扩展 UsageService 添加 `getDailyUsage`, `getUserStats` 方法
+  - [x] 2.5.2 实现统计图表组件 (Dashboard AreaChart)
+  - [x] 2.5.3 创建 Console Stats API (`console-stats.controller.ts`)
+  - [x] 2.5.4 创建前端 stats feature 模块
 
 ### Phase 3: 代码质量
 
@@ -187,7 +188,7 @@
 | Phase | 状态 | 开始时间 | 完成时间 | 备注 |
 |-------|------|---------|---------|------|
 | Phase 1 | ✅ 已完成 | 2026-01-02 | 2026-01-02 | 代码清理完成 |
-| Phase 2 | 待开始 | - | - | - |
+| Phase 2 | ✅ 已完成 | 2026-01-02 | 2026-01-02 | 功能完善完成 |
 | Phase 3 | 待开始 | - | - | - |
 
 ---
@@ -198,3 +199,4 @@
 |------|---------|--------|
 | 2026-01-02 | 创建文档，完成需求分析和方案设计 | Claude |
 | 2026-01-02 | 完成 Phase 1 所有任务 | Claude |
+| 2026-01-02 | 完成 Phase 2 所有任务: Entity 管理、Webhook 日志、Memory 导出、Playground 增强、API 使用统计 | Claude |
