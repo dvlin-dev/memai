@@ -19,7 +19,7 @@ COPY --from=deps /app/apps/docs/node_modules ./apps/docs/node_modules
 COPY --from=deps /app/packages/ui/node_modules ./packages/ui/node_modules
 COPY apps/docs ./apps/docs
 COPY packages/ui ./packages/ui
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.base.json ./
 
 WORKDIR /app/apps/docs
 RUN pnpm build
