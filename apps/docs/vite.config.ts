@@ -20,8 +20,19 @@ export default defineConfig({
       },
     }),
     nitro({
+      noExternals: false,
       rollupConfig: {
-        external: ['react', 'react-dom', 'react-dom/server'],
+        external: [
+          // React must be external to avoid bundling issues with React 19
+          'react',
+          'react-dom',
+          'react-dom/server',
+          'react/jsx-runtime',
+          'react/jsx-dev-runtime',
+          // fumadocs-core i18n middleware depends on Next.js
+          'fumadocs-core/i18n/middleware',
+          'next/server',
+        ],
       },
     }),
     viteReact(),
