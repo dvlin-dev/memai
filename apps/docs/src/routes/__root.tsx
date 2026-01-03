@@ -6,8 +6,8 @@ import {
   useParams,
 } from '@tanstack/react-router'
 import * as React from 'react'
-import { RootProvider } from 'fumadocs-ui/provider/tanstack'
 import { I18nProvider } from 'fumadocs-ui/i18n'
+import { Providers } from '../components/providers'
 import { i18n } from '../lib/i18n'
 import '../styles/app.css'
 
@@ -166,9 +166,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col">
-        <RootProvider>
+        <Providers>
           <I18nWrapper>{children}</I18nWrapper>
-        </RootProvider>
+        </Providers>
         <Scripts />
       </body>
     </html>
