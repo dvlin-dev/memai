@@ -3,7 +3,7 @@
  */
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Users, Receipt, CreditCard, LogOut } from 'lucide-react';
-import { cn } from '@memokit/ui/lib';
+import { cn } from '@memai/ui/lib';
 import { useAuthStore } from '@/stores/auth';
 
 const navItems = [

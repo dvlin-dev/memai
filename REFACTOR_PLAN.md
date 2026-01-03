@@ -114,7 +114,7 @@ Enterprise 按量计费，具体价格联系销售。
 │  ApiKey (API 密钥)                                              │
 │  ├─ id: string                                                 │
 │  ├─ name: string (用户自定义名称)                               │
-│  ├─ keyPrefix: string (显示用, 如 mk_abc...)                   │
+│  ├─ keyPrefix: string (显示用, 如 mm_abc...)                   │
 │  ├─ keyHash: string (SHA256 存储)                              │
 │  ├─ userId: string → User                                      │
 │  ├─ isActive: boolean                                          │
@@ -610,7 +610,7 @@ export const PlatformUserId = createParamDecorator(
 2. **复制 linksnap.dev 到新仓库**
 3. **全局重命名**
    - `linksnap` → `memory` (或你选择的名称)
-   - `lk_` (API Key 前缀) → `mk_`
+   - `lk_` (API Key 前缀) → `mm_`
    - 包名: `@linksnap/*` → `@memory/*`
 
 ### Phase 2: 清理不需要的模块
@@ -1150,7 +1150,7 @@ volumes:
 | Phase 7 | ✅ 完成 | `Phase 7: Update frontend apps for Memory platform` |
 | Phase 8 | ✅ 完成 | `Phase 8: Add deployment configuration` |
 
-**仓库地址:** https://github.com/dvlin-dev/memokit
+**仓库地址:** https://github.com/dvlin-dev/memai
 
 ---
 

@@ -1,5 +1,5 @@
 import { Container } from '@/components/layout'
-import { Button } from '@memokit/ui/primitives'
+import { Button } from '@memai/ui/primitives'
 import { ArrowRight, Brain, Github } from 'lucide-react'
 
 export function HeroSection() {
@@ -31,13 +31,13 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <a href="https://console.memokit.dev/signup">
+            <a href="https://console.memai.dev/signup">
               <Button size="lg" className="font-mono">
                 Get Started Free
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </a>
-            <a href="https://docs.memokit.dev">
+            <a href="https://docs.memai.dev">
               <Button variant="outline" size="lg" className="font-mono">
                 Read the Docs
               </Button>
@@ -47,7 +47,7 @@ export function HeroSection() {
           {/* Trust indicators */}
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-muted-foreground">
             <a
-              href="https://github.com/dvlin-dev/memokit"
+              href="https://github.com/dvlin-dev/memai"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 transition-colors hover:text-foreground"

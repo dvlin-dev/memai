@@ -1,4 +1,4 @@
-# Dockerfile for @memokit/server
+# Dockerfile for @memai/server
 # 构建上下文：根目录 (.)
 # Dockerfile 路径：Dockerfile
 
@@ -14,13 +14,13 @@ WORKDIR /app
 FROM base AS deps
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/server/package.json ./apps/server/
-RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memokit/server...
+RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memai/server...
 
 # 生产依赖阶段 - 仅安装生产依赖
 FROM base AS prod-deps
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/server/package.json ./apps/server/
-RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memokit/server... --prod \
+RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memai/server... --prod \
     # 重建 Sharp 以获取正确的原生模块（WebP/SVG 支持）
     && cd apps/server && pnpm rebuild sharp
 

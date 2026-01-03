@@ -5,11 +5,11 @@ description: Receive real-time notifications for memory events
 
 # Webhooks
 
-Webhooks allow you to receive real-time HTTP notifications when events occur in your Memokit account.
+Webhooks allow you to receive real-time HTTP notifications when events occur in your Memai account.
 
 ## Overview
 
-When you configure a webhook, Memokit will send HTTP POST requests to your specified URL whenever subscribed events occur. This enables real-time integrations without polling the API.
+When you configure a webhook, Memai will send HTTP POST requests to your specified URL whenever subscribed events occur. This enables real-time integrations without polling the API.
 
 ## Webhook Events
 
@@ -45,8 +45,8 @@ First, create an endpoint on your server that can receive POST requests:
 
 ```javascript
 // Express.js example
-app.post('/webhooks/memokit', (req, res) => {
-  const signature = req.headers['x-memokit-signature'];
+app.post('/webhooks/memai', (req, res) => {
+  const signature = req.headers['x-memai-signature'];
   const payload = req.body;
 
   // Verify signature
@@ -73,7 +73,7 @@ app.post('/webhooks/memokit', (req, res) => {
 
 ### 2. Register the Webhook
 
-In the Memokit Console:
+In the Memai Console:
 
 1. Go to **Webhooks** in the sidebar
 2. Click **Create Webhook**
@@ -86,7 +86,7 @@ In the Memokit Console:
 Each webhook request includes a signature header for verification:
 
 ```
-X-Memokit-Signature: sha256=abc123...
+X-Memai-Signature: sha256=abc123...
 ```
 
 Verify the signature using HMAC-SHA256:
@@ -109,7 +109,7 @@ function verifySignature(payload, signature, secret) {
 
 ## Webhook Retries
 
-If your endpoint returns an error (non-2xx status code), Memokit will retry the delivery:
+If your endpoint returns an error (non-2xx status code), Memai will retry the delivery:
 
 | Attempt | Delay |
 |---------|-------|
@@ -128,9 +128,9 @@ After 5 failed attempts, the webhook delivery is marked as failed.
 Return a 200 response as soon as possible. Process webhook data asynchronously:
 
 ```javascript
-app.post('/webhooks/memokit', async (req, res) => {
+app.post('/webhooks/memai', async (req, res) => {
   // Verify signature
-  if (!verifySignature(req.body, req.headers['x-memokit-signature'], secret)) {
+  if (!verifySignature(req.body, req.headers['x-memai-signature'], secret)) {
     return res.status(401).send('Invalid signature');
   }
 
@@ -169,7 +169,7 @@ Always use HTTPS endpoints to ensure webhook data is encrypted in transit.
 
 ## Viewing Webhook Logs
 
-In the Memokit Console, you can view webhook delivery logs:
+In the Memai Console, you can view webhook delivery logs:
 
 1. Go to **Webhooks**
 2. Click on a webhook

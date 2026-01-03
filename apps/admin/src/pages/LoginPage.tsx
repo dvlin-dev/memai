@@ -14,7 +14,7 @@ import {
   Label,
   Alert,
   AlertDescription,
-} from '@memokit/ui/primitives';
+} from '@memai/ui/primitives';
 import { useAuthStore } from '@/stores/auth';
 import { API_BASE_URL } from '@/lib/api-client';
 

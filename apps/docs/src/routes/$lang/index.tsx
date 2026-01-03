@@ -6,7 +6,7 @@ export const Route = createFileRoute('/$lang/')({
     return {
       meta: [
         {
-          title: isZh ? 'Memokit - AI 应用的记忆即服务' : 'Memokit - Memory as a Service for AI',
+          title: isZh ? 'Memai - AI 应用的记忆即服务' : 'Memai - Memory as a Service for AI',
         },
         {
           name: 'description',
@@ -74,7 +74,7 @@ function HomePage() {
       {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <span className="font-semibold text-xl">Memokit</span>
+          <span className="font-semibold text-xl">Memai</span>
           <nav className="flex items-center gap-4">
             {/* Language Switcher */}
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -99,7 +99,7 @@ function HomePage() {
               {t.nav.docs}
             </a>
             <a
-              href="https://console.memokit.dev"
+              href="https://console.memai.dev"
               className="text-sm bg-primary text-primary-foreground px-4 py-2 hover:bg-primary/90 transition-colors"
             >
               {t.nav.getStarted}
@@ -141,8 +141,8 @@ function HomePage() {
               <span className="ml-2 text-sm text-muted-foreground">Terminal</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto">
-              <code className="text-green-600 dark:text-green-400">{`curl -X POST https://api.memokit.dev/v1/memories \\
-  -H "Authorization: Bearer mk_your_api_key" \\
+              <code className="text-green-600 dark:text-green-400">{`curl -X POST https://api.memai.dev/v1/memories \\
+  -H "Authorization: Bearer mm_your_api_key" \\
   -H "Content-Type: application/json" \\
   -d '{
     "content": "User prefers dark mode",
@@ -176,7 +176,7 @@ function HomePage() {
       {/* Footer */}
       <footer className="border-t py-8 mt-24">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Memokit. {t.footer}
+          © {new Date().getFullYear()} Memai. {t.footer}
         </div>
       </footer>
     </div>

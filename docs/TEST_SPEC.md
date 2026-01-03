@@ -314,7 +314,7 @@ export async function seedTestData(prisma: PrismaClient) {
       userId: freeUser.id,
       name: 'Test Key',
       keyHash: 'hash_test_key',
-      keyPrefix: 'mk_test',
+      keyPrefix: 'mm_test',
     },
   });
 
@@ -478,7 +478,7 @@ describe('Screenshot API (E2E)', () => {
     it('使用有效 API Key 创建截图', async () => {
       const response = await request(app.getHttpServer())
         .post('/api/screenshots')
-        .set('X-API-Key', 'mk_test_valid_key')
+        .set('X-API-Key', 'mm_test_valid_key')
         .send({
           url: 'https://example.com',
           width: 1280,
@@ -493,7 +493,7 @@ describe('Screenshot API (E2E)', () => {
     it('无效 URL 返回 400', async () => {
       await request(app.getHttpServer())
         .post('/api/screenshots')
-        .set('X-API-Key', 'mk_test_valid_key')
+        .set('X-API-Key', 'mm_test_valid_key')
         .send({ url: 'not-a-url' })
         .expect(400);
     });

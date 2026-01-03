@@ -1,15 +1,15 @@
 ---
 title: 简介
-description: Memokit - 为 AI 应用提供记忆即服务
+description: Memai - 为 AI 应用提供记忆即服务
 ---
 
 # 简介
 
-Memokit 是一个**记忆即服务**平台，为 AI 应用提供语义记忆存储和检索 API。让您的 AI 代理具备长期记忆能力、基于向量的语义搜索、实体提取和知识图谱功能。
+Memai 是一个**记忆即服务**平台，为 AI 应用提供语义记忆存储和检索 API。让您的 AI 代理具备长期记忆能力、基于向量的语义搜索、实体提取和知识图谱功能。
 
-## 什么是 Memokit？
+## 什么是 Memai？
 
-Memokit 让 AI 应用能够：
+Memai 让 AI 应用能够：
 
 - **存储记忆** - 通过自动向量嵌入持久化对话、事实和上下文
 - **语义搜索** - 使用自然语言查询找到相关记忆
@@ -44,8 +44,8 @@ Memokit 让 AI 应用能够：
 
 ```bash
 # 创建一条记忆
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "用户偏好深色模式并使用 vim 快捷键",
@@ -53,8 +53,8 @@ curl -X POST https://api.memokit.dev/v1/memories \
   }'
 
 # 搜索记忆
-curl -X POST https://api.memokit.dev/v1/memories/search \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories/search \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "用户的偏好是什么？",

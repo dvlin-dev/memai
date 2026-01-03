@@ -13,8 +13,8 @@ import {
   type FieldValues,
 } from "react-hook-form"
 
-import { cn } from "@memokit/ui/lib"
-import { Label } from "@memokit/ui/primitives"
+import { cn } from "@memai/ui/lib"
+import { Label } from "@memai/ui/primitives"
 
 const Form = FormProvider
 

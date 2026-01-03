@@ -5,7 +5,7 @@ description: Understanding API rate limits and usage quotas
 
 # Rate Limits & Quotas
 
-Memokit uses rate limits and quotas to ensure fair usage and maintain service quality for all users.
+Memai uses rate limits and quotas to ensure fair usage and maintain service quality for all users.
 
 ## Rate Limits
 
@@ -95,7 +95,7 @@ Quotas limit the total number of API operations you can perform per billing peri
 
 ### Checking Your Usage
 
-View your current usage in the Memokit Console under **Usage**.
+View your current usage in the Memai Console under **Usage**.
 
 The API also returns usage information in response headers:
 
@@ -169,19 +169,19 @@ Only request the data you need:
 
 ```bash
 # Instead of fetching all memories
-curl "https://api.memokit.dev/v1/memories?userId=user_123"
+curl "https://api.memai.dev/v1/memories?userId=user_123"
 
 # Fetch only what you need
-curl "https://api.memokit.dev/v1/memories?userId=user_123&limit=5"
+curl "https://api.memai.dev/v1/memories?userId=user_123&limit=5"
 ```
 
 ## Upgrading Your Plan
 
 If you need higher limits:
 
-1. Log in to the [Memokit Console](https://console.memokit.dev)
+1. Log in to the [Memai Console](https://console.memai.dev)
 2. Go to **Settings** > **Billing**
 3. Select a higher plan
 4. Complete the upgrade
 
-For Enterprise plans with custom limits, contact sales@memokit.dev.
+For Enterprise plans with custom limits, contact sales@memai.dev.

@@ -3,7 +3,7 @@
  * 查看和导出所有 Memories
  */
 import { useState } from 'react'
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import {
   Card,
   CardContent,
@@ -28,8 +28,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@memokit/ui/primitives'
-import { formatRelativeTime } from '@memokit/ui/lib'
+} from '@memai/ui/primitives'
+import { formatRelativeTime } from '@memai/ui/lib'
 import { ChevronLeft, ChevronRight, Brain, Download, FileJson, FileSpreadsheet } from 'lucide-react'
 import { useMemories, useExportMemories } from '@/features/memories'
 import { useApiKeys } from '@/features/api-keys'

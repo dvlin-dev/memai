@@ -3,7 +3,7 @@
  * Interactive Memory API testing interface
  */
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import { API_BASE_URL } from '@/lib/api-client'
 import {
   Card,
@@ -26,7 +26,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 import { AlertTriangle, Send, Search, Plus, Key, List, Trash2, Copy, Check, Terminal } from 'lucide-react'
 import { toast } from 'sonner'
 import { useApiKeys, getStoredApiKeys, syncStoredApiKeys } from '@/features/api-keys'

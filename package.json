@@ -1,11 +1,11 @@
 {
-  "name": "memokit",
+  "name": "memai",
   "private": true,
   "scripts": {
-    "dev:server": "pnpm --filter @memokit/server start:dev",
-    "dev:console": "pnpm --filter @memokit/console dev",
-    "build:server": "pnpm --filter @memokit/server build",
-    "build:console": "pnpm --filter @memokit/console build",
+    "dev:server": "pnpm --filter @memai/server start:dev",
+    "dev:console": "pnpm --filter @memai/console dev",
+    "build:server": "pnpm --filter @memai/server build",
+    "build:console": "pnpm --filter @memai/console build",
     "build": "pnpm run build:server && pnpm run build:console",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"

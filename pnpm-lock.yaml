@@ -17,10 +17,10 @@ importers:
 
   apps/admin:
     dependencies:
-      '@memokit/shared-types':
+      '@memai/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
-      '@memokit/ui':
+      '@memai/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-query':
@@ -102,10 +102,10 @@ importers:
 
   apps/console:
     dependencies:
-      '@memokit/shared-types':
+      '@memai/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
-      '@memokit/ui':
+      '@memai/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@radix-ui/react-alert-dialog':
@@ -298,7 +298,7 @@ importers:
       '@fumadocs/content-collections':
         specifier: ^1.2.5
         version: 1.2.5(@content-collections/core@0.13.0(typescript@5.9.3))(@content-collections/mdx@0.2.2(@content-collections/core@0.13.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(fumadocs-core@15.8.5(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@types/react@19.2.7)(lucide-react@0.553.0(react@19.2.3))(next@15.5.9(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react-router@7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3))
-      '@memokit/ui':
+      '@memai/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@orama/tokenizers':
@@ -549,7 +549,7 @@ importers:
 
   apps/www:
     dependencies:
-      '@memokit/ui':
+      '@memai/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-router':

@@ -11,7 +11,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Memokit OKLCH color system - Boxy & Sharp style */
+/* Memai OKLCH color system - Boxy & Sharp style */
 :root {
   /* No border radius */
   --radius: 0;

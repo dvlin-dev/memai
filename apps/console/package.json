@@ -1,5 +1,5 @@
 {
-  "name": "@memokit/console",
+  "name": "@memai/console",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -13,8 +13,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@memokit/shared-types": "workspace:*",
-    "@memokit/ui": "workspace:*",
+    "@memai/shared-types": "workspace:*",
+    "@memai/ui": "workspace:*",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",

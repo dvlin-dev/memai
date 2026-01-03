@@ -28,8 +28,8 @@ POST /v1/memories
 ### Example Request
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "The user mentioned they prefer Python for data science work",
@@ -85,8 +85,8 @@ POST /v1/memories/search
 ### Example Request
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/memories/search \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories/search \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "What programming languages does the user prefer?",
@@ -147,8 +147,8 @@ GET /v1/memories
 ### Example Request
 
 ```bash
-curl -X GET "https://api.memokit.dev/v1/memories?userId=user_123&limit=10" \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET "https://api.memai.dev/v1/memories?userId=user_123&limit=10" \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### Response
@@ -194,8 +194,8 @@ GET /v1/memories/:id
 ### Example Request
 
 ```bash
-curl -X GET https://api.memokit.dev/v1/memories/mem_abc123def456 \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET https://api.memai.dev/v1/memories/mem_abc123def456 \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### Response
@@ -235,8 +235,8 @@ DELETE /v1/memories/:id
 ### Example Request
 
 ```bash
-curl -X DELETE https://api.memokit.dev/v1/memories/mem_abc123def456 \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X DELETE https://api.memai.dev/v1/memories/mem_abc123def456 \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### Response

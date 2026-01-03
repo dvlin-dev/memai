@@ -22,7 +22,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 
 // 导航分组配置
 const navGroups: NavGroup[] = [

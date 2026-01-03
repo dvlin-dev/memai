@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button } from '@memokit/ui/primitives'
+import { Button } from '@memai/ui/primitives'
 import { Search, Loader2 } from 'lucide-react'
 
 interface QueryInputProps {

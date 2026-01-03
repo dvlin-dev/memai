@@ -16,7 +16,7 @@ import { Reflector } from '@nestjs/core';
 export const SKIP_RESPONSE_WRAP = 'skipResponseWrap';
 
 /**
- * 分页元数据 - 与 @memokit/shared-types 保持同步
+ * 分页元数据 - 与 @memai/shared-types 保持同步
  */
 export interface PaginationMeta {
   total: number;

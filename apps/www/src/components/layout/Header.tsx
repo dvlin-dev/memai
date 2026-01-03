@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { Container } from './Container'
-import { Button } from '@memokit/ui/primitives'
+import { Button } from '@memai/ui/primitives'
 
 const navLinks = [
-  { href: 'https://docs.memokit.dev', label: 'Docs', external: true },
+  { href: 'https://docs.memai.dev', label: 'Docs', external: true },
   { href: '/pricing', label: 'Pricing', external: false },
   { href: '/blog', label: 'Blog', external: false },
 ]
@@ -16,7 +16,7 @@ export function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <span className="font-mono text-xl font-bold tracking-tight">
-              memokit
+              memai
             </span>
           </Link>
 
@@ -46,14 +46,14 @@ export function Header() {
           {/* CTA */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/dvlin-dev/memokit"
+              href="https://github.com/dvlin-dev/memai"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               GitHub
             </a>
-            <a href="https://console.memokit.dev">
+            <a href="https://console.memai.dev">
               <Button variant="outline" size="sm" className="font-mono">
                 Console
               </Button>

@@ -1,5 +1,5 @@
 /**
- * Memokit API 路径常量
+ * Memai API 路径常量
  */
 
 export const AUTH_API = {

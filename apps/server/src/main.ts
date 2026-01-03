@@ -8,7 +8,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 /**
  * 检查 origin 是否匹配模式
- * 支持通配符子域名，如 https://*.memokit.dev
+ * 支持通配符子域名，如 https://*.memai.dev
  */
 function matchOrigin(origin: string, pattern: string): boolean {
   // 精确匹配
@@ -38,7 +38,7 @@ async function bootstrap() {
   app.use(urlencoded({ limit: '50mb', extended: true }));
 
   // CORS 配置 - 生产环境必须配置 ALLOWED_ORIGINS
-  // 支持通配符子域名，如 https://*.memokit.dev
+  // 支持通配符子域名，如 https://*.memai.dev
   const isDev = process.env.NODE_ENV !== 'production';
   const allowedPatterns =
     process.env.ALLOWED_ORIGINS?.split(',')
@@ -108,7 +108,7 @@ async function bootstrap() {
   // Swagger API 文档配置
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Memory API')
-    .setDescription('Memokit - Memory as a Service API')
+    .setDescription('Memai - Memory as a Service API')
     .setVersion('1.0')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },

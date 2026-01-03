@@ -5,7 +5,7 @@
 import { useEffect } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { cn } from '@memokit/ui/lib'
+import { cn } from '@memai/ui/lib'
 
 interface TiptapEditorProps {
   value?: string

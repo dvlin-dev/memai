@@ -1,24 +1,24 @@
 ---
 title: 身份验证
-description: 了解如何使用 Memokit API 进行身份验证
+description: 了解如何使用 Memai API 进行身份验证
 ---
 
 # 身份验证
 
-所有 Memokit API 请求都需要使用 API 密钥进行身份验证。
+所有 Memai API 请求都需要使用 API 密钥进行身份验证。
 
 ## API 密钥
 
-API 密钥用于对 Memokit API 的请求进行身份验证。每个 API 密钥：
+API 密钥用于对 Memai API 的请求进行身份验证。每个 API 密钥：
 
-- 以 `mk_` 前缀开头
+- 以 `mm_` 前缀开头
 - 与您的账户关联
 - 有自己的配额和速率限制
 - 提供隔离的数据访问
 
 ## 获取 API 密钥
 
-1. 登录 [Memokit 控制台](https://console.memokit.dev)
+1. 登录 [Memai 控制台](https://console.memai.dev)
 2. 在侧边栏中导航至 **API 密钥**
 3. 点击 **创建 API 密钥**
 4. 为密钥起一个描述性名称
@@ -31,14 +31,14 @@ API 密钥用于对 Memokit API 的请求进行身份验证。每个 API 密钥�
 在每个请求的 `Authorization` 头中包含您的 API 密钥：
 
 ```bash
-curl -X GET https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### 头部格式
 
 ```
-Authorization: Bearer mk_your_api_key
+Authorization: Bearer mm_your_api_key
 ```
 
 ## 安全最佳实践
@@ -51,8 +51,8 @@ Authorization: Bearer mk_your_api_key
 
 ```bash
 # 推荐：使用环境变量
-export MEMOKIT_API_KEY="mk_your_api_key"
-curl -H "Authorization: Bearer $MEMOKIT_API_KEY" ...
+export MEMAI_API_KEY="mm_your_api_key"
+curl -H "Authorization: Bearer $MEMAI_API_KEY" ...
 ```
 
 ### 定期轮换密钥

@@ -18,7 +18,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 
 /** 子菜单项 */
 export interface NavSubItem {

@@ -8,8 +8,8 @@ import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth'
 import { apiClient } from '@/lib/api-client'
 import { ADMIN_API } from '@/lib/api-paths'
-import { cn } from '@memokit/ui/lib'
-import { Button, Card, CardContent, Input, Label } from '@memokit/ui/primitives'
+import { cn } from '@memai/ui/lib'
+import { Button, Card, CardContent, Input, Label } from '@memai/ui/primitives'
 import { Link2, Loader2 } from 'lucide-react'
 
 interface LoginResponse {

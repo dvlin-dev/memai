@@ -477,7 +477,7 @@ import type {
   ApiPaginatedResponse,
   ApiErrorResponse,
   PaginationMeta
-} from '@memokit/shared-types';
+} from '@memai/shared-types';
 
 export { ApiError } from './errors';  // 移到单独文件
 

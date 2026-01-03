@@ -1,4 +1,4 @@
-# Memokit
+# Memai
 
 > This document is the core guide for AI Agents. Following the [agents.md specification](https://agents.md/).
 
@@ -334,7 +334,7 @@ const response = await fetch(`${window.location.origin}/api/v1/endpoint`, { ... 
 | Constants | UPPER_SNAKE_CASE | `MAX_CONCURRENT` |
 | Component Folders | PascalCase | `ApiKeyCard/` |
 | Utility Files | camelCase | `vectorUtils.ts` |
-| API Key Prefix | `mk_` | `mk_abc123...` |
+| API Key Prefix | `mm_` | `mm_abc123...` |
 
 ## Language Specification
 

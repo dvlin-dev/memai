@@ -53,8 +53,8 @@ POST /v1/entities
 ### 请求示例
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/entities \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/entities \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "张三",
@@ -106,8 +106,8 @@ GET /v1/entities
 ### 请求示例
 
 ```bash
-curl -X GET "https://api.memokit.dev/v1/entities?type=PERSON&limit=10" \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET "https://api.memai.dev/v1/entities?type=PERSON&limit=10" \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### 响应
@@ -160,8 +160,8 @@ GET /v1/entities/:id
 ### 请求示例
 
 ```bash
-curl -X GET https://api.memokit.dev/v1/entities/ent_abc123 \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET https://api.memai.dev/v1/entities/ent_abc123 \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### 响应
@@ -200,8 +200,8 @@ DELETE /v1/entities/:id
 ### 请求示例
 
 ```bash
-curl -X DELETE https://api.memokit.dev/v1/entities/ent_abc123 \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X DELETE https://api.memai.dev/v1/entities/ent_abc123 \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ### 响应

@@ -1,5 +1,5 @@
 {
-  "name": "@memokit/shared-types",
+  "name": "@memai/shared-types",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",

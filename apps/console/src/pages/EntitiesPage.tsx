@@ -3,7 +3,7 @@
  * 查看和管理所有 Entities
  */
 import { useState } from 'react'
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import {
   Card,
   CardContent,
@@ -24,8 +24,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@memokit/ui/primitives'
-import { formatRelativeTime } from '@memokit/ui/lib'
+} from '@memai/ui/primitives'
+import { formatRelativeTime } from '@memai/ui/lib'
 import { Trash2, ChevronLeft, ChevronRight, Database } from 'lucide-react'
 import {
   useEntities,

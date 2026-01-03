@@ -1,4 +1,4 @@
-# Dockerfile for @memokit/www (TanStack Start + Nitro SSR)
+# Dockerfile for @memai/www (TanStack Start + Nitro SSR)
 # 构建上下文：根目录 (.)
 
 FROM node:22-slim AS base
@@ -10,7 +10,7 @@ FROM base AS deps
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/www/package.json ./apps/www/
 COPY packages/ui/package.json ./packages/ui/
-RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memokit/www...
+RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memai/www...
 
 # 构建阶段
 FROM base AS builder

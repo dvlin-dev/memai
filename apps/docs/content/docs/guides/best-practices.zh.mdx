@@ -5,7 +5,7 @@ description: 构建高效的记忆驱动应用的建议
 
 # 最佳实践
 
-遵循这些最佳实践，使用 Memokit 构建高效的应用。
+遵循这些最佳实践，使用 Memai 构建高效的应用。
 
 ## 记忆内容
 
@@ -62,7 +62,7 @@ await searchMemories({
 
 ### 编写自然查询
 
-Memokit 使用语义搜索，因此自然语言查询效果最好：
+Memai 使用语义搜索，因此自然语言查询效果最好：
 
 ```javascript
 // 好的：自然语言
@@ -297,7 +297,7 @@ for await (const memory of getAllMemories('user_123')) {
 // 好的：服务器端 API 调用
 // server.js
 app.post('/api/memories/search', async (req, res) => {
-  const results = await memokitClient.searchMemories({
+  const results = await memaiClient.searchMemories({
     query: req.body.query,
     userId: req.user.id
   });
@@ -306,9 +306,9 @@ app.post('/api/memories/search', async (req, res) => {
 
 // 不好的：客户端暴露 API 密钥
 // client.js（不要这样做）
-fetch('https://api.memokit.dev/v1/memories/search', {
+fetch('https://api.memai.dev/v1/memories/search', {
   headers: {
-    'Authorization': 'Bearer mk_exposed_key'  // 永远不要这样做
+    'Authorization': 'Bearer mm_exposed_key'  // 永远不要这样做
   }
 });
 ```
@@ -319,7 +319,7 @@ fetch('https://api.memokit.dev/v1/memories/search', {
 
 ```javascript
 app.get('/api/memories/:id', async (req, res) => {
-  const memory = await memokitClient.getMemory(req.params.id);
+  const memory = await memaiClient.getMemory(req.params.id);
 
   // 验证所有权
   if (memory.userId !== req.user.id) {

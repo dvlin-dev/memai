@@ -1,18 +1,18 @@
 ---
 title: 快速入门
-description: 5 分钟内开始使用 Memokit
+description: 5 分钟内开始使用 Memai
 ---
 
 # 快速入门
 
-本指南将带您完成创建第一条记忆并使用 Memokit API 进行搜索的过程。
+本指南将带您完成创建第一条记忆并使用 Memai API 进行搜索的过程。
 
 ## 第 1 步：获取 API 密钥
 
-1. 在 [console.memokit.dev](https://console.memokit.dev) 注册或登录
+1. 在 [console.memai.dev](https://console.memai.dev) 注册或登录
 2. 在侧边栏中导航至 **API 密钥**
 3. 点击 **创建 API 密钥**
-4. 复制您的 API 密钥（以 `mk_` 开头）
+4. 复制您的 API 密钥（以 `mm_` 开头）
 
 > **重要**：您的 API 密钥只会显示一次。请妥善保存。
 
@@ -21,8 +21,8 @@ description: 5 分钟内开始使用 Memokit
 使用以下 curl 命令创建一条记忆：
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "张三是一名软件工程师，热爱 TypeScript 和 React",
@@ -49,8 +49,8 @@ curl -X POST https://api.memokit.dev/v1/memories \
 
 ```bash
 # 关于偏好的记忆
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "张三偏好深色模式，使用 VS Code 作为 IDE",
@@ -59,8 +59,8 @@ curl -X POST https://api.memokit.dev/v1/memories \
   }'
 
 # 关于对话的记忆
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "张三提到他正在使用 Next.js 开发一个新的电商项目",
@@ -74,8 +74,8 @@ curl -X POST https://api.memokit.dev/v1/memories \
 现在让我们使用自然语言搜索相关记忆：
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/memories/search \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories/search \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "张三会哪些编程语言？",
@@ -116,8 +116,8 @@ curl -X POST https://api.memokit.dev/v1/memories/search \
 您还可以列出用户的所有记忆：
 
 ```bash
-curl -X GET "https://api.memokit.dev/v1/memories?userId=user_123&limit=10" \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET "https://api.memai.dev/v1/memories?userId=user_123&limit=10" \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ## 下一步

@@ -1,4 +1,4 @@
-# Memokit
+# Memai
 
 > See root [`AGENTS.md`](../AGENTS.md) for the main AI Agent guide.
 
@@ -210,7 +210,7 @@ export type CreateMemoryDto = z.infer<typeof createMemorySchema>;
 | 组件/类型 | PascalCase | `MemoryService` |
 | 函数/变量 | camelCase | `handleCreateMemory` |
 | 常量 | UPPER_SNAKE_CASE | `MAX_CONTENT_LENGTH` |
-| API Key 前缀 | `mk_` | `mk_abc123...` |
+| API Key 前缀 | `mm_` | `mm_abc123...` |
 
 ## 语言规范
 

@@ -3,7 +3,7 @@
  * 基于 primitives 组合的更高级组件
  *
  * 使用方式:
- * import { DataTable, PageHeader, StatusBadge } from '@memokit/ui/composed'
+ * import { DataTable, PageHeader, StatusBadge } from '@memai/ui/composed'
  */
 
 export * from './data-table'

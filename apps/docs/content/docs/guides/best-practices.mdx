@@ -5,7 +5,7 @@ description: Recommendations for building effective memory-powered applications
 
 # Best Practices
 
-Follow these best practices to build effective and efficient applications with Memokit.
+Follow these best practices to build effective and efficient applications with Memai.
 
 ## Memory Content
 
@@ -62,7 +62,7 @@ await searchMemories({
 
 ### Write Natural Queries
 
-Memokit uses semantic search, so natural language queries work best:
+Memai uses semantic search, so natural language queries work best:
 
 ```javascript
 // Good: Natural language
@@ -297,7 +297,7 @@ Keep API keys server-side:
 // Good: Server-side API call
 // server.js
 app.post('/api/memories/search', async (req, res) => {
-  const results = await memokitClient.searchMemories({
+  const results = await memaiClient.searchMemories({
     query: req.body.query,
     userId: req.user.id
   });
@@ -306,9 +306,9 @@ app.post('/api/memories/search', async (req, res) => {
 
 // Bad: Client-side API key exposure
 // client.js (DON'T DO THIS)
-fetch('https://api.memokit.dev/v1/memories/search', {
+fetch('https://api.memai.dev/v1/memories/search', {
   headers: {
-    'Authorization': 'Bearer mk_exposed_key'  // NEVER DO THIS
+    'Authorization': 'Bearer mm_exposed_key'  // NEVER DO THIS
   }
 });
 ```
@@ -319,7 +319,7 @@ Always verify users can only access their own data:
 
 ```javascript
 app.get('/api/memories/:id', async (req, res) => {
-  const memory = await memokitClient.getMemory(req.params.id);
+  const memory = await memaiClient.getMemory(req.params.id);
 
   // Verify ownership
   if (memory.userId !== req.user.id) {

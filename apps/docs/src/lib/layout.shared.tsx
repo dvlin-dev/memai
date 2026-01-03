@@ -7,12 +7,12 @@ export function baseOptions(locale?: string): BaseLayoutProps {
   return {
     i18n,
     nav: {
-      title: 'Memokit',
+      title: 'Memai',
     },
     links: [
       {
         text: isZh ? '控制台' : 'Console',
-        url: 'https://console.memokit.dev',
+        url: 'https://console.memai.dev',
         external: true,
       },
       {
@@ -21,12 +21,12 @@ export function baseOptions(locale?: string): BaseLayoutProps {
       },
       {
         text: isZh ? '状态' : 'Status',
-        url: 'https://status.memokit.dev',
+        url: 'https://status.memai.dev',
         external: true,
       },
       {
         text: 'GitHub',
-        url: 'https://github.com/memokit',
+        url: 'https://github.com/memai',
         external: true,
       },
     ],

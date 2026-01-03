@@ -1,8 +1,8 @@
 /**
- * Memokit Dashboard 页面
+ * Memai Dashboard 页面
  * 显示配额使用、API 统计和快速入门
  */
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import {
   Card,
   CardContent,
@@ -16,7 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 import { Brain, Key, Book, ExternalLink, Database, Activity } from 'lucide-react'
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import { useProfile } from '@/features/settings'
@@ -58,7 +58,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <PageHeader
         title="Dashboard"
-        description="Welcome to Memokit Semantic Memory API"
+        description="Welcome to Memai Semantic Memory API"
       />
 
       {/* Stats Overview Cards */}
@@ -225,7 +225,7 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>Quick Start</CardTitle>
-          <CardDescription>Get started with Memokit API in minutes</CardDescription>
+          <CardDescription>Get started with Memai API in minutes</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-start gap-4 p-4 border rounded-none">
@@ -253,8 +253,8 @@ export default function DashboardPage() {
                 Store and search memories using your API Key
               </p>
               <pre className="mt-2 p-3 bg-muted rounded-none text-xs overflow-x-auto">
-{`curl -X POST https://server.memokit.dev/v1/memories \\
-  -H "X-API-Key: mk_your_api_key" \\
+{`curl -X POST https://server.memai.dev/v1/memories \\
+  -H "X-API-Key: mm_your_api_key" \\
   -H "Content-Type: application/json" \\
   -d '{"content": "User prefers dark mode"}'`}
               </pre>
@@ -271,7 +271,7 @@ export default function DashboardPage() {
                 Learn about all available parameters and advanced features
               </p>
               <Button variant="link" className="px-0 h-auto mt-1" asChild>
-                <a href="https://docs.memokit.dev" target="_blank" rel="noopener noreferrer">
+                <a href="https://docs.memai.dev" target="_blank" rel="noopener noreferrer">
                   View docs <ExternalLink className="h-3 w-3 ml-1" />
                 </a>
               </Button>

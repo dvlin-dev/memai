@@ -16,7 +16,7 @@ export default defineConfig({
       },
       sitemap: {
         enabled: true,
-        host: 'https://docs.memokit.dev',
+        host: 'https://docs.memai.dev',
       },
     }),
     nitro({

@@ -18,8 +18,8 @@ import {
   TabsList,
   TabsTrigger,
   Skeleton,
-} from '@memokit/ui/primitives'
-import { PageHeader } from '@memokit/ui/composed'
+} from '@memai/ui/primitives'
+import { PageHeader } from '@memai/ui/composed'
 import { User, Key, Shield } from 'lucide-react'
 import { useProfile, useUpdateProfile, useChangePassword } from '@/features/settings'
 

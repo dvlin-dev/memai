@@ -3,7 +3,7 @@
  * 管理 Webhook 通知设置
  */
 import { useState } from 'react'
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import {
   Button,
   Card,
@@ -25,8 +25,8 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@memokit/ui/primitives'
-import { formatRelativeTime } from '@memokit/ui/lib'
+} from '@memai/ui/primitives'
+import { formatRelativeTime } from '@memai/ui/lib'
 import { Plus, MoreHorizontal, Pencil, Trash2, RefreshCw, Copy, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import {

@@ -3,7 +3,7 @@
  * 用于在 localStorage 中保存完整的 API Key，以便在 Playground 中使用
  */
 
-const STORAGE_KEY = 'memokit_api_keys'
+const STORAGE_KEY = 'memai_api_keys'
 
 export interface StoredApiKey {
   id: string

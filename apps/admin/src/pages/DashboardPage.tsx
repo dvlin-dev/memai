@@ -7,7 +7,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '@memokit/ui/primitives';
+} from '@memai/ui/primitives';
 import { Users, CreditCard, Database, DollarSign } from 'lucide-react';
 import {
   AreaChart,
@@ -18,7 +18,7 @@ import {
   YAxis,
   CartesianGrid,
 } from 'recharts';
-import type { ChartConfig } from '@memokit/ui/primitives';
+import type { ChartConfig } from '@memai/ui/primitives';
 import {
   formatNumber,
   formatCurrency,

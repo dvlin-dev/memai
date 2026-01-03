@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Container } from '@/components/layout'
-import { cn } from '@memokit/ui/lib'
+import { cn } from '@memai/ui/lib'
 
 const languages = ['curl', 'typescript'] as const
 type Language = (typeof languages)[number]
 
 const codeExamples: Record<Language, string> = {
   curl: `# Store a memory
-curl -X POST https://server.memokit.dev/v1/memories \\
+curl -X POST https://server.memai.dev/v1/memories \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -17,12 +17,12 @@ curl -X POST https://server.memokit.dev/v1/memories \\
   }'
 
 # Search memories
-curl -X POST https://server.memokit.dev/v1/memories/search \\
+curl -X POST https://server.memai.dev/v1/memories/search \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -d '{ "query": "user preferences", "limit": 5 }'`,
-  typescript: `import { Memokit } from '@memokit/sdk';
+  typescript: `import { Memai } from '@memai/sdk';
 
-const client = new Memokit('YOUR_API_KEY');
+const client = new Memai('YOUR_API_KEY');
 
 // Store a memory
 await client.memories.create({
@@ -75,7 +75,7 @@ export function CodeExampleSection() {
               </button>
             ))}
             <a
-              href="https://github.com/dvlin-dev/memokit/issues/new?title=SDK%20Request%3A%20%5BLanguage%5D"
+              href="https://github.com/dvlin-dev/memai/issues/new?title=SDK%20Request%3A%20%5BLanguage%5D"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 font-mono text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"

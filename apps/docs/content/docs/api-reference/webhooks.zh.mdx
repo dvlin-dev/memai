@@ -5,11 +5,11 @@ description: 接收记忆事件的实时通知
 
 # Webhooks
 
-Webhooks 允许您在 Memokit 账户中发生事件时接收实时 HTTP 通知。
+Webhooks 允许您在 Memai 账户中发生事件时接收实时 HTTP 通知。
 
 ## 概述
 
-当您配置了 webhook 后，Memokit 会在订阅的事件发生时向您指定的 URL 发送 HTTP POST 请求。这使得无需轮询 API 即可实现实时集成。
+当您配置了 webhook 后，Memai 会在订阅的事件发生时向您指定的 URL 发送 HTTP POST 请求。这使得无需轮询 API 即可实现实时集成。
 
 ## Webhook 事件
 
@@ -45,8 +45,8 @@ Webhooks 允许您在 Memokit 账户中发生事件时接收实时 HTTP 通知�
 
 ```javascript
 // Express.js 示例
-app.post('/webhooks/memokit', (req, res) => {
-  const signature = req.headers['x-memokit-signature'];
+app.post('/webhooks/memai', (req, res) => {
+  const signature = req.headers['x-memai-signature'];
   const payload = req.body;
 
   // 验证签名
@@ -73,7 +73,7 @@ app.post('/webhooks/memokit', (req, res) => {
 
 ### 2. 注册 Webhook
 
-在 Memokit 控制台中：
+在 Memai 控制台中：
 
 1. 在侧边栏中进入 **Webhooks**
 2. 点击 **创建 Webhook**
@@ -86,7 +86,7 @@ app.post('/webhooks/memokit', (req, res) => {
 每个 webhook 请求都包含用于验证的签名头：
 
 ```
-X-Memokit-Signature: sha256=abc123...
+X-Memai-Signature: sha256=abc123...
 ```
 
 使用 HMAC-SHA256 验证签名：
@@ -109,7 +109,7 @@ function verifySignature(payload, signature, secret) {
 
 ## Webhook 重试
 
-如果您的端点返回错误（非 2xx 状态码），Memokit 会重试投递：
+如果您的端点返回错误（非 2xx 状态码），Memai 会重试投递：
 
 | 尝试次数 | 延迟 |
 |---------|------|
@@ -128,9 +128,9 @@ function verifySignature(payload, signature, secret) {
 尽快返回 200 响应。异步处理 webhook 数据：
 
 ```javascript
-app.post('/webhooks/memokit', async (req, res) => {
+app.post('/webhooks/memai', async (req, res) => {
   // 验证签名
-  if (!verifySignature(req.body, req.headers['x-memokit-signature'], secret)) {
+  if (!verifySignature(req.body, req.headers['x-memai-signature'], secret)) {
     return res.status(401).send('签名无效');
   }
 
@@ -169,7 +169,7 @@ async function processWebhook(payload) {
 
 ## 查看 Webhook 日志
 
-在 Memokit 控制台中，您可以查看 webhook 投递日志：
+在 Memai 控制台中，您可以查看 webhook 投递日志：
 
 1. 进入 **Webhooks**
 2. 点击某个 webhook

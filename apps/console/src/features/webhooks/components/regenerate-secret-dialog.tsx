@@ -10,7 +10,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 import { useRegenerateWebhookSecret } from '../hooks'
 import type { Webhook } from '../types'
 

@@ -13,7 +13,7 @@ export const en = {
   editOnGithub: 'Edit on GitHub',
 
   // Site meta
-  siteTitle: 'Memokit - Memory as a Service for AI',
+  siteTitle: 'Memai - Memory as a Service for AI',
   siteDescription:
     'Build persistent memory layers for your AI applications. Store, search, and manage memories with a simple REST API.',
 

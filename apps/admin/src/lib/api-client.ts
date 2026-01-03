@@ -3,7 +3,7 @@
  * 使用 Bearer Token 认证，统一错误处理，自动解包响应
  */
 import { useAuthStore, getAuthToken } from '@/stores/auth';
-import type { ApiErrorResponse as ApiErrorResponseType } from '@memokit/shared-types';
+import type { ApiErrorResponse as ApiErrorResponseType } from '@memai/shared-types';
 
 // 开发环境使用空字符串走 Vite 代理，生产环境使用完整 URL
 export const API_BASE_URL = import.meta.env.VITE_API_URL ?? '';

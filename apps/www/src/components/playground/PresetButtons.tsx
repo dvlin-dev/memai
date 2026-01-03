@@ -1,4 +1,4 @@
-import { cn } from '@memokit/ui/lib'
+import { cn } from '@memai/ui/lib'
 
 interface PresetButtonsProps {
   onSelect: (query: string) => void

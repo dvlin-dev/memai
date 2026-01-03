@@ -14,7 +14,7 @@ The `apps/docs` application is built with Fumadocs documentation system + TanSta
 | Documentation | Fumadocs (MDX-driven) |
 | Styling | Tailwind CSS 4 |
 | Deployment | Cloudflare Workers |
-| Theme | Shadcn preset (inherits @memokit/ui colors) |
+| Theme | Shadcn preset (inherits @memai/ui colors) |
 
 ## Project Design System
 
@@ -61,13 +61,13 @@ apps/docs/
 
 ```bash
 # Development
-pnpm --filter @memokit/docs dev
+pnpm --filter @memai/docs dev
 
 # Build
-pnpm --filter @memokit/docs build
+pnpm --filter @memai/docs build
 
 # Deploy to Cloudflare
-pnpm --filter @memokit/docs deploy
+pnpm --filter @memai/docs deploy
 ```
 
 ## References
@@ -81,7 +81,7 @@ pnpm --filter @memokit/docs deploy
 ## Cloudflare Deployment Notes
 
 1. Login to Wrangler first: `npx wrangler login`
-2. Deploy command: `pnpm --filter @memokit/docs deploy`
+2. Deploy command: `pnpm --filter @memai/docs deploy`
 3. Will deploy to `*.workers.dev` subdomain, or configure custom domain
 
 ---

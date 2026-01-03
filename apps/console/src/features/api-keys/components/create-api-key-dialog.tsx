@@ -9,10 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@memokit/ui/primitives'
-import { Button } from '@memokit/ui/primitives'
-import { Input } from '@memokit/ui/primitives'
-import { Label } from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
+import { Button } from '@memai/ui/primitives'
+import { Input } from '@memai/ui/primitives'
+import { Label } from '@memai/ui/primitives'
 import { Copy, Check, AlertTriangle } from 'lucide-react'
 import { toast } from 'sonner'
 import { useCreateApiKey } from '../hooks'

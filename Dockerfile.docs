@@ -1,4 +1,4 @@
-# Dockerfile for @memokit/docs (TanStack Start + Nitro + Fumadocs)
+# Dockerfile for @memai/docs (TanStack Start + Nitro + Fumadocs)
 # Build context: root directory (.)
 # Dockerfile path: Dockerfile.docs
 
@@ -20,7 +20,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/docs/package.json ./apps/docs/
 COPY packages/ui/package.json ./packages/ui/
 
-RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memokit/docs...
+RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memai/docs...
 
 # =============================================================================
 # Stage 3: Build application
@@ -48,7 +48,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/docs/package.json ./apps/docs/
 COPY packages/ui/package.json ./packages/ui/
 
-RUN pnpm install --no-frozen-lockfile --ignore-scripts --prod --filter @memokit/docs...
+RUN pnpm install --no-frozen-lockfile --ignore-scripts --prod --filter @memai/docs...
 
 # =============================================================================
 # Stage 5: Production runtime

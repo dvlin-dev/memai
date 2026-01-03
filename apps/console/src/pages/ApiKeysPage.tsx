@@ -3,7 +3,7 @@
  * P0 MVP 核心功能 - 管理 API 密钥
  */
 import { useState } from 'react'
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import {
   Button,
   Card,
@@ -20,12 +20,12 @@ import {
   Badge,
   Skeleton,
   Switch,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 import {
   formatRelativeTime,
   isExpiringSoon,
   isExpired,
-} from '@memokit/ui/lib'
+} from '@memai/ui/lib'
 import { Plus, Trash2, Copy, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import {

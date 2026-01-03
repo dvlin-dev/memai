@@ -14,13 +14,13 @@ export const Route = createFileRoute('/docs/$')({
 
     if (!page) {
       return {
-        meta: [{ title: 'Not Found | Memokit Docs' }],
+        meta: [{ title: 'Not Found | Memai Docs' }],
       }
     }
 
     return {
       meta: [
-        { title: `${page.data.title} | Memokit Docs` },
+        { title: `${page.data.title} | Memai Docs` },
         { name: 'description', content: page.data.description },
       ],
     }

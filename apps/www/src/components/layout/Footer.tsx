@@ -2,10 +2,10 @@ import { Container } from './Container'
 
 const footerLinks = {
   product: [
-    { href: 'https://docs.memokit.dev', label: 'Documentation' },
+    { href: 'https://docs.memai.dev', label: 'Documentation' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/blog', label: 'Blog' },
-    { href: 'https://status.memokit.dev', label: 'Status' },
+    { href: 'https://status.memai.dev', label: 'Status' },
   ],
   company: [
     { href: '/about', label: 'About' },
@@ -13,9 +13,9 @@ const footerLinks = {
     { href: '/privacy', label: 'Privacy' },
   ],
   developers: [
-    { href: 'https://github.com/dvlin-dev/memokit', label: 'GitHub' },
-    { href: 'https://docs.memokit.dev/api', label: 'API Reference' },
-    { href: 'https://docs.memokit.dev/sdks', label: 'SDKs' },
+    { href: 'https://github.com/dvlin-dev/memai', label: 'GitHub' },
+    { href: 'https://docs.memai.dev/api', label: 'API Reference' },
+    { href: 'https://docs.memai.dev/sdks', label: 'SDKs' },
   ],
 }
 
@@ -28,7 +28,7 @@ export function Footer() {
             {/* Brand */}
             <div className="col-span-2 md:col-span-1">
               <span className="font-mono text-lg font-bold tracking-tight">
-                memokit
+                memai
               </span>
               <p className="mt-4 text-sm text-muted-foreground">
                 Semantic Memory API for AI Agents
@@ -96,11 +96,11 @@ export function Footer() {
           {/* Bottom */}
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} memokit. All rights reserved.
+              © {new Date().getFullYear()} memai. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="https://twitter.com/memokit"
+                href="https://twitter.com/memai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -108,7 +108,7 @@ export function Footer() {
                 Twitter
               </a>
               <a
-                href="https://github.com/dvlin-dev/memokit"
+                href="https://github.com/dvlin-dev/memai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"

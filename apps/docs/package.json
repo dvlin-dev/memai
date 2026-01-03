@@ -1,5 +1,5 @@
 {
-  "name": "@memokit/docs",
+  "name": "@memai/docs",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -15,7 +15,7 @@
     "@content-collections/mdx": "^0.2.2",
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
     "@fumadocs/content-collections": "^1.2.5",
-    "@memokit/ui": "workspace:*",
+    "@memai/ui": "workspace:*",
     "@tanstack/react-router": "^1.144.0",
     "@tanstack/react-start": "^1.145.3",
     "@orama/tokenizers": "^3.1.18",

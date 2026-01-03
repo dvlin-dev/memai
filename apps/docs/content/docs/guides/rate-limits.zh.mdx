@@ -5,7 +5,7 @@ description: 了解 API 速率限制和使用配额
 
 # 速率限制与配额
 
-Memokit 使用速率限制和配额来确保公平使用并为所有用户维护服务质量。
+Memai 使用速率限制和配额来确保公平使用并为所有用户维护服务质量。
 
 ## 速率限制
 
@@ -95,7 +95,7 @@ async function fetchWithRetry(url, options, maxRetries = 3) {
 
 ### 检查使用量
 
-在 Memokit 控制台的 **使用量** 中查看当前使用情况。
+在 Memai 控制台的 **使用量** 中查看当前使用情况。
 
 API 也会在响应头中返回使用信息：
 
@@ -169,19 +169,19 @@ async function searchWithCache(query, userId) {
 
 ```bash
 # 不要获取所有记忆
-curl "https://api.memokit.dev/v1/memories?userId=user_123"
+curl "https://api.memai.dev/v1/memories?userId=user_123"
 
 # 只获取需要的数量
-curl "https://api.memokit.dev/v1/memories?userId=user_123&limit=5"
+curl "https://api.memai.dev/v1/memories?userId=user_123&limit=5"
 ```
 
 ## 升级套餐
 
 如需更高限制：
 
-1. 登录 [Memokit 控制台](https://console.memokit.dev)
+1. 登录 [Memai 控制台](https://console.memai.dev)
 2. 进入 **设置** > **账单**
 3. 选择更高的套餐
 4. 完成升级
 
-如需自定义限制的企业套餐，请联系 sales@memokit.dev。
+如需自定义限制的企业套餐，请联系 sales@memai.dev。

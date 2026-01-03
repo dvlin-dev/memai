@@ -9,7 +9,7 @@ export interface PublicEnv {
  */
 export function getPublicEnv(): PublicEnv {
   return {
-    apiUrl: process.env.API_URL || 'https://server.memokit.dev',
+    apiUrl: process.env.API_URL || 'https://server.memai.dev',
     turnstileSiteKey: process.env.TURNSTILE_SITE_KEY || '',
   }
 }

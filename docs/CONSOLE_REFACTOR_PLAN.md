@@ -19,7 +19,7 @@
 ### 1.2 改造目标
 
 1. 清理所有旧项目遗留代码和命名
-2. 确保品牌一致性 (统一使用 "Memokit")
+2. 确保品牌一致性 (统一使用 "Memai")
 3. 完善 Console 功能，满足 Memory SaaS 服务需求
 4. 提升代码质量和可维护性
 
@@ -44,9 +44,9 @@
 
 | 文件路径 | 当前内容 | 修改为 |
 |---------|---------|--------|
-| `apps/console/src/components/layout/main-layout.tsx:35` | `Moryflow` | `Memokit` |
-| `apps/server/src/main.ts` (Swagger 描述) | `Memory 截图服务 API 文档` | `Memokit Memory API` |
-| `apps/server/src/main.ts` (注释) | `*.moryflow.com` | `*.memokit.dev` |
+| `apps/console/src/components/layout/main-layout.tsx:35` | `Moryflow` | `Memai` |
+| `apps/server/src/main.ts` (Swagger 描述) | `Memory 截图服务 API 文档` | `Memai Memory API` |
+| `apps/server/src/main.ts` (注释) | `*.moryflow.com` | `*.memai.dev` |
 | `apps/console/.env.development` | `linksnap.dev` / `moryflow.com` | 正确的本地/开发服务器地址 |
 
 #### 2.1.2 截图功能残留清理
@@ -105,7 +105,7 @@
 ### Phase 1: 代码清理 ✅
 
 - [x] **1.1** 修复 Console 品牌名称
-  - [x] 1.1.1 修改 `main-layout.tsx` 中的 "Moryflow" → "Memokit"
+  - [x] 1.1.1 修改 `main-layout.tsx` 中的 "Moryflow" → "Memai"
   - [x] 1.1.2 检查其他组件是否有品牌名称问题
 
 - [x] **1.2** 修复 Server 品牌名称和文档

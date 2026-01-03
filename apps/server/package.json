@@ -1,7 +1,7 @@
 {
-  "name": "@memokit/server",
+  "name": "@memai/server",
   "version": "0.0.1",
-  "description": "Memokit Semantic Memory API Server",
+  "description": "Memai Semantic Memory API Server",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

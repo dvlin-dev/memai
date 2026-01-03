@@ -1,18 +1,18 @@
 ---
 title: Quickstart
-description: Get up and running with Memokit in 5 minutes
+description: Get up and running with Memai in 5 minutes
 ---
 
 # Quickstart
 
-This guide will walk you through creating your first memory and searching for it using the Memokit API.
+This guide will walk you through creating your first memory and searching for it using the Memai API.
 
 ## Step 1: Get Your API Key
 
-1. Sign up or log in at [console.memokit.dev](https://console.memokit.dev)
+1. Sign up or log in at [console.memai.dev](https://console.memai.dev)
 2. Navigate to **API Keys** in the sidebar
 3. Click **Create API Key**
-4. Copy your API key (it starts with `mk_`)
+4. Copy your API key (it starts with `mm_`)
 
 > **Important**: Your API key is only shown once. Store it securely.
 
@@ -21,8 +21,8 @@ This guide will walk you through creating your first memory and searching for it
 Use the following curl command to create a memory:
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "John is a software engineer who loves TypeScript and React",
@@ -49,8 +49,8 @@ Let's add a few more memories to make searching interesting:
 
 ```bash
 # Memory about preferences
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "John prefers dark mode and uses VS Code as his IDE",
@@ -59,8 +59,8 @@ curl -X POST https://api.memokit.dev/v1/memories \
   }'
 
 # Memory about a conversation
-curl -X POST https://api.memokit.dev/v1/memories \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "content": "John mentioned he is working on a new e-commerce project using Next.js",
@@ -74,8 +74,8 @@ curl -X POST https://api.memokit.dev/v1/memories \
 Now let's search for relevant memories using natural language:
 
 ```bash
-curl -X POST https://api.memokit.dev/v1/memories/search \
-  -H "Authorization: Bearer mk_your_api_key" \
+curl -X POST https://api.memai.dev/v1/memories/search \
+  -H "Authorization: Bearer mm_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "What programming languages does John know?",
@@ -116,8 +116,8 @@ The search uses semantic similarity, so it finds relevant memories even when the
 You can also list all memories for a user:
 
 ```bash
-curl -X GET "https://api.memokit.dev/v1/memories?userId=user_123&limit=10" \
-  -H "Authorization: Bearer mk_your_api_key"
+curl -X GET "https://api.memai.dev/v1/memories?userId=user_123&limit=10" \
+  -H "Authorization: Bearer mm_your_api_key"
 ```
 
 ## Next Steps

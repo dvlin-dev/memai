@@ -1,7 +1,7 @@
-# Memokit 文档系统改造计划
+# Memai 文档系统改造计划
 
 > 参考项目：LinkSnap Docs (`/Users/bowling/code/me/linksnap.dev/apps/docs`)
-> 当前项目：Memokit Docs (`/Users/bowling/conductor/workspaces/memokit/pattaya/apps/docs`)
+> 当前项目：Memai Docs (`/Users/bowling/conductor/workspaces/memai/pattaya/apps/docs`)
 
 ---
 
@@ -9,10 +9,10 @@
 
 ### 1.1 技术栈对比
 
-| 特性 | 参考项目 (LinkSnap) | 当前项目 (Memokit) | 差异 |
+| 特性 | 参考项目 (LinkSnap) | 当前项目 (Memai) | 差异 |
 |------|---------------------|-------------------|------|
 | 全栈框架 | TanStack Start ^1.144.0 | TanStack Start ^1.145.3 | ✅ 相近 |
-| 文档引擎 | fumadocs-ui/core ^15.2.10 | fumadocs-ui/core ^16.4.2 | ✅ Memokit 更新 |
+| 文档引擎 | fumadocs-ui/core ^15.2.10 | fumadocs-ui/core ^16.4.2 | ✅ Memai 更新 |
 | 内容管理 | Content Collections | fumadocs-mdx | ⚠️ 方案不同 |
 | React | ^19.0.0 | ^19.2.0 | ✅ 相近 |
 | Tailwind | v4.0.0 | v4.1.17 | ✅ 相近 |
@@ -55,7 +55,7 @@ content/docs/
     └── meta.json / meta.zh.json
 ```
 
-**当前项目 (Memokit):**
+**当前项目 (Memai):**
 ```
 src/routes/
 ├── __root.tsx              # 基础布局
@@ -220,14 +220,14 @@ src/
 ```typescript
 // 元标签配置示例
 <Meta>
-  <title>Memokit - Memory as a Service for AI</title>
+  <title>Memai - Memory as a Service for AI</title>
   <meta name="description" content="..." />
-  <meta property="og:title" content="Memokit Docs" />
+  <meta property="og:title" content="Memai Docs" />
   <meta property="og:description" content="..." />
   <meta property="og:image" content="/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="alternate" hrefLang="en" href="https://docs.memokit.dev/docs" />
-  <link rel="alternate" hrefLang="zh" href="https://docs.memokit.dev/zh/docs" />
+  <link rel="alternate" hrefLang="en" href="https://docs.memai.dev/docs" />
+  <link rel="alternate" hrefLang="zh" href="https://docs.memai.dev/zh/docs" />
 </Meta>
 ```
 
@@ -240,7 +240,7 @@ tanstackStart({
   prerender: { enabled: true, crawlLinks: true },
   sitemap: {
     enabled: true,
-    host: 'https://docs.memokit.dev'
+    host: 'https://docs.memai.dev'
   },
 })
 ```
@@ -258,14 +258,14 @@ export function baseOptions(locale?: string): BaseLayoutProps {
   return {
     i18n,
     nav: {
-      title: 'Memokit',
+      title: 'Memai',
       // 添加 Logo 组件
     },
     links: [
       { text: 'Documentation', url: '/docs', active: 'nested-url' },
       {
         text: 'Console',
-        url: 'https://console.memokit.dev',
+        url: 'https://console.memai.dev',
         external: true
       },
       {
@@ -274,13 +274,13 @@ export function baseOptions(locale?: string): BaseLayoutProps {
       },
       {
         text: 'Status',
-        url: 'https://status.memokit.dev',
+        url: 'https://status.memai.dev',
         external: true
       },
       {
         icon: <GithubIcon />,
         text: 'GitHub',
-        url: 'https://github.com/memokit',
+        url: 'https://github.com/memai',
         external: true
       },
     ],

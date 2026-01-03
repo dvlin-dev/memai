@@ -13,7 +13,7 @@ import {
   Input,
   Label,
   Checkbox,
-} from '@memokit/ui/primitives'
+} from '@memai/ui/primitives'
 import { useUpdateWebhook } from '../hooks'
 import { WEBHOOK_EVENTS } from '../constants'
 import type { Webhook, WebhookEvent } from '../types'

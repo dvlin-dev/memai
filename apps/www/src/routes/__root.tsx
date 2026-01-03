@@ -29,20 +29,20 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'memokit - Semantic Memory API for AI Agents' },
+      { title: 'memai - Semantic Memory API for AI Agents' },
       {
         name: 'description',
         content:
           'Give your AI agents long-term memory. Semantic search, knowledge graphs, and entity extraction API.',
       },
-      { property: 'og:title', content: 'memokit - Semantic Memory API for AI' },
+      { property: 'og:title', content: 'memai - Semantic Memory API for AI' },
       {
         property: 'og:description',
         content:
           'Give your AI agents long-term memory. Semantic search, knowledge graphs, and entity extraction API.',
       },
-      { property: 'og:image', content: 'https://memokit.dev/og-image.png' },
-      { property: 'og:url', content: 'https://memokit.dev' },
+      { property: 'og:image', content: 'https://memai.dev/og-image.png' },
+      { property: 'og:url', content: 'https://memai.dev' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
     links: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -52,7 +52,7 @@ export const Route = createRootRoute({
         children: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
-          name: 'memokit',
+          name: 'memai',
           applicationCategory: 'DeveloperApplication',
           offers: {
             '@type': 'Offer',
@@ -60,7 +60,7 @@ export const Route = createRootRoute({
             priceCurrency: 'USD',
           },
           description: 'Semantic Memory API for AI Agents',
-          url: 'https://memokit.dev',
+          url: 'https://memai.dev',
         }),
       },
     ],

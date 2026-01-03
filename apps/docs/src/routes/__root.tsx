@@ -23,7 +23,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Memokit Documentation',
+        title: 'Memai Documentation',
       },
       {
         name: 'description',
@@ -33,7 +33,7 @@ export const Route = createRootRoute({
       // Open Graph
       {
         property: 'og:title',
-        content: 'Memokit - Memory as a Service for AI',
+        content: 'Memai - Memory as a Service for AI',
       },
       {
         property: 'og:description',
@@ -46,11 +46,11 @@ export const Route = createRootRoute({
       },
       {
         property: 'og:url',
-        content: 'https://docs.memokit.dev',
+        content: 'https://docs.memai.dev',
       },
       {
         property: 'og:site_name',
-        content: 'Memokit',
+        content: 'Memai',
       },
       // Twitter Card
       {
@@ -59,7 +59,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'twitter:title',
-        content: 'Memokit - Memory as a Service for AI',
+        content: 'Memai - Memory as a Service for AI',
       },
       {
         name: 'twitter:description',
@@ -88,17 +88,17 @@ export const Route = createRootRoute({
       {
         rel: 'alternate',
         hrefLang: 'en',
-        href: 'https://docs.memokit.dev/docs',
+        href: 'https://docs.memai.dev/docs',
       },
       {
         rel: 'alternate',
         hrefLang: 'zh',
-        href: 'https://docs.memokit.dev/zh/docs',
+        href: 'https://docs.memai.dev/zh/docs',
       },
       {
         rel: 'alternate',
         hrefLang: 'x-default',
-        href: 'https://docs.memokit.dev/docs',
+        href: 'https://docs.memai.dev/docs',
       },
     ],
   }),

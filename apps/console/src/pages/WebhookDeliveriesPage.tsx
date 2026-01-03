@@ -3,7 +3,7 @@
  * 查看 Webhook 投递历史
  */
 import { useState } from 'react'
-import { PageHeader } from '@memokit/ui/composed'
+import { PageHeader } from '@memai/ui/composed'
 import {
   Card,
   CardContent,
@@ -24,8 +24,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@memokit/ui/primitives'
-import { formatRelativeTime } from '@memokit/ui/lib'
+} from '@memai/ui/primitives'
+import { formatRelativeTime } from '@memai/ui/lib'
 import { ChevronLeft, ChevronRight, Send, CheckCircle2, XCircle } from 'lucide-react'
 import { useWebhooks, useWebhookDeliveries } from '@/features/webhooks'
 

@@ -1,9 +1,9 @@
 /**
  * 共享业务组件导出
- * 通用组件从 @memokit/ui/composed 导出
+ * 通用组件从 @memai/ui/composed 导出
  */
 
-// Re-export from @memokit/ui/composed
+// Re-export from @memai/ui/composed
 export {
   DataTable,
   PageHeader,
@@ -17,4 +17,4 @@ export {
   type SimplePaginationProps,
   type StatusBadgeProps,
   type StatusConfig,
-} from '@memokit/ui/composed'
+} from '@memai/ui/composed'
