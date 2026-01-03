@@ -14,6 +14,7 @@ FROM base AS deps
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/console/package.json ./apps/console/
 COPY packages/ui/package.json ./packages/ui/
+COPY packages/shared-types/package.json ./packages/shared-types/
 RUN pnpm install --no-frozen-lockfile --ignore-scripts --filter @memokit/console...
 
 # 构建阶段
@@ -23,6 +24,7 @@ COPY --from=deps /app/apps/console/node_modules ./apps/console/node_modules
 COPY --from=deps /app/packages/ui/node_modules ./packages/ui/node_modules
 COPY apps/console ./apps/console
 COPY packages/ui ./packages/ui
+COPY packages/shared-types ./packages/shared-types
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 
 WORKDIR /app/apps/console
