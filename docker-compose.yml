@@ -103,6 +103,14 @@ services:
     environment:
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
 
+  # Docs (Documentation)
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile.docs
+    ports:
+      - "3004:3000"
+
 volumes:
   postgres_data:
   redis_data:
