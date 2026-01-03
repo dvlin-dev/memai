@@ -19,7 +19,11 @@ export default defineConfig({
         host: 'https://docs.memokit.dev',
       },
     }),
-    nitro(),
+    nitro({
+      rollupConfig: {
+        external: ['react', 'react-dom', 'react-dom/server'],
+      },
+    }),
     viteReact(),
     tailwindcss(),
   ],
