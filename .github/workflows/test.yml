@@ -1,0 +1,159 @@
+name: Backend Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/server/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/test.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/server/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/test.yml'
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm --filter server prisma generate
+
+      - name: Run unit tests
+        run: pnpm --filter server test --run
+        env:
+          NODE_ENV: test
+          BETTER_AUTH_SECRET: test-secret-must-be-at-least-32-characters-long
+          BETTER_AUTH_URL: http://localhost:3000
+          OPENAI_API_KEY: test-openai-key
+          CREEM_WEBHOOK_SECRET: test-webhook-secret
+
+      - name: Run tests with coverage
+        run: pnpm --filter server test:coverage --run
+        env:
+          NODE_ENV: test
+          BETTER_AUTH_SECRET: test-secret-must-be-at-least-32-characters-long
+          BETTER_AUTH_URL: http://localhost:3000
+          OPENAI_API_KEY: test-openai-key
+          CREEM_WEBHOOK_SECRET: test-webhook-secret
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          files: ./apps/server/coverage/coverage-final.json
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm --filter server prisma generate
+
+      - name: Run database migrations
+        run: pnpm --filter server prisma migrate deploy
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/test
+
+      - name: Run E2E tests
+        run: pnpm --filter server test:e2e --run
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test:test@localhost:5432/test
+          REDIS_URL: redis://localhost:6379
+          BETTER_AUTH_SECRET: test-secret-must-be-at-least-32-characters-long
+          BETTER_AUTH_URL: http://localhost:3000
+          OPENAI_API_KEY: test-openai-key
+          CREEM_WEBHOOK_SECRET: test-webhook-secret
+          RUN_INTEGRATION_TESTS: '1'
+
+  lint-and-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm --filter server prisma generate
+
+      - name: Run ESLint
+        run: pnpm --filter server lint
+
+      - name: Run TypeScript check
+        run: pnpm --filter server typecheck

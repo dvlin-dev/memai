@@ -426,6 +426,35 @@ Cache hit: No deduction, still create record
 
 ## Test Infrastructure
 
+### Server Development Guidelines (Mandatory)
+
+服务端代码开发时必须遵循以下测试规范：
+
+1. **新功能必须写单元测试**
+   - 新增 Service/Guard/Interceptor 时，必须在对应的 `__tests__/` 目录创建 `*.spec.ts` 测试文件
+   - 测试覆盖核心业务逻辑、边界条件、错误处理
+
+2. **修改功能必须更新测试**
+   - 修改现有功能时，必须同步更新对应的单元测试
+   - 如果修改改变了行为，测试用例也需要相应调整
+
+3. **提交前必须运行测试**
+   - 每次代码修改完成后，必须运行 `pnpm --filter server test` 验证功能正确性
+   - 所有测试必须通过才能提交代码
+
+```bash
+# 开发流程示例
+# 1. 新增功能
+vim src/example/example.service.ts
+vim src/example/__tests__/example.service.spec.ts  # 同时创建测试
+
+# 2. 运行测试验证
+pnpm --filter server test
+
+# 3. 测试通过后提交
+git add . && git commit -m "feat(server): add example feature"
+```
+
 ### Test Commands
 
 ```bash
@@ -453,4 +482,4 @@ apps/server/
 
 ---
 
-*Version: 1.2 | Updated: 2026-01*
+*Version: 1.3 | Updated: 2026-01*
