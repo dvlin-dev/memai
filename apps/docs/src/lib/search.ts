@@ -7,7 +7,7 @@ import { source } from './source'
 const indexes: AdvancedIndex[] = source.getPages().map((page) => ({
   id: page.url,
   url: page.url,
-  title: page.data.title,
+  title: page.data.title ?? 'Untitled',
   description: page.data.description,
   structuredData: (page.data as { structuredData?: StructuredData }).structuredData ?? {
     headings: [],
