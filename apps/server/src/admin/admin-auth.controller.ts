@@ -15,7 +15,7 @@ import {
   ForbiddenException,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiOkResponse, ApiNoContentResponse } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { PrismaService } from '../prisma';
 import { Public } from '../auth';
@@ -33,6 +33,7 @@ export class AdminAuthController {
   @Public()
   @Post('login')
   @ApiOperation({ summary: 'Admin login' })
+  @ApiOkResponse({ description: 'Login successful' })
   async login(@Body() dto: AdminLoginDto) {
     const { email, password } = dto;
 
@@ -102,6 +103,7 @@ export class AdminAuthController {
    */
   @Post('logout')
   @ApiOperation({ summary: 'Admin logout' })
+  @ApiNoContentResponse({ description: 'Logout successful' })
   async logout(@Req() req: Request) {
     const authHeader = req.headers.authorization;
     if (authHeader?.startsWith('Bearer ')) {

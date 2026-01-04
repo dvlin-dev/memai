@@ -13,13 +13,13 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiSecurity } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiSecurity, ApiOkResponse } from '@nestjs/swagger';
 import { ExtractService } from './extract.service';
 import { ApiKeyGuard } from '../api-key/api-key.guard';
 import { QuotaGuard } from '../quota/quota.guard';
 import { ApiKeyDataIsolationInterceptor } from '../common/interceptors/api-key-isolation.interceptor';
 import { ApiKeyId } from '../common/decorators/api-key.decorator';
-import { ExtractDto, ExtractBatchDto, PreviewDto } from './dto';
+import { ExtractDto, ExtractBatchDto } from './dto';
 
 @ApiTags('Extract')
 @ApiSecurity('apiKey')
@@ -34,6 +34,7 @@ export class ExtractController {
    */
   @Post()
   @ApiOperation({ summary: 'Extract entities and relations from text' })
+  @ApiOkResponse({ description: 'Extracted entities and relations' })
   async extract(@ApiKeyId() apiKeyId: string, @Body() dto: ExtractDto) {
     return this.extractService.extractFromText(apiKeyId, dto.text, {
       userId: dto.userId,
@@ -49,6 +50,7 @@ export class ExtractController {
    */
   @Post('batch')
   @ApiOperation({ summary: 'Batch extract from multiple texts' })
+  @ApiOkResponse({ description: 'Batch extraction results' })
   async extractBatch(@ApiKeyId() apiKeyId: string, @Body() dto: ExtractBatchDto) {
     return this.extractService.extractFromTexts(apiKeyId, dto.texts, {
       userId: dto.userId,
@@ -56,18 +58,6 @@ export class ExtractController {
       relationTypes: dto.relationTypes,
       minConfidence: dto.minConfidence,
       saveToGraph: dto.saveToGraph,
-    });
-  }
-
-  /**
-   * Preview extraction result (without saving)
-   */
-  @Post('preview')
-  @ApiOperation({ summary: 'Preview extraction result' })
-  async preview(@Body() dto: PreviewDto) {
-    return this.extractService.preview(dto.text, {
-      entityTypes: dto.entityTypes,
-      relationTypes: dto.relationTypes,
     });
   }
 }

@@ -24,6 +24,8 @@ import {
   ApiOperation,
   ApiParam,
   ApiCookieAuth,
+  ApiOkResponse,
+  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { CurrentUser } from '../auth';
 import type { CurrentUserDto } from '../types';
@@ -45,6 +47,7 @@ export class WebhookController {
    */
   @Post()
   @ApiOperation({ summary: 'Create a webhook' })
+  @ApiOkResponse({ description: 'Webhook created' })
   async create(
     @CurrentUser() user: CurrentUserDto,
     @Body() dto: CreateWebhookDto,
@@ -57,6 +60,7 @@ export class WebhookController {
    */
   @Get()
   @ApiOperation({ summary: 'List all webhooks' })
+  @ApiOkResponse({ description: 'List of webhooks' })
   async findAll(@CurrentUser() user: CurrentUserDto) {
     return this.webhookService.findAllByUser(user.id);
   }
@@ -66,6 +70,7 @@ export class WebhookController {
    */
   @Get('deliveries')
   @ApiOperation({ summary: 'Get all webhook deliveries' })
+  @ApiOkResponse({ description: 'List of webhook deliveries' })
   async getAllDeliveries(
     @CurrentUser() user: CurrentUserDto,
     @Query() query: ListDeliveriesQueryDto,
@@ -91,6 +96,7 @@ export class WebhookController {
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get a webhook by ID' })
+  @ApiOkResponse({ description: 'Webhook details' })
   @ApiParam({ name: 'id', description: 'Webhook ID' })
   async findOne(
     @CurrentUser() user: CurrentUserDto,
@@ -104,6 +110,7 @@ export class WebhookController {
    */
   @Patch(':id')
   @ApiOperation({ summary: 'Update a webhook' })
+  @ApiOkResponse({ description: 'Webhook updated' })
   @ApiParam({ name: 'id', description: 'Webhook ID' })
   async update(
     @CurrentUser() user: CurrentUserDto,
@@ -119,6 +126,7 @@ export class WebhookController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a webhook' })
+  @ApiNoContentResponse({ description: 'Webhook deleted' })
   @ApiParam({ name: 'id', description: 'Webhook ID' })
   async remove(
     @CurrentUser() user: CurrentUserDto,
@@ -132,6 +140,7 @@ export class WebhookController {
    */
   @Post(':id/regenerate-secret')
   @ApiOperation({ summary: 'Regenerate webhook secret' })
+  @ApiOkResponse({ description: 'Webhook secret regenerated' })
   @ApiParam({ name: 'id', description: 'Webhook ID' })
   async regenerateSecret(
     @CurrentUser() user: CurrentUserDto,
@@ -145,6 +154,7 @@ export class WebhookController {
    */
   @Get(':id/deliveries')
   @ApiOperation({ summary: 'Get deliveries for a webhook' })
+  @ApiOkResponse({ description: 'List of deliveries' })
   @ApiParam({ name: 'id', description: 'Webhook ID' })
   async getDeliveries(
     @CurrentUser() user: CurrentUserDto,

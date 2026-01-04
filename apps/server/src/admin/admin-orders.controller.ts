@@ -13,7 +13,7 @@ import {
   Param,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiCookieAuth, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiCookieAuth, ApiParam, ApiOkResponse } from '@nestjs/swagger';
 import { RequireAdmin } from '../auth';
 import { AdminService } from './admin.service';
 import { OrderQueryDto } from './dto';
@@ -30,6 +30,7 @@ export class AdminOrdersController {
    */
   @Get()
   @ApiOperation({ summary: 'Get orders list' })
+  @ApiOkResponse({ description: 'List of orders' })
   async getOrders(@Query() query: OrderQueryDto) {
     return this.adminService.getOrders(query);
   }
@@ -39,6 +40,7 @@ export class AdminOrdersController {
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get order by ID' })
+  @ApiOkResponse({ description: 'Order details' })
   @ApiParam({ name: 'id', description: 'Order ID' })
   async getOrder(@Param('id') id: string) {
     return this.adminService.getOrder(id);

@@ -7,7 +7,7 @@
  */
 
 import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiCookieAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiCookieAuth, ApiOkResponse } from '@nestjs/swagger';
 import { RequireAdmin } from '../auth';
 import { AdminService } from './admin.service';
 
@@ -23,6 +23,7 @@ export class AdminDashboardController {
    */
   @Get()
   @ApiOperation({ summary: 'Get dashboard statistics' })
+  @ApiOkResponse({ description: 'Dashboard statistics' })
   async getDashboardStats() {
     return this.adminService.getDashboardStats();
   }
@@ -32,6 +33,7 @@ export class AdminDashboardController {
    */
   @Get('charts')
   @ApiOperation({ summary: 'Get chart data' })
+  @ApiOkResponse({ description: 'Chart data' })
   async getChartData() {
     return this.adminService.getChartData();
   }

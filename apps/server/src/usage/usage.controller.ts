@@ -7,7 +7,7 @@
  */
 
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiSecurity } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiSecurity, ApiOkResponse } from '@nestjs/swagger';
 import { UsageService, UsageSummary } from './usage.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { CurrentUser } from '../auth/decorators';
@@ -25,6 +25,7 @@ export class UsageController {
    */
   @Get('current')
   @ApiOperation({ summary: 'Get current month usage' })
+  @ApiOkResponse({ description: 'Current month usage' })
   async getCurrentUsage(@CurrentUser() user: User): Promise<UsageSummary> {
     return this.usageService.getMonthlyUsage(user.id);
   }
@@ -34,6 +35,7 @@ export class UsageController {
    */
   @Get('history')
   @ApiOperation({ summary: 'Get usage history' })
+  @ApiOkResponse({ description: 'Usage history' })
   async getUsageHistory(
     @CurrentUser() user: User,
   ): Promise<Array<{ billingPeriod: string } & UsageSummary>> {

@@ -21,6 +21,8 @@ import {
   ApiOperation,
   ApiSecurity,
   ApiParam,
+  ApiOkResponse,
+  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { RelationService } from './relation.service';
 import {
@@ -46,6 +48,7 @@ export class RelationController {
    */
   @Post()
   @ApiOperation({ summary: 'Create a relation between entities' })
+  @ApiOkResponse({ description: 'Relation created' })
   async create(
     @ApiKeyId() apiKeyId: string,
     @Body() dto: CreateRelationDto,
@@ -58,6 +61,7 @@ export class RelationController {
    */
   @Post('batch')
   @ApiOperation({ summary: 'Batch create relations' })
+  @ApiOkResponse({ description: 'Relations created' })
   async createMany(
     @ApiKeyId() apiKeyId: string,
     @Body() dto: CreateRelationBatchDto,
@@ -70,6 +74,7 @@ export class RelationController {
    */
   @Get()
   @ApiOperation({ summary: 'List relations for a user' })
+  @ApiOkResponse({ description: 'List of relations' })
   async list(
     @ApiKeyId() apiKeyId: string,
     @Query() query: ListRelationQueryDto,
@@ -86,6 +91,7 @@ export class RelationController {
    */
   @Get('entity/:entityId')
   @ApiOperation({ summary: 'Get all relations for an entity' })
+  @ApiOkResponse({ description: 'Relations for entity' })
   @ApiParam({ name: 'entityId', description: 'Entity ID' })
   async getByEntity(
     @ApiKeyId() apiKeyId: string,
@@ -99,6 +105,7 @@ export class RelationController {
    */
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a relation' })
+  @ApiNoContentResponse({ description: 'Relation deleted' })
   @ApiParam({ name: 'id', description: 'Relation ID' })
   async delete(
     @ApiKeyId() apiKeyId: string,

@@ -17,7 +17,13 @@ import {
   HttpStatus,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiCookieAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCookieAuth,
+  ApiOkResponse,
+  ApiNoContentResponse,
+} from '@nestjs/swagger';
 import { CurrentUser } from '../auth';
 import type { CurrentUserDto } from '../types';
 import { UserService } from './user.service';
@@ -38,6 +44,7 @@ export class UserController {
    */
   @Get('me')
   @ApiOperation({ summary: 'Get current user profile' })
+  @ApiOkResponse({ description: 'User profile details' })
   async getMe(@CurrentUser() user: CurrentUserDto) {
     return this.userService.getUserProfile(user.id);
   }
@@ -47,6 +54,7 @@ export class UserController {
    */
   @Patch('me')
   @ApiOperation({ summary: 'Update user profile' })
+  @ApiOkResponse({ description: 'Profile updated' })
   async updateProfile(
     @CurrentUser() user: CurrentUserDto,
     @Body() dto: UpdateProfileDto,
@@ -60,6 +68,7 @@ export class UserController {
   @Post('me/password')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Change password' })
+  @ApiNoContentResponse({ description: 'Password changed' })
   async changePassword(
     @CurrentUser() user: CurrentUserDto,
     @Body() dto: ChangePasswordDto,
@@ -73,6 +82,7 @@ export class UserController {
   @Delete('account')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete user account' })
+  @ApiNoContentResponse({ description: 'Account deleted' })
   async deleteAccount(
     @CurrentUser() user: CurrentUserDto,
     @Body() dto: DeleteAccountDto,

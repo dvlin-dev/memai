@@ -21,6 +21,8 @@ import {
   ApiOperation,
   ApiSecurity,
   ApiParam,
+  ApiOkResponse,
+  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { MemoryService } from './memory.service';
 import {
@@ -46,6 +48,7 @@ export class MemoryController {
    */
   @Post()
   @ApiOperation({ summary: 'Create a memory' })
+  @ApiOkResponse({ description: 'Memory created successfully' })
   async create(
     @ApiKeyId() apiKeyId: string,
     @Body() dto: CreateMemoryDto,
@@ -58,6 +61,7 @@ export class MemoryController {
    */
   @Post('search')
   @ApiOperation({ summary: 'Search memories by semantic similarity' })
+  @ApiOkResponse({ description: 'Search results returned' })
   async search(
     @ApiKeyId() apiKeyId: string,
     @Body() dto: SearchMemoryDto,
@@ -70,6 +74,7 @@ export class MemoryController {
    */
   @Get()
   @ApiOperation({ summary: 'List memories for a user' })
+  @ApiOkResponse({ description: 'List of memories' })
   async list(
     @ApiKeyId() apiKeyId: string,
     @Query() query: ListMemoryQueryDto,
@@ -87,6 +92,7 @@ export class MemoryController {
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get a memory by ID' })
+  @ApiOkResponse({ description: 'Memory details' })
   @ApiParam({ name: 'id', description: 'Memory ID' })
   async getById(
     @ApiKeyId() apiKeyId: string,
@@ -100,6 +106,7 @@ export class MemoryController {
    */
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a memory' })
+  @ApiNoContentResponse({ description: 'Memory deleted' })
   @ApiParam({ name: 'id', description: 'Memory ID' })
   async delete(
     @ApiKeyId() apiKeyId: string,
@@ -114,6 +121,7 @@ export class MemoryController {
    */
   @Delete('user/:userId')
   @ApiOperation({ summary: 'Delete all memories for a user' })
+  @ApiNoContentResponse({ description: 'All user memories deleted' })
   @ApiParam({ name: 'userId', description: 'User ID' })
   async deleteByUser(
     @ApiKeyId() apiKeyId: string,

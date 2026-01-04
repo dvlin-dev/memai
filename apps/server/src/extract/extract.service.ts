@@ -157,14 +157,4 @@ export class ExtractService {
       },
     };
   }
-
-  /**
-   * 仅预览提取结果（不保存）
-   */
-  async preview(
-    text: string,
-    options: { entityTypes?: string[]; relationTypes?: string[] } = {},
-  ): Promise<{ entities: ExtractedEntity[]; relations: ExtractedRelation[] }> {
-    return this.llmService.extractEntitiesAndRelations(text, options);
-  }
 }

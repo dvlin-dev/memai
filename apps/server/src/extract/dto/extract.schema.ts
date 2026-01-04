@@ -1,7 +1,7 @@
 /**
  * Extract module Zod schemas
  *
- * [DEFINES]: ExtractSchema, ExtractBatchSchema, PreviewSchema
+ * [DEFINES]: ExtractSchema, ExtractBatchSchema
  * [USED_BY]: extract.controller.ts
  */
 import { z } from 'zod';
@@ -33,14 +33,7 @@ export const ExtractBatchSchema = z.object({
   saveToGraph: z.boolean().optional().default(true),
 });
 
-export const PreviewSchema = z.object({
-  text: z.string().min(1, 'Text is required'),
-  entityTypes: EntityTypesSchema,
-  relationTypes: RelationTypesSchema,
-});
-
 // ========== DTO Classes ==========
 
 export class ExtractDto extends createZodDto(ExtractSchema) {}
 export class ExtractBatchDto extends createZodDto(ExtractBatchSchema) {}
-export class PreviewDto extends createZodDto(PreviewSchema) {}

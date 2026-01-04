@@ -7,7 +7,7 @@
  */
 
 import { Controller, Get, Query, VERSION_NEUTRAL } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiCookieAuth, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiCookieAuth, ApiQuery, ApiOkResponse } from '@nestjs/swagger';
 import { CurrentUser } from '../auth';
 import type { CurrentUserDto } from '../types';
 import { UsageService } from './usage.service';
@@ -28,6 +28,7 @@ export class ConsoleStatsController {
    */
   @Get('overview')
   @ApiOperation({ summary: 'Get statistics overview' })
+  @ApiOkResponse({ description: 'Statistics overview' })
   async getOverview(@CurrentUser() user: CurrentUserDto) {
     return this.usageService.getUserStats(user.id);
   }
@@ -37,6 +38,7 @@ export class ConsoleStatsController {
    */
   @Get('daily')
   @ApiOperation({ summary: 'Get daily usage data' })
+  @ApiOkResponse({ description: 'Daily usage data' })
   @ApiQuery({ name: 'days', required: false, description: 'Number of days (default: 30, max: 90)' })
   async getDailyUsage(
     @CurrentUser() user: CurrentUserDto,
@@ -51,6 +53,7 @@ export class ConsoleStatsController {
    */
   @Get('history')
   @ApiOperation({ summary: 'Get monthly usage history' })
+  @ApiOkResponse({ description: 'Monthly usage history' })
   @ApiQuery({ name: 'limit', required: false, description: 'Number of months (default: 12, max: 24)' })
   async getHistory(
     @CurrentUser() user: CurrentUserDto,

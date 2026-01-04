@@ -7,7 +7,7 @@
  */
 
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiSecurity } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiSecurity, ApiOkResponse } from '@nestjs/swagger';
 import { QuotaService } from './quota.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { CurrentUser } from '../auth/decorators';
@@ -25,6 +25,7 @@ export class QuotaController {
    */
   @Get()
   @ApiOperation({ summary: 'Get quota status' })
+  @ApiOkResponse({ description: 'Quota status' })
   async getQuotaStatus(@CurrentUser() user: User) {
     return this.quotaService.getQuotaStatus(user.id);
   }

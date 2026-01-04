@@ -18,7 +18,14 @@ import {
   HttpStatus,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiCookieAuth, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCookieAuth,
+  ApiParam,
+  ApiOkResponse,
+  ApiNoContentResponse,
+} from '@nestjs/swagger';
 import { RequireAdmin } from '../auth';
 import { AdminService } from './admin.service';
 import { UserQueryDto, UpdateUserDto } from './dto';
@@ -35,6 +42,7 @@ export class AdminUsersController {
    */
   @Get()
   @ApiOperation({ summary: 'Get users list' })
+  @ApiOkResponse({ description: 'List of users' })
   async getUsers(@Query() query: UserQueryDto) {
     return this.adminService.getUsers(query);
   }
@@ -44,6 +52,7 @@ export class AdminUsersController {
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get user by ID' })
+  @ApiOkResponse({ description: 'User details' })
   @ApiParam({ name: 'id', description: 'User ID' })
   async getUser(@Param('id') id: string) {
     return this.adminService.getUser(id);
@@ -54,6 +63,7 @@ export class AdminUsersController {
    */
   @Patch(':id')
   @ApiOperation({ summary: 'Update user' })
+  @ApiOkResponse({ description: 'User updated' })
   @ApiParam({ name: 'id', description: 'User ID' })
   async updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return this.adminService.updateUser(id, dto);
@@ -65,6 +75,7 @@ export class AdminUsersController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete user' })
+  @ApiNoContentResponse({ description: 'User deleted' })
   @ApiParam({ name: 'id', description: 'User ID' })
   async deleteUser(@Param('id') id: string): Promise<void> {
     await this.adminService.deleteUser(id);

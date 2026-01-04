@@ -21,6 +21,8 @@ import {
   ApiOperation,
   ApiSecurity,
   ApiParam,
+  ApiOkResponse,
+  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import {
@@ -46,6 +48,7 @@ export class EntityController {
    */
   @Post()
   @ApiOperation({ summary: 'Create an entity' })
+  @ApiOkResponse({ description: 'Entity created' })
   async create(
     @ApiKeyId() apiKeyId: string,
     @Body() dto: CreateEntityDto,
@@ -58,6 +61,7 @@ export class EntityController {
    */
   @Post('batch')
   @ApiOperation({ summary: 'Batch create entities' })
+  @ApiOkResponse({ description: 'Entities created' })
   async createMany(
     @ApiKeyId() apiKeyId: string,
     @Body() dto: CreateEntityBatchDto,
@@ -70,6 +74,7 @@ export class EntityController {
    */
   @Get()
   @ApiOperation({ summary: 'List entities for a user' })
+  @ApiOkResponse({ description: 'List of entities' })
   async list(
     @ApiKeyId() apiKeyId: string,
     @Query() query: ListEntityQueryDto,
@@ -86,6 +91,7 @@ export class EntityController {
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get an entity by ID' })
+  @ApiOkResponse({ description: 'Entity details' })
   @ApiParam({ name: 'id', description: 'Entity ID' })
   async getById(
     @ApiKeyId() apiKeyId: string,
@@ -99,6 +105,7 @@ export class EntityController {
    */
   @Delete(':id')
   @ApiOperation({ summary: 'Delete an entity' })
+  @ApiNoContentResponse({ description: 'Entity deleted' })
   @ApiParam({ name: 'id', description: 'Entity ID' })
   async delete(
     @ApiKeyId() apiKeyId: string,
