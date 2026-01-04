@@ -11,11 +11,11 @@ import {
   SCALAR_CONFIG,
   createScalarMiddleware,
 } from './openapi';
-import { MemoryController } from './memory/memory.controller';
-import { EntityController } from './entity/entity.controller';
-import { RelationController } from './relation/relation.controller';
-import { GraphController } from './graph/graph.controller';
-import { ExtractController } from './extract/extract.controller';
+import { MemoryModule } from './memory/memory.module';
+import { EntityModule } from './entity/entity.module';
+import { RelationModule } from './relation/relation.module';
+import { GraphModule } from './graph/graph.module';
+import { ExtractModule } from './extract/extract.module';
 
 /**
  * 检查 origin 是否匹配模式
@@ -142,11 +142,11 @@ function setupOpenApi(app: INestApplication, logger: Logger): void {
     const publicConfig = openApiService.buildPublicConfig();
     const publicDoc = SwaggerModule.createDocument(app, publicConfig, {
       include: [
-        MemoryController,
-        EntityController,
-        RelationController,
-        GraphController,
-        ExtractController,
+        MemoryModule,
+        EntityModule,
+        RelationModule,
+        GraphModule,
+        ExtractModule,
       ],
     });
     const cleanedPublicDoc = cleanupOpenApiDoc(publicDoc);
